@@ -252,6 +252,53 @@
                             {{$publisher->name}}
                         </td>
                         <td>
+                            <div class="badge badge-light">{{ $publisher->thematics[0]->name }}</div>
+                        </td>
+                        <td>
+                            @foreach(json_decode($publisher->thematics[0]->pivot->countries) as $country)
+                                <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($publisher->leadsTypes as $leadType)
+                                <div class="badge badge-light fw-bolder">{{ $leadType->name }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($publisher->costsTypes as $costType)
+                                <div class="badge badge-light fw-bolder">{{ $costType->name }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                                <div class="badge badge-light fw-bolder">{{ $publisher->thematics[0]->pivot->unit_price }}</div>
+                        </td>
+                        <td>
+                                <div class="badge badge-light fw-bolder">{{ $publisher->thematics[0]->pivot->sale_percentage?? NULL}}</div>
+                        </td>
+                        <td>{{ $publisher->created_at }}</td>
+                        <td class="text-end">
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                <span class="svg-icon svg-icon-5 m-0">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
+									</svg>
+								</span>
+                            </a>
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">Edit</a>
+                                </div>
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 delete_row" data-id="{{ $publisher->id }}">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
+                        <td></td>
+                        <td>
+                        </td>
+                        <td>
                             @foreach($publisher->thematics as $thematic)
                                 <div class="badge badge-light">{{ $thematic->name }}</div>
                             @endforeach
@@ -283,23 +330,8 @@
                                 <div class="badge badge-light fw-bolder">{{ $thematic->pivot->sale_percentage?? NULL}}</div>
                             @endforeach
                         </td>
-                        <td>{{ $publisher->created_at }}</td>
+                        <td></td>
                         <td class="text-end">
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                <span class="svg-icon svg-icon-5 m-0">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
-									</svg>
-								</span>
-                            </a>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">Edit</a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 delete_row" data-id="{{ $publisher->id }}">Delete</a>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -676,9 +708,10 @@
                         $('#kt_modal_edit_publisher').modal('show');
                         debugger;
                         $('#kt_modal_edit_publisher_form input[name="name"]').val(data.publisher.name);
-                        if(data.publisher.leads_types.length !=0)$('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="'+data.publisher.leads_types[0].id+'"]').attr('selected',true);
-                        if(data.publisher.costs_types.length !=0)$('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="'+data.publisher.costs_types[0].id+'"]').attr('selected',true);
-                        if(data.publisher.thematics.length !=0)$('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);$('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
+                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').attr('selected', true);
+                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').attr('selected', true);
+                        if (data.publisher.thematics.length != 0) $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);
+                        $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
                         $('#kt_modal_edit_publisher_form select[name="country"] option:selected').attr('selected', false);
                         $.each(JSON.parse(data.publisher.thematics[0].pivot.countries), function () {
                             $('#kt_modal_edit_publisher_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
@@ -754,7 +787,7 @@
                     }
                 })
             }
-        })
+        });
         $('#kt_modal_edit_publisher_form').on('submit', function (e) {
             e.preventDefault();
             if (validator) {
@@ -818,6 +851,6 @@
                     }
                 })
             }
-        })
+        });
     </script>
 @endsection
