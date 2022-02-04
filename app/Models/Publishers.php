@@ -11,6 +11,13 @@ class Publishers extends Model
     protected $guarded = [
         'id'
     ];
+    /**
+     * Get the leads associated with the publisher.
+     */
+    public function leads()
+    {
+        return $this->hasMany(Leads::class, 'publisher_id');
+    }
 
     /**
      * Get the thematics associated with the publisher.
@@ -34,6 +41,14 @@ class Publishers extends Model
     public function costsTypes()
     {
         return $this->belongsToMany(Cost_types::class, 'publishers_cost_types', 'publisher_id', 'cost_type_id');
+    }
+
+    /**
+     * Get the campaigns associated with the publisher.
+     */
+    public function campaigns()
+    {
+        return $this->belongsToMany(campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
     }
 
     protected static function booted()

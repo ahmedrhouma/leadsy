@@ -15,13 +15,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Blade::if('admin', function () {
-            return true;
+            return auth()->check() && auth()->user()->profile ==1;
         });
         Blade::if('publisher', function () {
-            return auth()->check() && auth()->user()->isPublisher();
+            return auth()->check() && auth()->user()->profile ==3;
         });
         Blade::if('advertiser', function () {
-            return auth()->check() && auth()->user()->isAdvertiser();
+            return auth()->check() && auth()->user()->profile ==2;
         });
     }
 

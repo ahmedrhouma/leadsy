@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('administration.dashboard');
+        switch (auth()->user()->profile) {
+            case 1:
+                return view('administration.dashboard');
+                break;
+            case 2:
+                return view('advertiser.dashboard');
+                break;
+            case 3:
+                return view('publisher.dashboard');
+                break;
+        }
     }
 }

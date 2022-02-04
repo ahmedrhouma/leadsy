@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNegotiationsProcessesTable extends Migration
+class CreateCampaignPublishersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateNegotiationsProcessesTable extends Migration
      */
     public function up()
     {
-        Schema::create('negotiations_processes', function (Blueprint $table) {
+        Schema::create('campaign_publishers', function (Blueprint $table) {
             $table->id();
-            $table->decimal('selling_price');
             $table->decimal('buying_price');
-            $table->tinyInteger('status');
+            $table->unsignedTinyInteger('status');
             $table->date('start_date');
             $table->date('end_date');
-            $table->foreignId('negotiation_id')->constrained('negotiations');
+            $table->foreignId('publisher_id')->constrained('publishers');
+            $table->foreignId('campaign_id')->constrained('campaigns');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateNegotiationsProcessesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('negotiations_processes');
+        Schema::dropIfExists('campaign_publishers');
     }
 }

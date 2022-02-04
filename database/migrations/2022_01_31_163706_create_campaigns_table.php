@@ -17,16 +17,18 @@ class CreateCampaignsTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->string('countries');
-            $table->integer('leads_type');
             $table->integer('leads_volume');
             $table->mediumInteger('leads_vmax');
-            $table->integer('cost_type');
             $table->decimal('cost_amount');
             $table->decimal('fee');
             $table->decimal('selling_price');
             $table->tinyInteger('status');
             $table->foreignId('advertiser_id')->constrained('advertisers');
             $table->foreignId('thematic_id')->constrained('thematics');
+            $table->foreignId('leads_type_id')->constrained('leads_types');
+            $table->foreignId('cost_type_id')->constrained('cost_types');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

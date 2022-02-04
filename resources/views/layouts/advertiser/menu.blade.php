@@ -1,8 +1,8 @@
 <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
     <!--begin::Logo-->
     <div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
-        <a href="<?= url_advertiser; ?>dashboard">
-            <img alt="Logo" src="<?= assets; ?>/media/logos/logo-demo9.svg" class="h-40px" />
+        <a href="{{route('advertiser.dashboard')}}">
+            <img alt="Logo" src="{{asset('assets/media/logos/logo-demo9.svg')}}" class="h-40px" />
         </a>
     </div>
     <!--end::Logo-->
@@ -12,7 +12,7 @@
         <div id="kt_aside_menu_wrapper" class="w-100 hover-scroll-overlay-y scroll-ps d-flex" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu" data-kt-scroll-offset="0">
             <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-icon-gray-400 menu-arrow-gray-400 fw-bold fs-6" data-kt-menu="true">
                 <div class="menu-item py-3">
-                    <a class="menu-link active" href="<?= url_advertiser; ?>dashboard" title="Dashboard" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('advertiser.dashboard')) active @endif" href="{{route('advertiser.dashboard')}}" title="Dashboard" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2x">
@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_advertiser; ?>campaigns" title="Campaigns" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('advertiser.campaigns')) active @endif" href="{{route('advertiser.campaigns')}}" title="Campaigns" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com004.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -42,7 +42,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_advertiser; ?>negociation" title="Negociation room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link " href="#" title="Negociation room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com007.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -56,7 +56,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_advertiser; ?>leads" title="Leads" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('advertiser.leads')) active @endif" href="{{route('advertiser.leads')}}" title="Leads" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com014.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -72,7 +72,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_advertiser; ?>reports" title="Campaign reports" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link" href="#" title="Campaign reports" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/graphs/gra010.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">

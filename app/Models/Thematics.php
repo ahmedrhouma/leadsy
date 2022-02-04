@@ -29,6 +29,22 @@ class Thematics extends Model
         return $this->belongsToMany(Publishers::class,'publishers_thematics', 'thematic_id', 'publisher_id');
     }
 
+    /**
+     * Get the leads type values associated with the thematic.
+     */
+    public function costsTypes()
+    {
+        return $this->belongsToMany(Cost_types::class, 'publishers_cost_types', 'thematic_id', 'cost_type_id')->withPivot(['publisher_id']);
+    }
+
+    /**
+     * Get the leads type values associated with the thematic.
+     */
+    public function leadsTypes()
+    {
+        return $this->belongsToMany(Leads_types::class, 'publishers_leads_types', 'thematic_id', 'lead_type_id')->withPivot(['publisher_id']);
+    }
+
     protected static function booted()
     {
         self::deleting(function($model){

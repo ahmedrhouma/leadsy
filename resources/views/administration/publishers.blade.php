@@ -228,7 +228,7 @@
                 <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th class="min-w-125px">ID</th>
+                    <th>ID</th>
                     <th class="min-w-125px">Name</th>
                     <th class="min-w-125px">Thematics</th>
                     <th class="min-w-125px">Country Scope</th>
@@ -238,6 +238,7 @@
                     <th class="min-w-125px">Sale%</th>
                     <th class="min-w-125px">Creation date</th>
                     <th class="text-end min-w-100px">Actions</th>
+                    <th></th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -260,20 +261,16 @@
                             @endforeach
                         </td>
                         <td>
-                            @foreach($publisher->leadsTypes as $leadType)
-                                <div class="badge badge-light fw-bolder">{{ $leadType->name }}</div>
-                            @endforeach
+                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name  }}</div>
                         </td>
                         <td>
-                            @foreach($publisher->costsTypes as $costType)
-                                <div class="badge badge-light fw-bolder">{{ $costType->name }}</div>
-                            @endforeach
+                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
                         </td>
                         <td>
-                                <div class="badge badge-light fw-bolder">{{ $publisher->thematics[0]->pivot->unit_price }}</div>
+                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->pivot->unit_price }}</div>
                         </td>
                         <td>
-                                <div class="badge badge-light fw-bolder">{{ $publisher->thematics[0]->pivot->sale_percentage?? NULL}}</div>
+                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->pivot->sale_percentage?? NULL}}</div>
                         </td>
                         <td>{{ $publisher->created_at }}</td>
                         <td class="text-end">
@@ -293,47 +290,58 @@
                                 </div>
                             </div>
                         </td>
+                        <td>
+                            @if($publisher->thematics->count() > 1)
+                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
+                                        data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $publisher->id }}">
+                                <span class="svg-icon svg-icon-3 m-0 toggle-off">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                                    <span class="svg-icon svg-icon-3 m-0 toggle-on">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                                </button>
+                            @endif
+                        </td>
                     </tr>
-                    <tr data-kt-docs-datatable-subtable="subtable_template" class="d-none">
-                        <td></td>
-                        <td>
-                        </td>
-                        <td>
-                            @foreach($publisher->thematics as $thematic)
+                    @foreach($publisher->thematics->skip(1) as $key => $thematic)
+
+                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}" class="d-none">
+                            <td></td>
+                            <td>
+                            </td>
+                            <td>
                                 <div class="badge badge-light">{{ $thematic->name }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($publisher->thematics as $thematic)
+                            </td>
+                            <td>
                                 @foreach(json_decode($thematic->pivot->countries) as $country)
                                     <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
                                 @endforeach
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($publisher->leadsTypes as $leadType)
-                                <div class="badge badge-light fw-bolder">{{ $leadType->name }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($publisher->costsTypes as $costType)
-                                <div class="badge badge-light fw-bolder">{{ $costType->name }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($publisher->thematics as $thematic)
+                            </td>
+                            <td>
+                                <div class="badge badge-light fw-bolder">{{ $thematic->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-light fw-bolder">{{ $thematic->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                            </td>
+                            <td>
                                 <div class="badge badge-light fw-bolder">{{ $thematic->pivot->unit_price }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($publisher->thematics as $thematic)
+                            </td>
+                            <td>
                                 <div class="badge badge-light fw-bolder">{{ $thematic->pivot->sale_percentage?? NULL}}</div>
-                            @endforeach
-                        </td>
-                        <td></td>
-                        <td class="text-end">
-                        </td>
-                    </tr>
+                            </td>
+                            <td></td>
+                            <td class="text-end">
+                            </td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+
                 @endforeach
                 </tbody>
             </table>
@@ -358,7 +366,7 @@
                         <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                             <div class="fv-row mb-7">
                                 <label class="required fw-bold fs-6 mb-2">Full Name</label>
-                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value="Emma Smith"/>
+                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
@@ -499,7 +507,7 @@
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <label class="required fs-6 fw-bold mb-2">Cost type</label>
                                     <select name="costs_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_edit_publisher" class="form-select form-select-solid fw-bolder">
-                                        <option value="">Select a Thematic...</option>
+                                        <option value="">Select a Cost type...</option>
                                         @foreach($costs_types as $cost_type)
                                             <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
                                         @endforeach
@@ -549,6 +557,20 @@
     <script>
         let tr;
         let id;
+        $('[data-kt-publisher-datatable-subtable="expand_row"]').click(function () {
+            if (!$(this).hasClass('expanded')) {
+                $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').insertAfter($(this).parents('tr'));
+                $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').removeClass('d-none');
+                $(this).addClass('expanded');
+            } else {
+                $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').addClass('d-none');
+                $(this).removeClass('expanded');
+            }
+            let onBTN = $(this).find('.toggle-on');
+            let offBTN = $(this).find('.toggle-off');
+            onBTN.addClass('toggle-off').removeClass('toggle-on');
+            offBTN.addClass('toggle-on').removeClass('toggle-off');
+        });
         $('select[name="leads_types"],select[name="costs_types"]').select2({
             minimumResultsForSearch: Infinity
         });
@@ -566,7 +588,7 @@
                     }, 'thematics': {
                         validators: {
                             notEmpty: {
-                                message: 'Start date is required'
+                                message: 'Tematics is required'
                             }
                         }
                     }, 'country': {
@@ -594,7 +616,7 @@
                 }
             }
         );
-        var validator = FormValidation.formValidation(
+        var validator1 = FormValidation.formValidation(
             $('#kt_modal_edit_publisher_form')[0],
             {
                 fields: {
@@ -790,8 +812,8 @@
         });
         $('#kt_modal_edit_publisher_form').on('submit', function (e) {
             e.preventDefault();
-            if (validator) {
-                validator.validate().then(function (status) {
+            if (validator1) {
+                validator1.validate().then(function (status) {
                     if (status == 'Valid') {
                         $('.indicator-progress').show();
                         $('.indicator-label').hide();
