@@ -59,102 +59,96 @@
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="1"/>
-                                        <span class="form-check-label text-gray-600">ID Advertiser</span>
-                                    </label>
-                                </div>
-                                <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
                                         <span class="form-check-label text-gray-600">ID Publisher</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
                                         <span class="form-check-label text-gray-600">Last Name</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
                                         <span class="form-check-label text-gray-600">First Name</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
                                         <span class="form-check-label text-gray-600">Country</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
                                         <span class="form-check-label text-gray-600">Phone</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
                                         <span class="form-check-label text-gray-600">Email</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
                                         <span class="form-check-label text-gray-600">Subscription date</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
                                         <span class="form-check-label text-gray-600">Web page name</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="10"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
                                         <span class="form-check-label text-gray-600">Web page URL</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="11"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="10"/>
                                         <span class="form-check-label text-gray-600">Sending date</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="12"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="11"/>
                                         <span class="form-check-label text-gray-600">Sale status</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="13"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="12"/>
                                         <span class="form-check-label text-gray-600">Sale status comment</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="14"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="13"/>
                                         <span class="form-check-label text-gray-600">Rejection</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="15"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="14"/>
                                         <span class="form-check-label text-gray-600">ID Campaign</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="16"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="15"/>
                                         <span class="form-check-label text-gray-600">Campaign Name</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="17"/>
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="16"/>
                                         <span class="form-check-label text-gray-600">Actions</span>
                                     </label>
                                 </div>
@@ -175,7 +169,6 @@
                 <!--begin::Table row-->
                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                     <th>ID Lead</th>
-                    <th>ID Advertiser</th>
                     <th>ID Publisher</th>
                     <th>Last Name</th>
                     <th>First Name</th>
@@ -191,7 +184,7 @@
                     <th>Rejection</th>
                     <th>ID Campaign</th>
                     <th>Campaign Name</th>
-                    <th>Actions</th>
+                    <th class="min-w-100px">Actions</th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -212,8 +205,7 @@
             ajax: "{{ route('admin.leads.list') }}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'campaigns[0].advertisers.id', name: 'campaigns.advertisers.id'},
-                {data: 'publisher.id', name: 'publisher.id'},
+                {data: 'publisher_id', name: 'publisher_id'},
                 {data: 'first_name', name: 'first_name'},
                 {data: 'last_name', name: 'last_name'},
                 {data: 'country', name: 'country'},
@@ -222,17 +214,30 @@
                 {data: 'subscription_date', name: 'subscription_date'},
                 {data: 'web_page_name', name: 'web_page_name'},
                 {data: 'web_page_url', name: 'web_page_url'},
-                {data: 'campaigns[0].pivot.sending_date', name: 'campaigns[0].pivot.sending_date'},
-                {data: 'campaigns[0].pivot.sale_status', name: 'campaigns[0].pivot.sale_status'},
+                {data: 'sending_date', name: 'sending_date'},
+                {data: 'sale_status', name: 'sale_status'},
                 {data: 'sale_status_comment', name: 'sale_status_comment'},
-                {data: 'campaigns[0].pivot.rejection', name: 'campaigns[0].pivot.rejection'},
-                {data: 'campaigns[0].id', name: 'campaigns[0].id'},
-                {data: 'campaigns[0].name', name: 'campaigns[0].name'},
+                {data: 'rejection', name: 'rejection'},
+                {data: 'campaign_id', name: 'campaign_id'},
+                {data: 'campaign_name', name: 'campaign_name'},
                 {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
+                },
+            ],
+            columnDefs:[
+                {
+                    "render": function ( data, type, row ) {
+                        return data == "0"?'<div class="badge badge-light-success">Accepted</div>':'<div class="badge badge-light-danger">Rejected</div>'
+                    },
+                    "targets": 13
+                },{
+                    "render": function ( data, type, row ) {
+                        return data == "1"?'<div class="badge badge-light-success">Sale</div>':'<div class="badge badge-light-info">Queued</div>'
+                    },
+                    "targets": 11
                 },
             ]
         });

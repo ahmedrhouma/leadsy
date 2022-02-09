@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix'=>'admin'], function () {
+Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard');
 
     Route::get('/thematics', [\App\Http\Controllers\ThematicsController::class,'index'])->name('admin.thematics');
@@ -48,7 +48,7 @@ Route::group(['prefix'=>'admin'], function () {
 
 });
 
-Route::group(['prefix'=>'advertiser'], function () {
+Route::group(['prefix'=>'advert', 'middleware' => ['auth']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('advertiser.dashboard');
     Route::get('/campaigns',[\App\Http\Controllers\CampaignsController::class,'index'])->name('advertiser.campaigns');
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('advertiser.campaigns.store');
@@ -59,7 +59,7 @@ Route::group(['prefix'=>'advertiser'], function () {
     Route::get('/leads/list',[\App\Http\Controllers\LeadsController::class,'indexList'])->name('advertiser.leads.list');
 });
 
-Route::group(['prefix'=>'publisher'], function () {
+Route::group(['prefix'=>'publisher', 'middleware' => ['auth']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('publisher.dashboard');
     Route::get('/campaigns',[\App\Http\Controllers\CampaignsController::class,'index'])->name('publisher.campaigns');
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('publisher.campaigns.store');

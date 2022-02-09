@@ -11,7 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    private $accountTypes = [
+        1 => 'admin',
+        2 => 'advertiser',
+        3 => 'publisher',
+    ];
     protected $guarded = [
         'id'
     ];
@@ -33,4 +37,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAccountName(){
+        return $this->accountTypes[$this->profile];
+    }
+    public function account(){
+        switch ($this->profile){
+            case 1:
+                return $this;
+                break;
+            case 2:
+                return $this->belongsTo(Advertisers::class,'account_id');
+                break;
+            case 3:
+                return $this->belongsTo(Publishers::class,'account_id');
+                break;
+        }
+
+    }
 }

@@ -212,7 +212,7 @@
             ajax: "{{ route('admin.leads.list') }}",
             columns: [
                 {data: 'id', name: 'id'},
-                {data: 'campaigns[0].advertisers.id', name: 'campaigns.advertisers.id'},
+                {data: 'advertiser_id', name: 'advertiser_id'},
                 {data: 'publisher.id', name: 'publisher.id'},
                 {data: 'first_name', name: 'first_name'},
                 {data: 'last_name', name: 'last_name'},
@@ -222,17 +222,36 @@
                 {data: 'subscription_date', name: 'subscription_date'},
                 {data: 'web_page_name', name: 'web_page_name'},
                 {data: 'web_page_url', name: 'web_page_url'},
-                {data: 'campaigns[0].pivot.sending_date', name: 'campaigns[0].pivot.sending_date'},
-                {data: 'campaigns[0].pivot.sale_status', name: 'campaigns[0].pivot.sale_status'},
+                {data: 'sending_date', name: 'sending_date'},
+                {data: 'sale_status', name: 'sale_status'},
                 {data: 'sale_status_comment', name: 'sale_status_comment'},
-                {data: 'campaigns[0].pivot.rejection', name: 'campaigns[0].pivot.rejection'},
-                {data: 'campaigns[0].id', name: 'campaigns[0].id'},
-                {data: 'campaigns[0].name', name: 'campaigns[0].name'},
+                {data: 'rejection', name: 'rejection'},
+                {data: 'campaign_id', name: 'campaign_id'},
+                {data: 'campaign_name', name: 'campaign_name'},
                 {
                     data: 'action',
                     name: 'action',
                     orderable: false,
                     searchable: false
+                },
+            ],
+
+            columnDefs:[
+                {
+                    "render": function ( data, type, row ) {
+                        return data == "0"?'<div class="badge badge-light-success">Accepted</div>':'<div class="badge badge-light-danger">Rejected</div>'
+                    },
+                    "targets": 14
+                },{
+                    "render": function ( data, type, row ) {
+                        return data == "1"?'<div class="badge badge-light-success">Sale</div>':'<div class="badge badge-light-info">Queued</div>'
+                    },
+                    "targets": 12
+                },{
+                    "render": function ( data, type, row ) {
+                        return '<div class="badge badge-light-info">'+data+'</div>';
+                    },
+                    "targets": 5
                 },
             ]
         });
@@ -242,11 +261,11 @@
         $('[data-kt-leads-table-filter="search"]').on('keyup', function (e) {
             table.search($(this).val()).draw();
         });
-        $('.columnToggleBtn').on( 'click', function (e) {
-            var column = table.column( $(this).attr('data-column') );
-            column.visible( $(this).is(':checked') );
-            table.columns.adjust().draw();
-        } );
+            $('.columnToggleBtn').on( 'click', function (e) {
+                var column = table.column( $(this).attr('data-column') );
+                column.visible( $(this).is(':checked') );
+                table.columns.adjust().draw();
+            } );
     </script>
 @endsection
 

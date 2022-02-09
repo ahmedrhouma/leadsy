@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\Advertisers;
 use App\Models\Publishers;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -22,18 +23,6 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-/*        Validator::make($input, [
-            'username' => ['required', 'string', 'max:255'],
-            'profile' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-            ],
-            'password' => $this->passwordRules(),
-        ])->validate();*/
         if ($input['profile'] == 1){
             /** administration */
             return User::create([

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\Countries;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,9 @@ class campaigns extends Model
     use HasFactory;
     protected $guarded = [
         'id'
+    ];
+    protected $appends = [
+        'countriesName'
     ];
     /**
      * Get the publishers associated with the campaign.
@@ -55,5 +59,11 @@ class campaigns extends Model
     public function costsTypes()
     {
         return $this->belongsTo(Cost_types::class, 'cost_type_id');
+    }
+
+    public function getCountriesNameAttribute(){
+        return array_map(function ($country){
+                return Countries::getCountry($country);
+            },json_decode($this->countries)) ?? null;
     }
 }

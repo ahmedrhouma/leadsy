@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Countries;
+use App\Models\CampaignPublisher;
 use App\Models\campaigns;
 use App\Models\Cost_types;
 use App\Models\Leads_types;
+use App\Models\Publishers;
 use App\Models\Thematics;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CampaignsController extends Controller
@@ -16,7 +20,7 @@ class CampaignsController extends Controller
         switch (auth()->user()->profile) {
             case 1:
                 $campaigns = campaigns::with(['publishers', 'advertisers', 'thematics', 'leadsTypes', 'costsTypes'])->get();
-                return view('administration.campaigns', ['campaigns' => $campaigns]);
+                return view('admin.campaigns', ['campaigns' => $campaigns,'publishers'=>Publishers::all(),'thematics' => Thematics::all(), 'costs_types' => Cost_types::all(), 'leads_types' => Leads_types::all()]);
                 break;
             case 2:
                 $thematics = Thematics::all();
@@ -30,7 +34,6 @@ class CampaignsController extends Controller
                 return view('publisher.campaigns', ['campaigns' => $campaigns]);
                 break;
         }
-
     }
 
     public function store(Request $request)
@@ -41,9 +44,46 @@ class CampaignsController extends Controller
         if ($validator->fails()) {
             return Response()->json(['success' => false]);
         }
-        $advertiser = campaigns::create(['name' => $request->name, 'status' => 1]);
-        if ($advertiser) {
-            return Response()->json(['success' => true, 'advertiser' => $advertiser]);
+        $data = $request->all();
+        $data['countries'] = json_encode($request['countries'] );
+        $data['fee'] = env('DEFAULT_FEE');
+        $data['fee_type'] = env('DEFAULT_FEE_TYPE');
+        $data['status'] = 1;
+        $data['advertiser_id'] = Auth::user()->account->id;
+        $campaign = campaigns::create($data);
+        if ($campaign) {
+            return Response()->json(['success' => true, 'campaign' => $campaign->load(['thematics', 'leadsTypes', 'costsTypes'])]);
+        }
+        return Response()->json(['success' => false]);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), ['id' => 'required|exists:Campaigns,id'], $messages = [
+            'required' => 'The :attribute field is required.',
+        ]);
+        if ($validator->fails()) {
+            return Response()->json(['success' => false]);
+        }
+        $campaign = campaigns::find($request->id);
+        $request->countries =json_encode($request->countries);
+        $campaign->update($request->all());
+        if (auth()->user()->profile == 1){
+            $campaignPublisher = CampaignPublisher::updateOrCreate(['publisher_id'=>$request->publisher_id,'campaign_id'=>$campaign->id],['buying_price'=>$request->buying_price,'status'=>1,'start_date'=>$campaign->start_date,'end_date'=>$campaign->end_date,'publisher_id'=>$request->publisher_id,'campaign_id'=>$campaign->id]);
+            if ($campaignPublisher || $campaignPublisher->wasChanged()) {
+                return Response()->json(['success' => true, 'campaign' => $campaign->load('publishers')]);
+            }
+        }
+        if ($campaign->wasChanged()) {
+            return Response()->json(['success' => true, 'campaign' => $campaign->load('publishers')]);
+        }
+        return Response()->json(['success' => false]);
+    }
+    public function show(Request $request)
+    {
+        $campaign = campaigns::find($request->id);
+        if ($campaign) {
+            return Response()->json(['success' => true, 'campaign' => $campaign->load(['publishers', 'advertisers', 'thematics', 'leadsTypes', 'costsTypes'])]);
         }
         return Response()->json(['success' => false]);
     }

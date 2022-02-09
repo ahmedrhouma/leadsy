@@ -154,26 +154,19 @@
                 <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th>Publishers</th>
-                    <th>Buying Price</th>
-                    <th>Selling Price</th>
-                    <th>Fee</th>
-                    <th>Advertiser ID</th>
-                    <th>Advertiser Name</th>
-                    <th>Campaign ID</th>
-                    <th>Campaign Name</th>
-                    <th>Campaign Creation Date</th>
-                    <th>Campaign Starting Date</th>
-                    <th>Campaign Ending Date</th>
-                    <th>Campaign Status</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Creation date</th>
+                    <th>Starting date</th>
+                    <th>Ending date</th>
+                    <th>Status</th>
                     <th>Thematic</th>
-                    <th>Country Scope</th>
-                    <th>Leads Type</th>
-                    <th>Expected Leads Volume</th>
+                    <th>Country scope</th>
+                    <th>Leads type</th>
+                    <th>Expected leads volume + Value</th>
                     <th>Cost type</th>
-                    <th>Max Fixed Amount/%</th>
-
-                    <th class="text-end min-w-70px">Actions</th>
+                    <th>Unit price</th>
+                    <th>Actions</th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -183,13 +176,6 @@
                 @foreach($campaigns as $campaign)
                     <tr>
 
-                        <td>@foreach($campaign->publishers as $publisher)
-                                <div class="badge badge-light">{{$campaign->publishers[0]->name}}</div>@endforeach</td>
-                        <td>{{$campaign->publishers[0]->pivot->buying_price}}</td>
-                        <td>{{$campaign->selling_price}}</td>
-                        <td>{{$campaign->fee}}</td>
-                        <td>{{$campaign->advertisers->id}}</td>
-                        <td>{{$campaign->advertisers->name}}</td>
                         <td>{{$campaign->id}}</td>
                         <td>{{$campaign->name}}</td>
                         <td>{{$campaign->created_at}}</td>
@@ -213,7 +199,7 @@
                         </td>
                         <td>{{$campaign->leads_vmax}}</td>
                         <td>{{$campaign->costsTypes->name}}</td>
-                        <td>{{$campaign->cost_amount}}</td>
+                        <td>{{$campaign->selling_price}}</td>
                         <!--begin::Action=-->
                         <td class="text-end">
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions

@@ -20,7 +20,7 @@ class PublishersController extends Controller
         $thematics = Thematics::all();
         $costs_type = Cost_types::all();
         $leads_type = Leads_types::all();
-        return view('administration.publishers', ['publishers' => $publishers, 'thematics' => $thematics, 'costs_types' => $costs_type, 'leads_types' => $leads_type]);
+        return view('admin.publishers', ['publishers' => $publishers, 'thematics' => $thematics, 'costs_types' => $costs_type, 'leads_types' => $leads_type]);
     }
 
     public function store(Request $request)

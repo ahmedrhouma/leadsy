@@ -1,8 +1,8 @@
 <div id="kt_aside" class="aside" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="auto" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
     <!--begin::Logo-->
     <div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
-        <a href="<?= url_publisher; ?>dashboard">
-            <img alt="Logo" src="<?= assets; ?>/media/logos/logo-demo9.svg" class="h-40px" />
+        <a href="{{route('publisher.dashboard')}}">
+            <img alt="Logo" src="{{asset('assets/media/logos/logo-demo9.svg')}}" class="h-40px" />
         </a>
     </div>
     <!--end::Logo-->
@@ -12,9 +12,8 @@
         <div id="kt_aside_menu_wrapper" class="w-100 hover-scroll-overlay-y scroll-ps d-flex" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu" data-kt-scroll-offset="0">
             <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-icon-gray-400 menu-arrow-gray-400 fw-bold fs-6" data-kt-menu="true">
                 <div class="menu-item py-3">
-                    <a class="menu-link active" href="<?= url_publisher; ?>dashboard" title="Dashboard" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('publisher.dashboard')) active @endif" href="{{route('publisher.dashboard')}}" title="Dashboard" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-custom-class="tooltip-dark" data-bs-placement="right">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2x">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
@@ -23,12 +22,11 @@
                                     <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->
                         </span>
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_publisher; ?>offers" title="Offers" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link" href="#" title="Offers" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/ecommerce/ecm007.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -43,21 +41,19 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_publisher; ?>opportunities" title="Opportunities" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link" href="#" title="Opportunities" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: assets/media/icons/duotune/general/gen020.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M14 18V16H10V18L9 20H15L14 18Z" fill="black" />
                                     <path opacity="0.3" d="M20 4H17V3C17 2.4 16.6 2 16 2H8C7.4 2 7 2.4 7 3V4H4C3.4 4 3 4.4 3 5V9C3 11.2 4.8 13 7 13C8.2 14.2 8.8 14.8 10 16H14C15.2 14.8 15.8 14.2 17 13C19.2 13 21 11.2 21 9V5C21 4.4 20.6 4 20 4ZM5 9V6H7V11C5.9 11 5 10.1 5 9ZM19 9C19 10.1 18.1 11 17 11V6H19V9ZM17 21V22H7V21C7 20.4 7.4 20 8 20H16C16.6 20 17 20.4 17 21ZM10 9C9.4 9 9 8.6 9 8V5C9 4.4 9.4 4 10 4C10.6 4 11 4.4 11 5V8C11 8.6 10.6 9 10 9ZM10 13C9.4 13 9 12.6 9 12V11C9 10.4 9.4 10 10 10C10.6 10 11 10.4 11 11V12C11 12.6 10.6 13 10 13Z" fill="black" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->
                         </span>
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_publisher; ?>campaigns" title="Campaigns" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link  @if (\Route::is('publisher.campaigns')) active @endif" href="{{route('publisher.campaigns')}}" title="Campaigns" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com004.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -71,7 +67,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_publisher; ?>leads" title="Leads" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('publisher.leads')) active @endif" href="{{route('publisher.leads')}}" title="Leads" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com014.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
@@ -87,7 +83,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="<?= url_publisher; ?>reports" title="Campaign reports" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link" href="" title="Campaign reports" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/graphs/gra010.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">

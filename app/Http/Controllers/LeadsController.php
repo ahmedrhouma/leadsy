@@ -11,11 +11,23 @@ class LeadsController extends Controller
 {
     public function index()
     {
-        return view('administration.leads');
+        return view(\auth()->user()->getAccountName() . '.leads');
     }
-    public function indexList(Request $request){
-        return Datatables::of(Leads::with(['campaigns','campaigns.advertisers','publisher']))
-            ->addColumn('action', function($row){
+
+    public function indexList(Request $request)
+    {
+        if (auth()->user()->profile == 1) {
+            $data = Leads::with(['campaigns', 'campaigns.advertisers', 'publisher']);
+        } elseif (auth()->user()->profile == 2) {
+            $data = Leads::with(['campaigns', 'publisher'])->whereHas('campaigns', function ($q) {
+                $q->where('advertiser_id', '=', \auth()->user()->account->id);
+            });
+        } elseif (auth()->user()->profile == 3) {
+            $data = Leads::where('publisher_id',\auth()->user()->account->id)->with(['campaigns']);
+        }
+
+        return Datatables::of($data)
+            ->addColumn('action', function ($row) {
                 $actionBtn = '<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <span class="svg-icon svg-icon-5 m-0">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -33,16 +45,40 @@ class LeadsController extends Controller
                             </div>';
                 return $actionBtn;
             })
-            ->addColumn('web_page_name', function($row){
+            ->addColumn('advertiser_id', function ($row) {
+                return $row->campaigns[0]->advertiser_id;
+            })
+            ->addColumn('sale_income', function ($row) {
+                $costs = $row->campaigns->pluck('cost_amount');
+                return array_sum(array_map(function ($cost){
+                    return floatval($cost)+2.5;
+                },$costs->toArray()));
+            })
+            ->addColumn('sending_date', function ($row) {
+                return $row->campaigns[0]->pivot->sending_date;
+            })
+            ->addColumn('sale_status', function ($row) {
+                return $row->campaigns[0]->pivot->sale_status;
+            })
+            ->addColumn('rejection', function ($row) {
+                return $row->campaigns[0]->pivot->rejection;
+            })
+            ->addColumn('campaign_id', function ($row) {
+                return $row->campaigns[0]->id;
+            })
+            ->addColumn('campaign_name', function ($row) {
+                return $row->campaigns[0]->name;
+            })
+            ->addColumn('web_page_name', function ($row) {
                 return '';
-            })->addColumn('country', function($row){
+            })->addColumn('country', function ($row) {
                 return Countries::getCountry($row->country);
-            })->addColumn('web_page_url', function($row){
+            })->addColumn('web_page_url', function ($row) {
                 return '';
-            })->addColumn('sale_status_comment', function($row){
+            })->addColumn('sale_status_comment', function ($row) {
                 return '';
             })
-            ->rawColumns(['action','advertisers','publisher'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 }

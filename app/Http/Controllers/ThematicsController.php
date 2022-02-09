@@ -11,7 +11,7 @@ class ThematicsController extends Controller
     public function index()
     {
         $thematics = Thematics::with('countries')->get();
-        return view('administration.thematics', ['thematics' => $thematics]);
+        return view('admin.thematics', ['thematics' => $thematics]);
     }
 
     public function store(Request $request)

@@ -11,7 +11,7 @@ class AdvertisersController extends Controller
     public function index()
     {
         $advertisers = Advertisers::all();
-        return view('administration.advertisers',['advertisers'=>$advertisers]);
+        return view('admin.advertisers',['advertisers'=>$advertisers]);
     }
 
     public function store(Request $request)
