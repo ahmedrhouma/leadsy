@@ -5,6 +5,24 @@
 @section('pageDescription')
     List of all campaigns
 @endsection
+@section('css')
+    <style>
+        .dtfc-fixed-right {
+            position: absolute !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .dtfc-fixed-right, .dtfc-fixed-left, .DTFC_Cloned tr {
+            background-color: #fafbfc !important
+        }
+
+        .DTFC_ScrollWrapper {
+            height: auto !important
+        }
+    </style>
+
+@endsection
 @section('content')
     <div class="card">
         <!--begin::Card header-->
@@ -21,7 +39,7 @@
 						</svg>
 					</span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-campaigns-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -168,17 +186,6 @@
                         </div>
                     </div>
                 </div>
-                <!--end::Toolbar-->
-                <!--begin::Group actions-->
-                <div class="d-flex justify-content-end align-items-center d-none" data-kt-subscription-table-toolbar="selected">
-                    <div class="fw-bolder me-5">
-                        <span class="me-2" data-kt-subscription-table-select="selected_count"></span>Selected
-                    </div>
-                    <button type="button" class="btn btn-danger" data-kt-subscription-table-select="delete_selected">
-                        Delete Selected
-                    </button>
-                </div>
-                <!--end::Group actions-->
             </div>
             <!--end::Card toolbar-->
         </div>
@@ -186,7 +193,7 @@
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <!--begin::Table-->
-            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_campaigns_table">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 h-100" id="kt_campaigns_table">
                 <!--begin::Table head-->
                 <thead>
                 <!--begin::Table row-->
@@ -204,10 +211,10 @@
                     <th>Campaign Ending Date</th>
                     <th>Campaign Status</th>
                     <th>Thematic</th>
-                    <th>Country Scope</th>
-                    <th>Leads Type</th>
+                    <th class="min-w-100px">Country Scope</th>
+                    <th class="min-w-100px">Leads Type</th>
                     <th>Expected Leads Volume</th>
-                    <th>Cost type</th>
+                    <th class="min-w-100px">Cost type</th>
                     <th>Max Fixed Amount/%</th>
 
                     <th class="text-end min-w-70px">Actions</th>
@@ -245,8 +252,10 @@
                         <td>
                             <div class="badge badge-light">{{$campaign->thematics->name}}</div>
                         </td>
-                        <td>@foreach(json_decode($campaign->countries) as $country)
-                                <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                        <td>@foreach($campaign->countriesName as $country)
+                                <div class="badge badge-light fw-bolder m-1">
+                                    <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
+                                </div>
                             @endforeach</td>
                         <td>
                             <div class="badge badge-light">{{$campaign->leadsTypes->name}}</div>
@@ -256,7 +265,7 @@
                         <td>{{$campaign->cost_amount}}</td>
                         <!--begin::Action=-->
                         <td class="text-end">
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                            <a href="#" class="btn btn-secondary btn-active-secondary-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                 <span class="svg-icon svg-icon-5 m-0">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -287,7 +296,7 @@
         </div>
         <!--end::Card body-->
     </div>
-    <div class="modal fade" id="kt_modal_edit_campaign" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_edit_campaign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -300,7 +309,7 @@
                         <h2 class="fw-bolder">Edit campaign</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
-                        <div id="kt_modal_edit_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                        <div id="kt_modal_edit_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -466,7 +475,7 @@
                                 </div>
                             </div>
                             <div class="row g-9 mb-7">
-                                <div class="col-md-6 d-flex flex-column fv-row">
+                                <div class="col-md-12 d-flex flex-column fv-row">
                                     <!--begin::Label-->
                                     <label class="fs-6 fw-bold mb-2">
                                         <span class="required">Publisher</span>
@@ -494,7 +503,7 @@
                                     </select>
                                     <!--end::Input-->
                                 </div>
-                                <div class="col-md-12 fv-row ">
+                                <div class="col-md-6 fv-row ">
                                     <label class="required fs-6 fw-bold mb-2">Fee</label>
                                     <input type="number" step="0.1" class="form-control form-control-solid" placeholder="" name="fee" required/>
                                 </div>
@@ -510,7 +519,8 @@
                         </div>
                     </div>
                     <div class="modal-footer flex-center">
-                        <button type="reset" id="kt_modal_add_campaign_cancel" class="btn btn-light me-3">Discard
+                        <button type="reset" id="kt_modal_add_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
+                            Cancel
                         </button>
                         <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
                             <span class="indicator-label">Save changes</span>
@@ -531,8 +541,21 @@
 @section('javascript')
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>
     <script>
-        var table = $("#kt_campaigns_table").DataTable();
+        $(document).ready(function () {
+            var table = $("#kt_campaigns_table").DataTable({
+                "pageLength": 5,
+                lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                /*scrollX:        true,
+                fixedColumns:   {
+                    right: 1,
+                }*/
+            });w
+        })
+        $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
+            table.search($(this).val()).draw();
+        });
         var id;
         $('select[name="costs_types"]').change(function () {
             if ($(this).val() == 2) {
@@ -544,11 +567,11 @@
                 $('.sale_percentage').hide();
             }
         });
-        $('.columnToggleBtn').on( 'click', function (e) {
-            var column = table.column( $(this).attr('data-column') );
-            column.visible( $(this).is(':checked') );
+        $('.columnToggleBtn').on('click', function (e) {
+            var column = table.column($(this).attr('data-column'));
+            column.visible($(this).is(':checked'));
             table.columns.adjust().draw();
-        } );
+        });
         $(document).on('click', '.row_edit', function () {
             id = $(this).data('id');
             $.ajax({
@@ -564,9 +587,9 @@
                     $('.indicator-label').show();
                     if (data.success) {
                         $('#kt_modal_edit_campaign_form input[name="name"]').val(data.campaign.name);
-                        $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"]').change();
+                        $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
+                        $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
+                        $('#kt_modal_edit_campaign_form select[name="costs_types"], #kt_modal_edit_campaign_form select[name="leads_types"]').change();
                         $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(data.campaign.cost_amount);
                         $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(data.campaign.cost_amount);
                         $('#kt_modal_edit_campaign_form input[name="start_date"]').val(data.campaign.start_date);
@@ -579,6 +602,7 @@
                         $('#kt_modal_edit_campaign_form select[name="publisher"] option[value="' + (data.campaign.publishers.length != 0 ? data.campaign.publishers[0].id : 0) + '"]').attr('selected', true);
                         $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
                         $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
+                        $('#kt_modal_edit_campaign_form select[name="country"] option:selected').attr('selected', false);
                         $.each(JSON.parse(data.campaign.countries), function (country) {
                             $('#kt_modal_edit_campaign_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
                         });
@@ -626,9 +650,8 @@
                         Swal.fire({
                             text: "Campaign successfully updated",
                             icon: "success",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                     } else {
                         Swal.fire({

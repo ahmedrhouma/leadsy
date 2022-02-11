@@ -11,6 +11,7 @@ class AdvertisersController extends Controller
     public function index()
     {
         $advertisers = Advertisers::all();
+        $advertisers->load(['campaigns','campaigns.thematics']);
         return view('admin.advertisers',['advertisers'=>$advertisers]);
     }
 

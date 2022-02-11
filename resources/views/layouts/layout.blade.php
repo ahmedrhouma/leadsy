@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head>
     <base href="">
-    <title>Admin | Leadsy</title>
+    <title>{{auth()->user()->getAccountName()}} | Leadsy</title>
     <meta charset="utf-8"/>
     <meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free."/>
     <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon"/>
@@ -1434,12 +1434,11 @@
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
                                             <div class="d-flex flex-column">
-                                                <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-                                                    <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
+                                                <div class="fw-bolder d-flex align-items-center fs-5">
+                                                    {{ auth()->user()->username }}
                                                 </div>
-                                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                             </div>
-                                            <!--end::Username-->
                                         </div>
                                     </div>
                                     <!--end::Menu item-->

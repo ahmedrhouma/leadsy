@@ -15,11 +15,11 @@ class CreateCampaignsLeadsTable extends Migration
     {
         Schema::create('campaigns_leads', function (Blueprint $table) {
             $table->id();
-            $table->integer('rejection');
-            $table->integer('sale_status');
             $table->date('sending_date');
             $table->foreignId('lead_id')->constrained('leads');
             $table->foreignId('campaign_id')->constrained('campaigns');
+            $table->foreignId('sale_status_id')->nullable()->constrained('sale_statuses');
+            $table->foreignId('rejection_id')->nullable()->constrained('rejections');
             $table->timestamps();
         });
     }

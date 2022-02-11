@@ -21,7 +21,7 @@
 						</svg>
 					</span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-advertisers-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -192,10 +192,10 @@
                                     <!--begin::Actions-->
                                     <div class="text-center">
                                         <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">
-                                            Discard
+                                            Cancel
                                         </button>
                                         <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                            <span class="indicator-label">Submit</span>
+                                            <span class="indicator-label">Save</span>
                                             <span class="indicator-progress">Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         </button>
@@ -246,12 +246,24 @@
                         <td>{{ $advertiser->name }}</td>
                         <!--end::User=-->
                         <!--begin::Role=-->
-                        <td></td>
-                        <!--end::Role=-->
                         <!--begin::Last login=-->
                         <td>
+                            @if($advertiser->campaigns->count() != 0)
+                                @foreach(array_unique($advertiser->campaigns->each->thematics->pluck('name')->toArray()) as $thematic)
+                                    <div class="badge badge-light">{{ $thematic }}</div>
+                                @endforeach
+                            @endif
                         </td>
                         <!--end::Last login=-->
+                        <td>
+                            @if($advertiser->campaigns->count() != 0)
+                                @foreach(array_unique(array_merge(...$advertiser->campaigns->pluck('countriesName'))) as $country)
+                                    <div class="badge badge-light"><img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}</div>
+                                @endforeach
+                            @endif
+                        </td>
+                        <!--end::Role=-->
+
 
                         <!--begin::Joined-->
                         <td>{{ $advertiser->created_at }}</td>
@@ -291,7 +303,7 @@
         </div>
         <!--end::Card body-->
     </div>
-    <div class="modal fade" id="kt_modal_add_advertiser" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_advertiser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -302,7 +314,7 @@
                     <h2 class="fw-bolder">Add new Advertiser</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -336,11 +348,11 @@
                         <!--end::Scroll-->
                         <!--begin::Actions-->
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">
-                                Discard
+                            <button type="reset" class="btn btn-light me-3"   data-bs-dismiss="modal" data-kt-users-modal-action="cancel">
+                                Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-label">Save</span>
                                 <span class="indicator-progress">Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
@@ -355,7 +367,7 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-    <div class="modal fade" id="kt_modal_edit_advertiser" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_edit_advertiser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -366,7 +378,7 @@
                     <h2 class="fw-bolder">Edit Advertiser</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -398,8 +410,8 @@
                         <!--end::Scroll-->
                         <!--begin::Actions-->
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3" data-kt-advertises-modal-action="cancel">
-                                Discard
+                            <button type="reset" class="btn btn-light me-3"   data-bs-dismiss="modal" data-kt-advertises-modal-action="cancel">
+                                Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-advertises-modal-action="submit">
                                 <span class="indicator-label">Save changes</span>
@@ -417,7 +429,6 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-
 @endsection
 
 @section('javascript')
@@ -427,6 +438,9 @@
         let tr;
         let id;
         var table = $("#kt_table_advertisers").DataTable();
+        $('[data-kt-advertisers-table-filter="search"]').on('keyup', function (e) {
+            table.search($(this).val()).draw();
+        });
         $(document).on('click', '.delete_row', function () {
             let tr = $(this).parents('tr');
             let id = $(this).data('id');
@@ -455,9 +469,8 @@
                                 Swal.fire({
                                     text: "Advertiser successfully Removed",
                                     icon: "success",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
                                 table.row(tr).remove().draw();
                             } else {
@@ -500,9 +513,8 @@
                         Swal.fire({
                             text: "Advertiser successfully created",
                             icon: "success",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                         table.row.add([data.advertiser.id, data.advertiser.name, '', '', 'Now', '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                         '                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->\n' +
@@ -558,9 +570,8 @@
                         Swal.fire({
                             text: "Advertiser successfully updated",
                             icon: "success",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                         $(tr.find('td')[1]).text(data.advertiser.name);
                     } else {

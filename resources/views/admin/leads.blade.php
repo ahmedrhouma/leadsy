@@ -213,7 +213,7 @@
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'advertiser_id', name: 'advertiser_id'},
-                {data: 'publisher.id', name: 'publisher.id'},
+                {data: 'publisher_id', name: 'publisher_id'},
                 {data: 'first_name', name: 'first_name'},
                 {data: 'last_name', name: 'last_name'},
                 {data: 'country', name: 'country'},
@@ -244,7 +244,7 @@
                     "targets": 14
                 },{
                     "render": function ( data, type, row ) {
-                        return data == "1"?'<div class="badge badge-light-success">Sale</div>':'<div class="badge badge-light-info">Queued</div>'
+                        return '<div class="badge badge-light-info">'+data+'</div>';
                     },
                     "targets": 12
                 },{
@@ -252,6 +252,11 @@
                         return '<div class="badge badge-light-info">'+data+'</div>';
                     },
                     "targets": 5
+                },{
+                    "render": function ( data, type, row ) {
+                        return '';
+                    },
+                    "targets": 17
                 },
             ]
         });

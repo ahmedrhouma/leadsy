@@ -13,9 +13,13 @@ class Publishers_thematics extends Model
         'id'
     ];
     protected $appends = [
-        'countries_name'
+        'countries_name',
+        'countries'
     ];
     public function getCountriesNameAttribute(){
-        return Countries::getCountry($this->country) ?? null;
+        return Countries::getCountry($this->countries) ?? null;
+    }
+    public function getCountriesAttribute(){
+        return json_decode($this->countries) ?? null;
     }
 }

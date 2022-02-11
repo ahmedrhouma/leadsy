@@ -16,7 +16,7 @@
 							<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"/>
 						</svg>
 					</span>
-                    <input type="text" data-kt-subscription-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-campaigns-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
                 </div>
             </div>
             <div class="card-toolbar">
@@ -177,8 +177,10 @@
                         <td>
                             <div class="badge badge-light">{{$campaign->thematics->name}}</div>
                         </td>
-                        <td>@foreach(json_decode($campaign->countries) as $country)
-                                <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                        <td>@foreach($campaign->countriesName as $country)
+                                <div class="badge badge-light fw-bolder">
+                                    <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
+                                </div>
                             @endforeach</td>
                         <td>
                             <div class="badge badge-light">{{$campaign->leadsTypes->name}}</div>
@@ -198,10 +200,10 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 row_edit" data-id="{{ $campaign->id }}" >Edit</a>
+                                    <a href="#" class="menu-link px-3 row_edit" data-id="{{ $campaign->id }}">Edit</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" data-kt-subscriptions-table-filter="delete_row" class="menu-link px-3">Delete</a>
+                                    <a href="#" data-id="{{ $campaign->id }}" class="menu-link px-3 row_delete">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -211,7 +213,7 @@
             </table>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_add_campaign" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_campaign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -224,7 +226,7 @@
                         <h2 class="fw-bolder">Add new campaign</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
-                        <div id="kt_modal_add_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                        <div id="kt_modal_add_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -284,6 +286,7 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="Thematic" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                    <option></option>
                                     @foreach($thematics as $thematic)
                                         <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
                                     @endforeach
@@ -301,9 +304,7 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder" multiple>
-                                    @foreach(\App\Helper\Countries::getCountries() as $key => $country)
-                                        <option value="{{ $key}}">{{ $country}}</option>
-                                    @endforeach
+
                                 </select>
                                 <!--end::Input-->
                             </div>
@@ -317,6 +318,7 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="leads_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Lead Type..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                    <option></option>
                                     @foreach($leads_types as $lead_type)
                                         <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
                                     @endforeach
@@ -333,6 +335,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="leads_volume" aria-label="Select a lead volume" data-control="select2" data-placeholder="Select a Lead volume..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                        <option></option>
                                         <option value="1">Per Day</option>
                                         <option value="2">Per Campaign</option>
                                     </select>
@@ -354,13 +357,14 @@
                             </div>
                             <!--begin::Input group-->
                             <div class="row g-9 mb-7">
-                                 <!--begin::Col-->
+                                <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
                                     <label class="required fs-6 fw-bold mb-2">Cost type</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="costs_types" aria-label="Select a Cost type" data-control="select2" data-placeholder="Select a Cost type..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                        <option></option>
                                         @foreach($costs_types as $cost_type)
                                             <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
                                         @endforeach
@@ -375,7 +379,7 @@
                                     <label class="required fs-6 fw-bold mb-2">Amount</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="number"  step="0.1" class="form-control form-control-solid" name="cost_amount">
+                                    <input type="number" step="0.1" class="form-control form-control-solid" name="cost_amount">
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -392,10 +396,11 @@
                         </div>
                     </div>
                     <div class="modal-footer flex-center">
-                        <button type="reset" id="kt_modal_add_campaign_cancel" class="btn btn-light me-3">Discard
+                        <button type="reset" id="kt_modal_add_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
+                            Cancel
                         </button>
                         <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
-                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-label">Save</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -407,7 +412,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_edit_campaign" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_edit_campaign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -420,7 +425,7 @@
                         <h2 class="fw-bolder">Edit campaign</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
-                        <div id="kt_modal_edit_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                        <div id="kt_modal_edit_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                             <span class="svg-icon svg-icon-1">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -588,9 +593,10 @@
                         </div>
                     </div>
                     <div class="modal-footer flex-center">
-                        <button type="reset" id="kt_modal_add_campaign_cancel" class="btn btn-light me-3">Discard
+                        <button type="reset" id="kt_modal_edit_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
+                            Cancel
                         </button>
-                        <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_edit_campaign_submit" class="btn btn-primary">
                             <span class="indicator-label">Save changes</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -610,22 +616,250 @@
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
-        var table = $("#kt_campaigns_table").DataTable();
-        $('select[name="costs_types"]').change(function () {
-            if ($(this).val() == 2) {
-                $('.sale_percentage').show();
-                $('.cost_amount').hide();
+        $(document).ready(function () {
+            let table = $("#kt_campaigns_table").DataTable({
+                "pageLength": 5,
+                lengthMenu: [[5, 10, 20], [5, 10, 20]],
+            });
+            $('#kt_modal_add_campaign_form').on('submit', function (e) {
+                e.preventDefault();
 
-            } else {
-                $('.cost_amount').show();
-                $('.sale_percentage').hide();
-            }
+                $('.indicator-progress').show();
+                $('.indicator-label').hide();
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('advertiser.campaigns.store') }}',
+                    dataType: 'JSON',
+                    data: {
+                        name: $('#kt_modal_add_campaign_form input[name="name"]').val(),
+                        leads_type_id: $('#kt_modal_add_campaign_form select[name="leads_types"]').val(),
+                        cost_type_id: $('#kt_modal_add_campaign_form select[name="costs_types"]').val(),
+                        sale_percentage: $('#kt_modal_add_campaign_form input[name="sale_percentage"]').val(),
+                        cost_amount: $('#kt_modal_add_campaign_form input[name="cost_amount"]').val(),
+                        start_date: $('#kt_modal_add_campaign_form input[name="start_date"]').val(),
+                        end_date: $('#kt_modal_add_campaign_form input[name="end_date"]').val(),
+                        leads_vmax: $('#kt_modal_add_campaign_form input[name="leads_vmax"]').val(),
+                        leads_volume: $('#kt_modal_add_campaign_form select[name="leads_volume"]').val(),
+                        status: 1,
+                        countries: $('#kt_modal_add_campaign_form select[name="country"]').val(),
+                        thematic_id: $('#kt_modal_add_campaign_form select[name="Thematic"]').val(),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('.indicator-progress').hide();
+                        $('.indicator-label').show();
+                        if (data.success) {
+                            Swal.fire({
+                                text: "Campaign successfully created",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            table.row.add([data.campaign.id, data.campaign.name, 'NOW', data.campaign.start_date, data.campaign.end_date, '<div class="badge badge-light-success">Active</div>', '<div class="badge badge-light">' + data.campaign.thematics.name + '</div>', data.campaign.countriesName.map((O) => '<div class="badge badge-light">' + O + '</div>').join(''), '<div class="badge badge-light">' + data.campaign.leads_types.name + '</div>', data.campaign.leads_vmax, '<div class="badge badge-light">' + data.campaign.costs_types.name + '</div>', data.campaign.cost_amount, 0, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                            '                                <span class="svg-icon svg-icon-5 m-0">\n' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                            '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
+                            '</svg>\n' +
+                            '</span>\n' +
+                            '                            </a>\n' +
+                            '                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">\n' +
+                            '                                <div class="menu-item px-3">\n' +
+                            '                                    <a href="#" class="menu-link px-3 row_edit" data-id="' + data.campaign.id + '" >Edit</a>\n' +
+                            '                                </div>\n' +
+                            '                                <div class="menu-item px-3">\n' +
+                            '                                    <a href="#" data-kt-subscriptions-table-filter="delete_row" data-id="' + data.campaign.id + '"  class="menu-link px-3">Delete</a>\n' +
+                            '                                </div>\n' +
+                            '                            </div>']).draw();
+                            KTMenu.createInstances();
+                            $('#kt_modal_edit_campaign_cancel').click();
+                            $('#kt_modal_add_campaign_form select').change();
+                        } else {
+                            Swal.fire({
+                                text: "Something went wrong ! please try later.",
+                                icon: "error",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    }
+                })
+            });
+            $(document).on('click', '.row_edit', function () {
+                id = $(this).data('id');
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('admin.campaigns.show') }}',
+                    dataType: 'JSON',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('.indicator-progress').hide();
+                        $('.indicator-label').show();
+                        if (data.success) {
+                            $('#kt_modal_edit_campaign_form input[name="name"]').val(data.campaign.name);
+                            $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="costs_types"],#kt_modal_edit_campaign_form select[name="leads_types"]').change();
+                            $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(data.campaign.cost_amount);
+                            $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(data.campaign.cost_amount);
+                            $('#kt_modal_edit_campaign_form input[name="start_date"]').val(data.campaign.start_date);
+                            $('#kt_modal_edit_campaign_form input[name="end_date"]').val(data.campaign.end_date);
+                            $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
+                            $('#kt_modal_edit_campaign_form select[name="publisher"] option[value="' + (data.campaign.publishers.length != 0 ? data.campaign.publishers[0].id : 0) + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="country"] option:selected').attr('selected', false);
+                            selectedCountries = JSON.parse(data.campaign.countries);
+                            $('#kt_modal_edit_campaign_form select[name="Thematic"] option[value="' + data.campaign.thematic_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="Thematic"]').change();
+                            $('#kt_modal_edit_campaign').modal('show');
+                        }
+                    }
+                });
+
+            });
+            $(document).on('click', '.row_delete', function () {
+                let tr = $(this).parents('tr');
+                let id = $(this).data('id');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Your really want to delete this Campaign ?',
+                    showCancelButton: true,
+                    confirmButtonText: "Yes Delete It",
+                    cancelButtonText: 'Cancel',
+                    customClass: {
+                        cancelButton: "btn btn-primary",
+                        confirmButton: 'btn btn-danger'
+                    }
+                }).then(function (e) {
+                    if (e.isConfirmed) {
+                        $.ajax({
+                            method: 'DELETE',
+                            url: '{{ route('advertiser.campaigns.destroy') }}',
+                            dataType: 'JSON',
+                            data: {
+                                id: id,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (data) {
+                                if (data.success) {
+                                    Swal.fire({
+                                        text: "Campaign successfully Removed",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    table.row(tr).remove().draw();
+                                } else {
+                                    Swal.fire({
+                                        text: "Something went wrong ! please try later.",
+                                        icon: "error",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary"
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+            $('#kt_modal_add_campaign').on('show.bs.modal', function (e) {
+                $('#kt_modal_add_campaign_form').trigger('reset');
+                $('#kt_modal_add_campaign_form select').change();
+            });
+            $('select[name="Thematic"]').change(function () {
+                var select = $(this);
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('admin.thematics.countries') }}',
+                    dataType: 'JSON',
+                    data: {
+                        thematics: [$(this).val()],
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('select[name="country"]', select.parents('form')).empty();
+                        if (data.success) {
+                            $.each(data.countries, function (index, country) {
+                                let sel = $.inArray(index,selectedCountries) != -1?'selected':'';
+                                $('select[name="country"]', select.parents('form')).append('<option value="' + index + '" '+sel+'>' + country + '</option>');
+                            })
+                        }
+                    }
+                })
+            });
+            $('#kt_modal_edit_campaign_form').on('submit', function (e) {
+                e.preventDefault();
+
+                $('.indicator-progress').show();
+                $('.indicator-label').hide();
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('admin.campaigns.update') }}',
+                    dataType: 'JSON',
+                    data: {
+                        name: $('#kt_modal_edit_campaign_form input[name="name"]').val(),
+                        leads_type_id: $('#kt_modal_edit_campaign_form select[name="leads_types"]').val(),
+                        cost_type_id: $('#kt_modal_edit_campaign_form select[name="costs_types"]').val(),
+                        sale_percentage: $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(),
+                        cost_amount: $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(),
+                        start_date: $('#kt_modal_edit_campaign_form input[name="start_date"]').val(),
+                        end_date: $('#kt_modal_edit_campaign_form input[name="end_date"]').val(),
+                        leads_vmax: $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(),
+                        leads_volume: $('#kt_modal_edit_campaign_form select[name="leads_volume"]').val(),
+                        countries: $('#kt_modal_edit_campaign_form select[name="country"]').val(),
+                        thematic_id: $('#kt_modal_edit_campaign_form select[name="Thematic"]').val(),
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('.indicator-progress').hide();
+                        $('.indicator-label').show();
+                        if (data.success) {
+                            Swal.fire({
+                                text: "Campaign successfully updated",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            Swal.fire({
+                                text: "Something went wrong ! please try later.",
+                                icon: "error",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    }
+                })
+            });
+            let selectedCountries;
+
+            $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
+                table.search($(this).val()).draw();
+            });
+            $('select[name="costs_types"]').change(function () {
+                if ($(this).val() == 2) {
+                    $('.sale_percentage').show();
+                    $('.cost_amount').hide();
+
+                } else {
+                    $('.cost_amount').show();
+                    $('.sale_percentage').hide();
+                }
+            });
+            $('.columnToggleBtn').on('click', function (e) {
+                var column = table.column($(this).attr('data-column'));
+                column.visible($(this).is(':checked'));
+                table.columns.adjust().draw();
+            });
         });
-        $('.columnToggleBtn').on( 'click', function (e) {
-            var column = table.column( $(this).attr('data-column') );
-            column.visible( $(this).is(':checked') );
-            table.columns.adjust().draw();
-        } );
+
+
         $(".dateStart").daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
@@ -644,153 +878,6 @@
                 }
             }
         );
-        $('#kt_modal_add_campaign_form').on('submit', function (e) {
-            e.preventDefault();
 
-            $('.indicator-progress').show();
-            $('.indicator-label').hide();
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('advertiser.campaigns.store') }}',
-                dataType: 'JSON',
-                data: {
-                    name: $('#kt_modal_add_campaign_form input[name="name"]').val(),
-                    leads_type_id: $('#kt_modal_add_campaign_form select[name="leads_types"]').val(),
-                    cost_type_id: $('#kt_modal_add_campaign_form select[name="costs_types"]').val(),
-                    sale_percentage: $('#kt_modal_add_campaign_form input[name="sale_percentage"]').val(),
-                    cost_amount: $('#kt_modal_add_campaign_form input[name="cost_amount"]').val(),
-                    start_date: $('#kt_modal_add_campaign_form input[name="start_date"]').val(),
-                    end_date: $('#kt_modal_add_campaign_form input[name="end_date"]').val(),
-                    leads_vmax: $('#kt_modal_add_campaign_form input[name="leads_vmax"]').val(),
-                    leads_volume: $('#kt_modal_add_campaign_form select[name="leads_volume"]').val(),
-                    status: 1,
-                    countries: $('#kt_modal_add_campaign_form select[name="country"]').val(),
-                    thematic_id: $('#kt_modal_add_campaign_form select[name="Thematic"]').val(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('.indicator-progress').hide();
-                    $('.indicator-label').show();
-                    if (data.success) {
-                        Swal.fire({
-                            text: "Campaign successfully created",
-                            icon: "success",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                        debugger;
-                        table.row.add([data.campaign.id,data.campaign.name,'NOW',data.campaign.start_date,data.campaign.end_date,'<div class="badge badge-light-success">Active</div>','<div class="badge badge-light">'+data.campaign.thematics.name+'</div>',data.campaign.countriesName.map((O)=> '<div class="badge badge-light">'+O+'</div>').join(''),'<div class="badge badge-light">'+data.campaign.leads_types.name+'</div>',data.campaign.leads_vmax,'<div class="badge badge-light">'+data.campaign.costs_types.name+'</div>',data.campaign.cost_amount,0,'<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
-                        '                                <span class="svg-icon svg-icon-5 m-0">\n' +
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-                        '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
-                        '</svg>\n' +
-                        '</span>\n' +
-                        '                            </a>\n' +
-                        '                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">\n' +
-                        '                                <div class="menu-item px-3">\n' +
-                        '                                    <a href="#" class="menu-link px-3 row_edit" data-id="'+data.campaign.id+'" >Edit</a>\n' +
-                        '                                </div>\n' +
-                        '                                <div class="menu-item px-3">\n' +
-                        '                                    <a href="#" data-kt-subscriptions-table-filter="delete_row" class="menu-link px-3">Delete</a>\n' +
-                        '                                </div>\n' +
-                        '                            </div>']).draw();
-                        KTMenu.createInstances();
-                    } else {
-                        Swal.fire({
-                            text: "Something went wrong ! please try later.",
-                            icon: "error",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                }
-            })
-        });
-        $(document).on('click', '.row_edit', function () {
-            id = $(this).data('id');
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('admin.campaigns.show') }}',
-                dataType: 'JSON',
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('.indicator-progress').hide();
-                    $('.indicator-label').show();
-                    if (data.success) {
-                        $('#kt_modal_edit_campaign_form input[name="name"]').val(data.campaign.name);
-                        $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"]').change();
-                        $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(data.campaign.cost_amount);
-                        $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(data.campaign.cost_amount);
-                        $('#kt_modal_edit_campaign_form input[name="start_date"]').val(data.campaign.start_date);
-                        $('#kt_modal_edit_campaign_form input[name="end_date"]').val(data.campaign.end_date);
-                        $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
-                        $('#kt_modal_edit_campaign_form select[name="publisher"] option[value="' + (data.campaign.publishers.length != 0 ? data.campaign.publishers[0].id : 0) + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
-                        $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
-                        $.each(JSON.parse(data.campaign.countries), function (country) {
-                            $('#kt_modal_edit_campaign_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
-                        });
-                        $('#kt_modal_edit_campaign_form select[name="country"]').change();
-                        $('#kt_modal_edit_campaign_form select[name="Thematic"] option[value="' + data.campaign.thematic_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign').modal('show');
-                    }
-                }
-            });
-
-        });
-        $('#kt_modal_edit_campaign_form').on('submit', function (e) {
-            e.preventDefault();
-
-            $('.indicator-progress').show();
-            $('.indicator-label').hide();
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('admin.campaigns.update') }}',
-                dataType: 'JSON',
-                data: {
-                    name: $('#kt_modal_edit_campaign_form input[name="name"]').val(),
-                    leads_type_id: $('#kt_modal_edit_campaign_form select[name="leads_types"]').val(),
-                    cost_type_id: $('#kt_modal_edit_campaign_form select[name="costs_types"]').val(),
-                    sale_percentage: $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(),
-                    cost_amount: $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(),
-                    start_date: $('#kt_modal_edit_campaign_form input[name="start_date"]').val(),
-                    end_date: $('#kt_modal_edit_campaign_form input[name="end_date"]').val(),
-                    leads_vmax: $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(),
-                    leads_volume: $('#kt_modal_edit_campaign_form select[name="leads_volume"]').val(),
-                    countries: $('#kt_modal_edit_campaign_form select[name="country"]').val(),
-                    thematic_id: $('#kt_modal_edit_campaign_form select[name="Thematic"]').val(),
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('.indicator-progress').hide();
-                    $('.indicator-label').show();
-                    if (data.success) {
-                        Swal.fire({
-                            text: "Campaign successfully updated",
-                            icon: "success",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    } else {
-                        Swal.fire({
-                            text: "Something went wrong ! please try later.",
-                            icon: "error",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                }
-            })
-        });
     </script>
 @endsection

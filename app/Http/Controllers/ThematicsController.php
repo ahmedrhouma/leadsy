@@ -16,7 +16,7 @@ class ThematicsController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), ['name' => 'required', 'end_date' => 'required', 'start_date' => 'required'], $messages = [
+        $validator = Validator::make($request->all(), ['name' => 'required', 'start_date' => 'required'], $messages = [
             'required' => 'The :attribute field is required.',
         ]);
         if ($validator->fails()) {
@@ -65,6 +65,17 @@ class ThematicsController extends Controller
         return Response()->json(['success' => false]);
     }
 
+    public function countries(Request $request)
+    {
+        $countries = [];
+        foreach ($request->thematics as $thematic){
+            $thematic = Thematics::find($thematic);
+            foreach ($thematic->countries as $country){
+                $countries[$country->country] = $country->countryName;
+            }
+        }
+        return Response()->json(['success' => true,'countries'=>$countries]);
+    }
     public function destroy(Request $request)
     {
         $thematic = Thematics::find($request->id);

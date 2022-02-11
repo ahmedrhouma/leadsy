@@ -29,7 +29,7 @@
 						</svg>
 					</span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-publishers-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -38,7 +38,6 @@
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <!--begin::Filter-->
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -46,70 +45,95 @@
 								<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Filter
+                        <!--end::Svg Icon-->Columns
                     </button>
-                    <!--begin::Menu 1-->
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
-                        <!--begin::Header-->
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
                         <div class="px-7 py-5">
-                            <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+                            <div class="fs-4 text-dark fw-bolder">Columns</div>
                         </div>
-                        <!--end::Header-->
-                        <!--begin::Separator-->
                         <div class="separator border-gray-200"></div>
-                        <!--end::Separator-->
-                        <!--begin::Content-->
-                        <div class="px-7 py-5" data-kt-user-table-filter="form">
-                            <!--begin::Input group-->
+                        <div class="px-7 py-5">
                             <div class="mb-10">
-                                <label class="form-label fs-6 fw-bold">Role:</label>
-                                <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
-                                    <option></option>
-                                    <option value="Administrator">Administrator</option>
-                                    <option value="Analyst">Analyst</option>
-                                    <option value="Developer">Developer</option>
-                                    <option value="Support">Support</option>
-                                    <option value="Trial">Trial</option>
-                                </select>
+                                <label class="form-label fs-5 fw-bold mb-3">Columns :</label>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="0"/>
+                                        <span class="form-check-label text-gray-600">ID</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="1"/>
+                                        <span class="form-check-label text-gray-600">Name</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
+                                        <span class="form-check-label text-gray-600">Thematics</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
+                                        <span class="form-check-label text-gray-600">Country Scope</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
+                                        <span class="form-check-label text-gray-600">Leads Type</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
+                                        <span class="form-check-label text-gray-600">Cost type</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
+                                        <span class="form-check-label text-gray-600">Unit Price</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
+                                        <span class="form-check-label text-gray-600">Sale%</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
+                                        <span class="form-check-label text-gray-600">Creation date</span>
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-column flex-wrap fw-bold">
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
+                                        <span class="form-check-label text-gray-600">Actions</span>
+                                    </label>
+                                </div>
                             </div>
-                            <!--end::Input group-->
-                            <!--begin::Input group-->
-                            <div class="mb-10">
-                                <label class="form-label fs-6 fw-bold">Two Step Verification:</label>
-                                <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="two-step" data-hide-search="true">
-                                    <option></option>
-                                    <option value="Enabled">Enabled</option>
-                                </select>
-                            </div>
-                            <!--end::Input group-->
-                            <!--begin::Actions-->
-                            <div class="d-flex justify-content-end">
-                                <button type="reset" class="btn btn-light btn-active-light-primary fw-bold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">
-                                    Reset
-                                </button>
-                                <button type="submit" class="btn btn-primary fw-bold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">
-                                    Apply
-                                </button>
-                            </div>
-                            <!--end::Actions-->
                         </div>
-                        <!--end::Content-->
                     </div>
+                    <button type="button" class="btn btn-light-primary me-3 expand_all toggle">
+                        Expand All
+                        <span class="svg-icon svg-icon-3 m-0 toggle-off">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                        <span class="svg-icon svg-icon-3 m-0 toggle-on">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                    </button>
                     <!--end::Menu 1-->
                     <!--end::Filter-->
-                    <!--begin::Export-->
-                    <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_export_users">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
-                        <span class="svg-icon svg-icon-2">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1" transform="rotate(90 12.75 4.25)" fill="black"/>
-								<path d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z" fill="black"/>
-								<path d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z" fill="#C4C4C4"/>
-							</svg>
-						</span>
-                        <!--end::Svg Icon-->Export
-                    </button>
-                    <!--end::Export-->
                     <!--begin::Add publisher-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_publisher">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
@@ -124,100 +148,6 @@
                     <!--end::Add publisher-->
                 </div>
                 <!--end::Toolbar-->
-                <!--begin::Group actions-->
-                <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
-                    <div class="fw-bolder me-5">
-                        <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected
-                    </div>
-                    <button type="button" class="btn btn-danger" data-kt-user-table-select="delete_selected">Delete
-                        Selected
-                    </button>
-                </div>
-                <!--end::Group actions-->
-                <!--begin::Modal - Adjust Balance-->
-                <div class="modal fade" id="kt_modal_export_users" tabindex="-1" aria-hidden="true">
-                    <!--begin::Modal dialog-->
-                    <div class="modal-dialog modal-dialog-centered mw-650px">
-                        <!--begin::Modal content-->
-                        <div class="modal-content">
-                            <!--begin::Modal header-->
-                            <div class="modal-header">
-                                <!--begin::Modal title-->
-                                <h2 class="fw-bolder">Export Users</h2>
-                                <!--end::Modal title-->
-                                <!--begin::Close-->
-                                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                    <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
-                                    <!--end::Svg Icon-->
-                                </div>
-                                <!--end::Close-->
-                            </div>
-                            <!--end::Modal header-->
-                            <!--begin::Modal body-->
-                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                <!--begin::Form-->
-                                <form id="kt_modal_export_users_form" class="form" action="#">
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10">
-                                        <!--begin::Label-->
-                                        <label class="fs-6 fw-bold form-label mb-2">Select Roles:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <select name="role" data-control="select2" data-placeholder="Select a role" data-hide-search="true" class="form-select form-select-solid fw-bolder">
-                                            <option></option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="Analyst">Analyst</option>
-                                            <option value="Developer">Developer</option>
-                                            <option value="Support">Support</option>
-                                            <option value="Trial">Trial</option>
-                                        </select>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="fv-row mb-10">
-                                        <!--begin::Label-->
-                                        <label class="required fs-6 fw-bold form-label mb-2">Select Export
-                                            Format:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <select name="format" data-control="select2" data-placeholder="Select a format" data-hide-search="true" class="form-select form-select-solid fw-bolder">
-                                            <option></option>
-                                            <option value="excel">Excel</option>
-                                            <option value="pdf">PDF</option>
-                                            <option value="cvs">CVS</option>
-                                            <option value="zip">ZIP</option>
-                                        </select>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Actions-->
-                                    <div class="text-center">
-                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">
-                                            Discard
-                                        </button>
-                                        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                            <span class="indicator-label">Submit</span>
-                                            <span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                        </button>
-                                    </div>
-                                    <!--end::Actions-->
-                                </form>
-                                <!--end::Form-->
-                            </div>
-                            <!--end::Modal body-->
-                        </div>
-                        <!--end::Modal content-->
-                    </div>
-                    <!--end::Modal dialog-->
-                </div>
             </div>
             <!--end::Card toolbar-->
         </div>
@@ -228,6 +158,7 @@
                 <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+                    <th></th>
                     <th>ID</th>
                     <th class="min-w-125px">Name</th>
                     <th class="min-w-125px">Thematics</th>
@@ -238,7 +169,7 @@
                     <th class="min-w-125px">Sale%</th>
                     <th class="min-w-125px">Creation date</th>
                     <th class="text-end min-w-100px">Actions</th>
-                    <th></th>
+
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -248,29 +179,47 @@
                 <!--begin::Table row-->
                 @foreach($publishers as $publisher)
                     <tr>
+                        <td>
+                            @if($publisher->thematics->count() > 1)
+                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
+                                        data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $publisher->id }}">
+                                <span class="svg-icon svg-icon-3 m-0 toggle-off">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                                    <span class="svg-icon svg-icon-3 m-0 toggle-on">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	</svg>
+																</span>
+                                </button>
+                            @endif
+                        </td>
                         <td>{{$publisher->id}}</td>
                         <td>
                             {{$publisher->name}}
                         </td>
                         <td>
-                            <div class="badge badge-light">{{ $publisher->thematics[0]->name }}</div>
+                            <div class="badge badge-light">{{ $publisher->thematics->first()->name }}</div>
                         </td>
                         <td>
-                            @foreach(json_decode($publisher->thematics[0]->pivot->countries) as $country)
-                                <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                            @foreach(json_decode($publisher->thematics->first()->pivot->countries) as $country)
+                                <div class="badge badge-light fw-bolder"><img src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                             @endforeach
                         </td>
                         <td>
-                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name  }}</div>
+                            {{ $publisher->thematics->first()->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name  }}
                         </td>
                         <td>
-                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                            {{ $publisher->thematics->first()->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}
                         </td>
                         <td>
-                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->pivot->unit_price }}</div>
+                            {{ $publisher->thematics->first()->pivot->unit_price }}
                         </td>
                         <td>
-                            <div class="badge badge-light fw-bolder">{{ $publisher->thematics->first()->pivot->sale_percentage?? NULL}}</div>
+                            {{ $publisher->thematics->first()->pivot->sale_percentage?? NULL}}
                         </td>
                         <td>{{ $publisher->created_at }}</td>
                         <td class="text-end">
@@ -290,28 +239,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            @if($publisher->thematics->count() > 1)
-                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                        data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $publisher->id }}">
-                                <span class="svg-icon svg-icon-3 m-0 toggle-off">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
-																	</svg>
-																</span>
-                                    <span class="svg-icon svg-icon-3 m-0 toggle-on">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
-																	</svg>
-																</span>
-                                </button>
-                            @endif
-                        </td>
+
                     </tr>
                     @foreach($publisher->thematics->skip(1) as $key => $thematic)
 
                         <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}" class="d-none">
+                            <td></td>
                             <td></td>
                             <td>
                             </td>
@@ -320,7 +253,7 @@
                             </td>
                             <td>
                                 @foreach(json_decode($thematic->pivot->countries) as $country)
-                                    <div class="badge badge-light fw-bolder">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                                    <div class="badge badge-light fw-bolder"><img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                                 @endforeach
                             </td>
                             <td>
@@ -338,7 +271,6 @@
                             <td></td>
                             <td class="text-end">
                             </td>
-                            <td></td>
                         </tr>
                     @endforeach
 
@@ -347,12 +279,12 @@
             </table>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_add_publisher" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_add_user_header">
-                    <h2 class="fw-bolder">Edit publisher</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <h2 class="fw-bolder">Add publisher</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
@@ -381,10 +313,10 @@
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Country</span>
+                                    <span class="required">Countries</span>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
                                 </label>
-                                <select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
+                                <select name="country" aria-label="Select Countries" data-placeholder="Select Countries..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
                                     <option value="">Select a Country...</option>
                                     @foreach(\App\Helper\Countries::getCountries() as $key => $country)
                                         <option value="{{ $key}}">{{ $country}}</option>
@@ -434,11 +366,11 @@
                             </div>
                         </div>
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">
-                                Discard
+                            <button type="reset" class="btn btn-light me-3"  data-bs-dismiss="modal" data-kt-users-modal-action="cancel">
+                                Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-label">Save</span>
                                 <span class="indicator-progress">Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
@@ -448,12 +380,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_edit_publisher" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_edit_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_edit_user_header">
                     <h2 class="fw-bolder">Edit publisher</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
@@ -536,7 +468,7 @@
                         </div>
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-                                Discard
+                                Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-publishers-modal-action="submit">
                                 <span class="indicator-label">Save changes</span>
@@ -557,7 +489,7 @@
     <script>
         let tr;
         let id;
-        $('[data-kt-publisher-datatable-subtable="expand_row"]').click(function () {
+        $(document).on('click','button[data-kt-publisher-datatable-subtable="expand_row"]',function () {
             if (!$(this).hasClass('expanded')) {
                 $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').insertAfter($(this).parents('tr'));
                 $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').removeClass('d-none');
@@ -571,10 +503,66 @@
             onBTN.addClass('toggle-off').removeClass('toggle-on');
             offBTN.addClass('toggle-on').removeClass('toggle-off');
         });
+        let Utils = $.fn.select2.amd.require('select2/utils');
+        let Dropdown = $.fn.select2.amd.require('select2/dropdown');
+        let DropdownSearch = $.fn.select2.amd.require('select2/dropdown/search');
+        let CloseOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
+        let AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
+
+        let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
+
+        $('select[name="country"]').select2({
+            dropdownAdapter: dropdownAdapter,
+            multiple: true
+        });
+        $('.expand_all').click(function () {
+            if (!$(this).hasClass('expanded')) {
+                $(this).addClass('expanded');
+                $('button[data-kt-publisher-datatable-subtable="expand_row"]',document).removeClass('expanded').click();
+            }else {
+                $(this).removeClass('expanded');
+                $('button[data-kt-publisher-datatable-subtable="expand_row"]',document).addClass('expanded').click();
+            }
+            let onBTN = $(this).find('.toggle-on');
+            let offBTN = $(this).find('.toggle-off');
+            onBTN.addClass('toggle-off').removeClass('toggle-on');
+            offBTN.addClass('toggle-on').removeClass('toggle-off');
+        });
+        $('.columnToggleBtn').on('click', function (e) {
+            var column = table.column($(this).attr('data-column'));
+            column.visible($(this).is(':checked'));
+            table.columns.adjust().draw();
+        });
+        $('select[name="thematics"]').change(function () {
+            var select = $(this);
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('admin.thematics.countries') }}',
+                dataType: 'JSON',
+                data: {
+                    thematics: $(this).val(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    $('select[name="country"]',select.parents('form')).empty();
+                    if (data.success) {
+                        $.each(data.countries, function (index,country) {
+                            let sel = $.inArray(index,selectedCountries) != -1?'selected':'';
+                            $('select[name="country"]', select.parents('form')).append('<option value="' + index + '" '+sel+' >' + country + '</option>')
+                        })
+                    }
+                }
+            })
+        });
         $('select[name="leads_types"],select[name="costs_types"]').select2({
             minimumResultsForSearch: Infinity
         });
-        var table = $("#kt_table_publishers").DataTable();
+        var table = $("#kt_table_publishers").DataTable({
+            "order": [[ 1, "desc" ]]
+        } );
+        $('[data-kt-publishers-table-filter="search"]').on('keyup', function (e) {
+            table.search($(this).val()).draw();
+        });
         var validator = FormValidation.formValidation(
             $('#kt_modal_add_publisher_form')[0],
             {
@@ -616,6 +604,9 @@
                 }
             }
         );
+        $('#kt_modal_add_publisher_form').on('reset', function (e) {
+            $(this).find('select').change();
+        });
         var validator1 = FormValidation.formValidation(
             $('#kt_modal_edit_publisher_form')[0],
             {
@@ -657,6 +648,11 @@
                 }
             }
         );
+        $('#kt_modal_add_publisher').on('show.bs.modal', function (e) {
+            $('#kt_modal_add_publisher_form').trigger('reset');
+            $('#kt_modal_add_thematic_form select').change();
+        });
+        let selectedCountries;
         $('select[name="costs_types"]').change(function () {
             if ($(this).val() == 2) {
                 $('.sale_percentage').show();
@@ -695,9 +691,8 @@
                                 Swal.fire({
                                     text: "Publisher successfully Removed",
                                     icon: "success",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
                                 table.row(tr).remove().draw();
                             } else {
@@ -728,20 +723,19 @@
                 success: function (data) {
                     if (data.success) {
                         $('#kt_modal_edit_publisher').modal('show');
-                        debugger;
                         $('#kt_modal_edit_publisher_form input[name="name"]').val(data.publisher.name);
-                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').attr('selected', true);
-                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').attr('selected', true);
+                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').prop('selected', true);
+                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').prop('selected', true);
                         if (data.publisher.thematics.length != 0) $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);
                         $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
-                        $('#kt_modal_edit_publisher_form select[name="country"] option:selected').attr('selected', false);
-                        $.each(JSON.parse(data.publisher.thematics[0].pivot.countries), function () {
-                            $('#kt_modal_edit_publisher_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
-                        });
+                        $('#kt_modal_edit_publisher_form select[name="country"] option:selected').prop('selected', false);
+                        $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').prop('selected', false);
                         $.each(data.publisher.thematics, function () {
-                            $('#kt_modal_edit_publisher_form select[name="thematics"] option[value="' + this.id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_publisher_form select[name="thematics"] option[value="' + this.id + '"]').prop('selected', true);
                         });
-                        $('#kt_modal_edit_publisher_form select[name="country"], #kt_modal_edit_publisher_form select[name="thematics"], #kt_modal_edit_publisher_form select[name="costs_types"], #kt_modal_edit_publisher_form select[name="leads_types"]').change();
+                        $('#kt_modal_edit_publisher_form select[name="thematics"]').change();
+                        selectedCountries = JSON.parse(data.publisher.thematics[0].pivot.countries);
+                        $('#kt_modal_edit_publisher_form select[name="country"], #kt_modal_edit_publisher_form select[name="costs_types"], #kt_modal_edit_publisher_form select[name="leads_types"]').change();
                     }
                 }
             });
@@ -775,11 +769,10 @@
                                     Swal.fire({
                                         text: "Publisher successfully created",
                                         icon: "success",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        }
+                                        showConfirmButton: false,
+                                        timer: 1500
                                     });
-                                    table.row.add([data.publisher.id, data.publisher.name, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), data.publisher.end_date, '<div class="badge badge-light-success">Active</div>', data.thematic.countries.map((O, K) => '<div class="badge badge-light-info">' + O.country_name + '</div>').join(""), '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                                    table.row.add(['',data.publisher.id, data.publisher.name, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), $('#kt_modal_add_publisher_form select[name="country"]').map((O, K) => '<div class="badge badge-light-info">' + $(K).text() + '</div>').toArray().join(""), data.publisher.leads_types[0].name , data.publisher.costs_types[0].name, data.publisher.thematics[0].pivot.unit_price, data.publisher.thematics[0].pivot.sale_percentage,'NOW' ,'<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                                     '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                                     '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -788,13 +781,15 @@
                                     '                            </a>\n' +
                                     '                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">\n' +
                                     '                                <div class="menu-item px-3">' +
-                                    '                                   <a href="#" class="menu-link px-3 edit_row" data-id="{{ $thematic->id }}">Edit</a>' +
+                                    '                                   <a href="#" class="menu-link px-3 edit_row" data-id="' + data.publisher.id + '">Edit</a>' +
                                     '                               </div>\n' +
                                     '                                <div class="menu-item px-3">\n' +
-                                    '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.thematic.id + '">Delete</a>\n' +
+                                    '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.publisher.id + '">Delete</a>\n' +
                                     '                                </div>\n' +
                                     '                            </div>']).draw();
                                     KTMenu.createInstances();
+                                    $('#kt_modal_add_publisher_form button[type="reset"]').click();
+
                                 } else {
                                     Swal.fire({
                                         text: "Something went wrong ! please try later.",
@@ -839,26 +834,18 @@
                                     Swal.fire({
                                         text: "Publisher successfully updated",
                                         icon: "success",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        }
+                                        showConfirmButton: false,
+                                        timer: 1500
                                     });
-                                    table.row.add([data.publisher.id, data.publisher.name, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), data.publisher.end_date, '<div class="badge badge-light-success">Active</div>', data.thematic.countries.map((O, K) => '<div class="badge badge-light-info">' + O.country_name + '</div>').join(""), '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
-                                    '                                <span class="svg-icon svg-icon-5 m-0">\n' +
-                                    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-                                    '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
-                                    '</svg>\n' +
-                                    '</span>\n' +
-                                    '                            </a>\n' +
-                                    '                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">\n' +
-                                    '                                <div class="menu-item px-3">' +
-                                    '                                   <a href="#" class="menu-link px-3 edit_row" data-id="{{ $thematic->id }}">Edit</a>' +
-                                    '                               </div>\n' +
-                                    '                                <div class="menu-item px-3">\n' +
-                                    '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.thematic.id + '">Delete</a>\n' +
-                                    '                                </div>\n' +
-                                    '                            </div>']).draw();
-                                    KTMenu.createInstances();
+                                    let DTdata = table.row(tr).data();
+                                    DTdata[2] = data.publisher.name;
+                                    DTdata[3] = $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').map((O,V) => '<div class="badge badge-light">'+$(V).text()+'</div>').toArray().join('');
+                                    DTdata[4] = $('#kt_modal_edit_publisher_form select[name="country"] option:selected').map((O,V) => '<div class="badge badge-light">'+$(V).text()+'</div>').toArray().join('');
+                                    DTdata[5] = $('#kt_modal_edit_publisher_form select[name="leads_types"] option:selected').text();
+                                    DTdata[6] = $('#kt_modal_edit_publisher_form select[name="costs_types"] option:selected').text();
+                                    DTdata[7] = $('#kt_modal_edit_publisher_form input[name="unit_price"]').val();
+                                    table.row(tr).data(DTdata).draw();
+
                                 } else {
                                     Swal.fire({
                                         text: "Something went wrong ! please try later.",

@@ -17,7 +17,7 @@ class Leads extends Model
      */
     public function campaigns()
     {
-        return $this->belongsToMany(campaigns::class, 'campaigns_leads', 'lead_id', 'campaign_id')->withPivot(['rejection','sale_status','sending_date']);
+        return $this->belongsToMany(campaigns::class, 'campaigns_leads', 'lead_id', 'campaign_id')->withPivot(['rejection_id','sale_status_id','sending_date']);
     }
 
     /**

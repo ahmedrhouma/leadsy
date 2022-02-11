@@ -13,10 +13,10 @@ class Thematics_countries extends Model
         'id'
     ];
     protected $appends = [
-        'countries_name'
+        'countryName'
     ];
-    public function getCountriesNameAttribute(){
-        return json_decode($this->countries) ?? null;
+    public function getCountryNameAttribute(){
+        return \App\Helper\Countries::getCountry($this->country) ?? null;
     }
 
 }

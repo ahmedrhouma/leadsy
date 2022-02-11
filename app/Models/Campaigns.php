@@ -13,8 +13,8 @@ class campaigns extends Model
         'id'
     ];
     protected $appends = [
-        'countriesName'
-    ];
+        'countriesName'];
+
     /**
      * Get the publishers associated with the campaign.
      */
@@ -27,7 +27,7 @@ class campaigns extends Model
      */
     public function leads()
     {
-        return $this->belongsToMany(Leads::class, 'campaigns_leads', 'campaign_id', 'lead_id')->withPivot(['rejection','sale_status','sending_date']);
+        return $this->belongsToMany(Leads::class, 'campaigns_leads', 'campaign_id', 'lead_id')->withPivot(['rejection_id','sale_status_id','sending_date']);
     }
     /**
      * Get the campaigns associated with the campaign.
@@ -61,8 +61,11 @@ class campaigns extends Model
         return $this->belongsTo(Cost_types::class, 'cost_type_id');
     }
 
+
     public function getCountriesNameAttribute(){
-        return array_map(function ($country){
+        return is_array($this->countries)?array_map(function ($country){
+                return Countries::getCountry($country);
+            },$this->countries):array_map(function ($country){
                 return Countries::getCountry($country);
             },json_decode($this->countries)) ?? null;
     }

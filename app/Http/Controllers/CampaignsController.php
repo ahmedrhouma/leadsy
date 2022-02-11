@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 
 class CampaignsController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         switch (auth()->user()->profile) {
@@ -26,16 +29,22 @@ class CampaignsController extends Controller
                 $thematics = Thematics::all();
                 $costs_type = Cost_types::all();
                 $leads_type = Leads_types::all();
-                $campaigns = campaigns::with(['thematics', 'leadsTypes', 'costsTypes'])->get();
+                $campaigns = campaigns::where('status',1)->with(['thematics', 'leadsTypes', 'costsTypes'])->get();
                 return view('advertiser.campaigns', ['campaigns' => $campaigns,'thematics' => $thematics, 'costs_types' => $costs_type, 'leads_types' => $leads_type]);
                 break;
             case 3:
-                $campaigns = campaigns::with(['thematics', 'leadsTypes', 'costsTypes'])->get();
+                $campaigns = campaigns::where('status',1)->with(['publishers','thematics', 'leadsTypes', 'costsTypes'])->whereHas('publishers', function ($q) {
+                    $q->where('publisher_id', '=', \auth()->user()->account->id);
+                })->get();
                 return view('publisher.campaigns', ['campaigns' => $campaigns]);
                 break;
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), ['name' => 'required'], $messages = [
@@ -57,6 +66,10 @@ class CampaignsController extends Controller
         return Response()->json(['success' => false]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), ['id' => 'required|exists:Campaigns,id'], $messages = [
@@ -79,11 +92,42 @@ class CampaignsController extends Controller
         }
         return Response()->json(['success' => false]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(Request $request)
     {
         $campaign = campaigns::find($request->id);
         if ($campaign) {
             return Response()->json(['success' => true, 'campaign' => $campaign->load(['publishers', 'advertisers', 'thematics', 'leadsTypes', 'costsTypes'])]);
+        }
+        return Response()->json(['success' => false]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function offers()
+    {
+        $campaigns = campaigns::where('status',1)->with(['publishers','thematics', 'leadsTypes', 'costsTypes'])->whereHas('publishers', function ($q) {
+            $q->where('publisher_id', '=', \auth()->user()->account->id);
+        })->get();
+        return view('publisher.offers', ['campaigns' => $campaigns]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Request $request)
+    {
+        $campaign = campaigns::find($request->id);
+        $campaign->update(['status'=>2]);
+        if ($campaign->wasChanged()) {
+            return Response()->json(['success' => true]);
         }
         return Response()->json(['success' => false]);
     }

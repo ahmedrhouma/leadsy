@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+ @extends('layouts.layout')
 @section('pageTitle')
     Leads list
 @endsection
@@ -210,12 +210,20 @@
                     searchable: false
                 },
             ],
-            columnDefs:[
+            columnDefs: [
                 {
-                    "render": function ( data, type, row ) {
-                        return data == "0"?'<div class="badge badge-success">Accepted</div>':'<div class="badge badge-danger">Rejected</div>'
+                    "render": function (data, type, row) {
+                        if (data == "") {
+                            return '<div class="badge badge-light">No rejection</div>';
+                        }
+                        return '<div class="badge badge-light">' + data + '</div>';
                     },
                     "targets": 12
+                }, {
+                    "render": function (data, type, row) {
+                        return '';
+                    },
+                    "targets": 14
                 },
             ]
         });

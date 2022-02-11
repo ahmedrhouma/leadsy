@@ -15,8 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
-    Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard');
 
+    Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('admin.leads');
+    Route::get('/leads/list',[\App\Http\Controllers\LeadsController::class,'indexList'])->name('admin.leads.list');
+    Route::post('/thematic/countries', [\App\Http\Controllers\ThematicsController::class,'countries'])->name('admin.thematics.countries');
+    Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('admin.campaigns.show');
+
+});
+Route::group(['prefix'=>'admin', 'middleware' => ['auth','checkRole:admin']], function () {
+    Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/thematics', [\App\Http\Controllers\ThematicsController::class,'index'])->name('admin.thematics');
     Route::post('/thematic', [\App\Http\Controllers\ThematicsController::class,'store'])->name('admin.thematics.store');
     Route::delete('/thematic', [\App\Http\Controllers\ThematicsController::class,'destroy'])->name('admin.thematics.destroy');
@@ -32,12 +39,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
 
     Route::get('/campaigns',[\App\Http\Controllers\CampaignsController::class,'index'])->name('admin.campaigns');
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('admin.campaigns.store');
-    Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('admin.campaigns.show');
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('admin.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('admin.campaigns.destroy');
-
-    Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('admin.leads');
-    Route::get('/leads/list',[\App\Http\Controllers\LeadsController::class,'indexList'])->name('admin.leads.list');
 
     Route::get('/publishers',[\App\Http\Controllers\PublishersController::class,'index'])->name('admin.publishers');
     Route::post('/publisher', [\App\Http\Controllers\PublishersController::class,'store'])->name('admin.publishers.store');
@@ -48,7 +51,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
 
 });
 
-Route::group(['prefix'=>'advert', 'middleware' => ['auth']], function () {
+Route::group(['prefix'=>'advert', 'middleware' => ['auth','checkRole:advertiser']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('advertiser.dashboard');
     Route::get('/campaigns',[\App\Http\Controllers\CampaignsController::class,'index'])->name('advertiser.campaigns');
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('advertiser.campaigns.store');
@@ -56,16 +59,25 @@ Route::group(['prefix'=>'advert', 'middleware' => ['auth']], function () {
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('advertiser.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('advertiser.campaigns.destroy');
     Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('advertiser.leads');
+    Route::get('/leads/comments',[\App\Http\Controllers\LeadsController::class,'saleComments'])->name('advertiser.leads.saleComments');
+    Route::post('/leads/comments/add',[\App\Http\Controllers\LeadsController::class,'addComment'])->name('advertiser.leads.addComment');
+    Route::post('/leads/status',[\App\Http\Controllers\LeadsController::class,'updateStatus'])->name('advertiser.leads.status');
+    Route::post('/leads/reject',[\App\Http\Controllers\LeadsController::class,'updateRejection'])->name('advertiser.leads.reject');
     Route::get('/leads/list',[\App\Http\Controllers\LeadsController::class,'indexList'])->name('advertiser.leads.list');
 });
 
-Route::group(['prefix'=>'publisher', 'middleware' => ['auth']], function () {
+Route::group(['prefix'=>'publisher', 'middleware' => ['auth','checkRole:publisher']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('publisher.dashboard');
     Route::get('/campaigns',[\App\Http\Controllers\CampaignsController::class,'index'])->name('publisher.campaigns');
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('publisher.campaigns.store');
     Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('publisher.campaigns.show');
+    Route::get('/offers', [\App\Http\Controllers\CampaignsController::class,'offers'])->name('publisher.offers');
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('publisher.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('publisher.campaigns.destroy');
     Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('publisher.leads');
     Route::get('/leads/list',[\App\Http\Controllers\LeadsController::class,'indexList'])->name('publisher.leads.list');
 });
+Route::get('/error',function (){
+    return view('error');
+})->name('error');
+
