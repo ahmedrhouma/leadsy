@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helper\Countries;
 use App\Models\CampaignPublisher;
 use App\Models\campaigns;
+use App\Models\CampaignsLeads;
 use App\Models\Cost_types;
+use App\Models\Leads;
 use App\Models\Leads_types;
 use App\Models\Publishers;
 use App\Models\Thematics;
@@ -125,7 +127,10 @@ class CampaignsController extends Controller
     public function upload(Request $request)
     {
         $file = $request->file('file');
-
+        while (($line = fgetcsv($file, 1000, ";")) !== FALSE) {
+            $lead = Leads::create(['first_name'=>$line[0],'last_name'=>$line[1],'gender'=>$line[2],'email'=>$line[3],'phone_number'=>$line[4],'country'=>$line[5],'language'=>$line[6],'source'=>$line[7],'source_id'=>$line[8],'status'=>1,'subscription_date'=>date('y-m-d H:i')]);
+            CampaignsLeads::create(['lead_id'=>$lead->id,'campaign_id'=>$request->id,'sending_date'=>date('y-m-d')]);
+        }
     }
     /**
      * @param Request $request
