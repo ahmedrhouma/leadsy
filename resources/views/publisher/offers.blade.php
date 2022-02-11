@@ -9,15 +9,20 @@
     @foreach($campaigns as $campaign)
         <div class="row g-6 g-xl-9">
 
-            <div class="col-lg-6 col-xxl-4">
+            <div class="col-lg-4 col-xxl-3">
                 <!--begin::Budget-->
                 <div class="card h-100">
                     <div class="card-body p-9">
                         <div class="fs-2 fw-bolder">{{$campaign->name}}</div>
-                        <div class="fs-4 fw-bold text-gray-400 mb-7">{{$campaign->thematics->name}}</div>
-                        <div class="badge badge-light">{{$campaign->thematics->name}}</div>
+                        <div class="fs-4 fw-bold text-gray-400 mb-2">{{$campaign->thematics->name}}</div>
+                        <div class="my-4">@foreach($campaign->countriesName as $country)
+                                <div class="badge badge-light fw-bolder m-1">
+                                    <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
+                                </div>
+                            @endforeach</div>
                         <div class="separator separator-dashed"></div>
-                        <div class="fv-row">
+                        <input type="file" name="file" accept="text/csv" data-id="{{$campaign->id}}">
+                        <div class="fv-row mt-4">
                             <div class="dropzone" id="kt_dropzonejs_example_1">
                                 <div class="dz-message needsclick">
                                     <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
@@ -46,6 +51,25 @@
             maxFilesize: 10,
             addRemoveLinks: true
         });
+        $('input[name="file"]').change(function () {
+            var file_data = $('input[name="file"]')[0];
+            var form_data = new FormData();
+            form_data.append('file', file_data);
+            form_data.append('id_campaign', $(this).data('id'));
+            alert(form_data);
+            $.ajax({
+                url: '{{ route('admin.leads.upload') }}',
+                dataType: 'text',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function(php_script_response){
+                    alert(php_script_response);
+                }
+            });
+        })
     </script>
 {{--    <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>

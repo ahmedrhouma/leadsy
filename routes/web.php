@@ -72,6 +72,7 @@ Route::group(['prefix'=>'publisher', 'middleware' => ['auth','checkRole:publishe
     Route::post('/campaigns', [\App\Http\Controllers\CampaignsController::class,'store'])->name('publisher.campaigns.store');
     Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('publisher.campaigns.show');
     Route::get('/offers', [\App\Http\Controllers\CampaignsController::class,'offers'])->name('publisher.offers');
+    Route::post('/leads/upload', [\App\Http\Controllers\CampaignsController::class,'upload'])->name('admin.leads.upload');
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('publisher.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('publisher.campaigns.destroy');
     Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('publisher.leads');

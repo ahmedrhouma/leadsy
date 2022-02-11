@@ -122,6 +122,15 @@ class CampaignsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function upload(Request $request)
+    {
+        $file = $request->file('file');
+
+    }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Request $request)
     {
         $campaign = campaigns::find($request->id);
