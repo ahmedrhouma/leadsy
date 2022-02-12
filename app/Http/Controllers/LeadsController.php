@@ -96,7 +96,7 @@ class LeadsController extends Controller
                 return $row->campaign->advertiser_id;
             })
             ->addColumn('sale_income', function ($row) {
-                return $row->campaign->selling_price;
+                return  $row->sale_status_id ==1? $row->campaign->selling_price:'';
             })
             ->addColumn('sending_date', function ($row) {
                 return $row->sending_date;

@@ -143,7 +143,7 @@
             <!--end::Card toolbar-->
         </div>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body">
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_leads_table">
                 <thead>
                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
