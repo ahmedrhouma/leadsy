@@ -15,7 +15,7 @@ class CreateCampaignsLeadsTable extends Migration
     {
         Schema::create('campaigns_leads', function (Blueprint $table) {
             $table->id();
-            $table->date('sending_date');
+            $table->date('sending_date')->nullable();
             $table->foreignId('lead_id')->constrained('leads');
             $table->foreignId('campaign_id')->constrained('campaigns');
             $table->foreignId('sale_status_id')->nullable()->constrained('sale_statuses');

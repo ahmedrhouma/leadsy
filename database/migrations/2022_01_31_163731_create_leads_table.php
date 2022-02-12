@@ -15,13 +15,13 @@ class CreateLeadsTable extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('gender');
+            $table->unsignedTinyInteger('gender')->nullable();
             $table->string('first_name',100);
-            $table->string('last_name',100);
-            $table->string('email',128);
-            $table->string('phone_number',32);
-            $table->char('country',2);
-            $table->char('language',2);
+            $table->string('last_name',100)->nullable();
+            $table->string('email',128)->nullable();
+            $table->string('phone_number',32)->nullable();
+            $table->char('country',2)->nullable();
+            $table->char('language',2)->nullable();
             $table->unsignedTinyInteger('source');
             $table->integer('source_id');
             $table->dateTime('subscription_date');
