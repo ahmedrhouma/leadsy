@@ -114,7 +114,7 @@ class CampaignsController extends Controller
      */
     public function offers()
     {
-        $campaigns = campaigns::where('status',1)->with(['publishers','thematics', 'leadsTypes', 'costsTypes'])->whereHas('publishers', function ($q) {
+        $campaigns = campaigns::where('status',1)->with(['publishers','thematics', 'leadsTypes', 'costsTypes'])->withCount('leads')->whereHas('publishers', function ($q) {
             $q->where('publisher_id', '=', \auth()->user()->account->id);
         })->get();
         return view('publisher.offers', ['campaigns' => $campaigns]);
@@ -126,11 +126,22 @@ class CampaignsController extends Controller
      */
     public function upload(Request $request)
     {
-        $file = $request->file('file');
-        while (($line = fgetcsv($file, 1000, ";")) !== FALSE) {
-            $lead = Leads::create(['first_name'=>$line[0],'last_name'=>$line[1],'gender'=>$line[2],'email'=>$line[3],'phone_number'=>$line[4],'country'=>$line[5],'language'=>$line[6],'source'=>$line[7],'source_id'=>$line[8],'status'=>1,'subscription_date'=>date('y-m-d H:i')]);
-            CampaignsLeads::create(['lead_id'=>$lead->id,'campaign_id'=>$request->id,'sending_date'=>date('y-m-d')]);
+        $campaign= campaigns::find($request->id_campaign)->withCount('leads')->get()->first();
+        $success = 0;
+        if (intval($campaign->leads_vmax) >= intval($campaign->leads_count)) {
+            $file = $request->file('file');
+            $csvFile = fopen($file, 'r');
+            fgetcsv($csvFile, 1000, ";");
+            while (($line = fgetcsv($csvFile, 1000, ";")) !== FALSE) {
+                if (intval($campaign->leads_vmax) == (intval($campaign->leads_count)+$success))break;
+                $lead = Leads::create(['first_name' => $line[0], 'last_name' => $line[1], 'gender' => $line[2], 'email' => $line[3], 'phone_number' => $line[4], 'country' => $line[5], 'language' => $line[6], 'source' => 0, 'source_id' => 0, 'status' => 1, 'subscription_date' => date('y-m-d H:i'), 'publisher_id' => auth()->user()->account->id]);
+                CampaignsLeads::create(['lead_id' => $lead->id, 'campaign_id' => $request->id_campaign, 'sending_date' => date('y-m-d')]);
+                if ($lead) {
+                    $success++;
+                }
+            }
         }
+        return Response()->json(['success'=>true,'count'=>$success]);
     }
     /**
      * @param Request $request
