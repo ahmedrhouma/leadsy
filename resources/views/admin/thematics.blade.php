@@ -300,7 +300,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Ending date</label>
+                                    <label class="fs-6 fw-bold mb-2">Ending date</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateEnd" name="endDate">

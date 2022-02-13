@@ -50,7 +50,14 @@ class Publishers extends Model
     {
         return $this->belongsToMany(campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
     }
-
+ /**
+     * Get the user associated with the advertiser.
+     */
+    public function userInfo()
+    {
+        return $this->hasOne(User::class,'account_id')->where('profile','3');
+    }
+    
     protected static function booted()
     {
         self::deleting(function ($model) {

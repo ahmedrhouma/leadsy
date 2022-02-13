@@ -268,7 +268,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Ending date</label>
+                                    <label class="fs-6 fw-bold mb-2">Ending date</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="">
@@ -777,7 +777,7 @@
                     url: '{{ route('admin.thematics.countries') }}',
                     dataType: 'JSON',
                     data: {
-                        thematics: [$(this).val()],
+                        thematics: $(this).val(),
                         _token: '{{ csrf_token() }}'
                     },
                     success: function (data) {
@@ -861,6 +861,8 @@
 
 
         $(".dateStart").daterangepicker({
+            autoUpdateInput: false,
+                autoApply: true,
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 2020,
@@ -868,8 +870,12 @@
                     format: 'YYYY-MM-DD'
                 }
             }
-        );
+        ).on("apply.daterangepicker", function (e, picker) {
+            picker.element.val(picker.startDate.format(picker.locale.format));
+        });
         $(".dateEnd").daterangepicker({
+            autoUpdateInput: false,
+                autoApply: true,
                 singleDatePicker: true,
                 showDropdowns: true,
                 minYear: 2020,
@@ -877,7 +883,9 @@
                     format: 'YYYY-MM-DD'
                 }
             }
-        );
+        ).on("apply.daterangepicker", function (e, picker) {
+            picker.element.val(picker.startDate.format(picker.locale.format));
+        });
 
     </script>
 @endsection

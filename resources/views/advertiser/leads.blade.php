@@ -177,7 +177,6 @@
                     <th>Email</th>
                     <th>Subscription date</th>
                     <th>Web page name</th>
-                    <th>Web page URL</th>
                     <th>Sending date</th>
                     <th class="min-w-125px">Sale status</th>
                     <th>Sale status comment</th>
@@ -400,7 +399,6 @@
                 {data: 'email', name: 'email'},
                 {data: 'subscription_date', name: 'subscription_date'},
                 {data: 'web_page_name', name: 'web_page_name'},
-                {data: 'web_page_url', name: 'web_page_url'},
                 {data: 'sending_date', name: 'sending_date'},
                 {data: 'sale_status', name: 'sale_status'},
                 {data: 'sale_status_comment', name: 'sale_status_comment'},

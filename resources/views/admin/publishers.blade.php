@@ -12,7 +12,6 @@
             margin-bottom: 5px;
         }
     </style>
-
 @endsection
 @section('content')
     <div class="card">
@@ -24,12 +23,16 @@
                     <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                     <span class="svg-icon svg-icon-1 position-absolute ms-6">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black"/>
-							<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black"/>
+							<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
+                                  transform="rotate(45 17.0365 15.1223)" fill="black"/>
+							<path
+                                d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                fill="black"/>
 						</svg>
 					</span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-publishers-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-publishers-table-filter="search"
+                           class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -38,16 +41,21 @@
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                    <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click"
+                            data-kt-menu-placement="bottom-end">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                         <span class="svg-icon svg-icon-2">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black"/>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+								<path
+                                    d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
+                                    fill="black"/>
 							</svg>
 						</span>
                         <!--end::Svg Icon-->Columns
                     </button>
-                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true"
+                         id="kt-toolbar-filter">
                         <div class="px-7 py-5">
                             <div class="fs-4 text-dark fw-bolder">Columns</div>
                         </div>
@@ -56,62 +64,82 @@
                             <div class="mb-10">
                                 <label class="form-label fs-5 fw-bold mb-3">Columns :</label>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="0"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="0"/>
                                         <span class="form-check-label text-gray-600">ID</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="1"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="1"/>
                                         <span class="form-check-label text-gray-600">Name</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="2"/>
                                         <span class="form-check-label text-gray-600">Thematics</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="3"/>
                                         <span class="form-check-label text-gray-600">Country Scope</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="4"/>
                                         <span class="form-check-label text-gray-600">Leads Type</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="5"/>
                                         <span class="form-check-label text-gray-600">Cost type</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="6"/>
                                         <span class="form-check-label text-gray-600">Unit Price</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="7"/>
                                         <span class="form-check-label text-gray-600">Sale%</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="8"/>
                                         <span class="form-check-label text-gray-600">Creation date</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
-                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-                                        <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
+                                    <label
+                                        class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                        <input class="form-check-input columnToggleBtn" type="checkbox"
+                                               checked="ckeched" data-column="9"/>
                                         <span class="form-check-label text-gray-600">Actions</span>
                                     </label>
                                 </div>
@@ -121,25 +149,35 @@
                     <button type="button" class="btn btn-light-primary me-3 expand_all toggle">
                         Expand All
                         <span class="svg-icon svg-icon-3 m-0 toggle-off">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none">
+																		<rect opacity="0.5" x="11" y="18" width="12"
+                                                                              height="2" rx="1"
+                                                                              transform="rotate(-90 11 18)"
+                                                                              fill="black"></rect>
+																		<rect x="6" y="11" width="12" height="2" rx="1"
+                                                                              fill="black"></rect>
 																	</svg>
 																</span>
                         <span class="svg-icon svg-icon-3 m-0 toggle-on">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none">
+																		<rect x="6" y="11" width="12" height="2" rx="1"
+                                                                              fill="black"></rect>
 																	</svg>
 																</span>
                     </button>
                     <!--end::Menu 1-->
                     <!--end::Filter-->
                     <!--begin::Add publisher-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_publisher">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_add_publisher">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                         <span class="svg-icon svg-icon-2">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"/>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+								<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                      transform="rotate(-90 11.364 20.364)" fill="black"/>
 								<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
 							</svg>
 						</span>
@@ -160,7 +198,8 @@
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th></th>
                     <th>ID</th>
-                    <th class="min-w-125px">Name</th>
+                    <th class="min-w-125px">Name / login</th>
+                    <th class="min-w-200px">Default Password</th>
                     <th class="min-w-125px">Thematics</th>
                     <th class="min-w-125px">Country Scope</th>
                     <th class="min-w-125px">Leads Type</th>
@@ -169,7 +208,6 @@
                     <th class="min-w-125px">Sale%</th>
                     <th class="min-w-125px">Creation date</th>
                     <th class="text-end min-w-100px">Actions</th>
-
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -181,17 +219,26 @@
                     <tr>
                         <td>
                             @if($publisher->thematics->count() > 1)
-                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                        data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $publisher->id }}">
+                                <button type="button"
+                                        class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
+                                        data-kt-publisher-datatable-subtable="expand_row"
+                                        data-id="{{ $publisher->id }}">
                                 <span class="svg-icon svg-icon-3 m-0 toggle-off">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none">
+																		<rect opacity="0.5" x="11" y="18" width="12"
+                                                                              height="2" rx="1"
+                                                                              transform="rotate(-90 11 18)"
+                                                                              fill="black"></rect>
+																		<rect x="6" y="11" width="12" height="2" rx="1"
+                                                                              fill="black"></rect>
 																	</svg>
 																</span>
                                     <span class="svg-icon svg-icon-3 m-0 toggle-on">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																		<rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                         height="24" viewBox="0 0 24 24" fill="none">
+																		<rect x="6" y="11" width="12" height="2" rx="1"
+                                                                              fill="black"></rect>
 																	</svg>
 																</span>
                                 </button>
@@ -202,11 +249,17 @@
                             {{$publisher->name}}
                         </td>
                         <td>
+                            {{$publisher->name.$publisher->id}}</div>
+                        </td>
+                        <td>
                             <div class="badge badge-light">{{ $publisher->thematics->first()->name }}</div>
                         </td>
                         <td>
                             @foreach(json_decode($publisher->thematics->first()->pivot->countries) as $country)
-                                <div class="badge badge-light fw-bolder"><img src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                                <div class="badge badge-light fw-bolder"><img
+                                        src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}"
+                                        class="me-4 w-15px" style="border-radius: 4px"
+                                        alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                             @endforeach
                         </td>
                         <td>
@@ -223,19 +276,26 @@
                         </td>
                         <td>{{ $publisher->created_at }}</td>
                         <td class="text-end">
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm"
+                               data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <span class="svg-icon svg-icon-5 m-0">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none">
+										<path
+                                            d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                            fill="black"/>
 									</svg>
 								</span>
                             </a>
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                            <div
+                                class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
+                                data-kt-menu="true">
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">Edit</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 delete_row" data-id="{{ $publisher->id }}">Delete</a>
+                                    <a href="#" class="menu-link px-3 delete_row"
+                                       data-id="{{ $publisher->id }}">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -243,7 +303,9 @@
                     </tr>
                     @foreach($publisher->thematics->skip(1) as $key => $thematic)
 
-                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}" class="d-none">
+                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}"
+                            class="d-none">
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>
@@ -253,20 +315,26 @@
                             </td>
                             <td>
                                 @foreach(json_decode($thematic->pivot->countries) as $country)
-                                    <div class="badge badge-light fw-bolder"><img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                                    <div class="badge badge-light fw-bolder"><img
+                                            src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}"
+                                            class="me-4 w-15px" style="border-radius: 4px"
+                                            alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                                 @endforeach
                             </td>
                             <td>
-                                <div class="badge badge-light fw-bolder">{{ $thematic->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                                <div
+                                    class="badge badge-light fw-bolder">{{ $thematic->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
                             </td>
                             <td>
-                                <div class="badge badge-light fw-bolder">{{ $thematic->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                                <div
+                                    class="badge badge-light fw-bolder">{{ $thematic->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
                             </td>
                             <td>
                                 <div class="badge badge-light fw-bolder">{{ $thematic->pivot->unit_price }}</div>
                             </td>
                             <td>
-                                <div class="badge badge-light fw-bolder">{{ $thematic->pivot->sale_percentage?? NULL}}</div>
+                                <div
+                                    class="badge badge-light fw-bolder">{{ $thematic->pivot->sale_percentage?? NULL}}</div>
                             </td>
                             <td></td>
                             <td class="text-end">
@@ -279,156 +347,86 @@
             </table>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_add_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_add_user_header">
                     <h2 class="fw-bolder">Add publisher</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
+                         data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                                  transform="rotate(-45 6 17.3137)" fill="black"/>
+											<rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                  transform="rotate(45 7.41422 6)" fill="black"/>
 										</svg>
 									</span>
                     </div>
                 </div>
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                     <form id="kt_modal_add_publisher_form" class="form" action="#">
-                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll"
+                             data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                             data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                             data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                             <div class="fv-row mb-7">
                                 <label class="required fw-bold fs-6 mb-2">Full Name</label>
-                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
+                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
+                                       placeholder="Full name"/>
                             </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Thematic</span>
-                                </label>
-                                <select name="thematics" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
-                                    <option value="">Select a Thematic...</option>
-                                    @foreach($thematics as $thematic)
-                                        <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Countries</span>
-                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
-                                </label>
-                                <select name="country" aria-label="Select Countries" data-placeholder="Select Countries..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
-                                    <option value="">Select a Country...</option>
-                                    @foreach(\App\Helper\Countries::getCountries() as $key => $country)
-                                        <option value="{{ $key}}">{{ $country}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Leads type</span>
-                                </label>
-                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Leads type..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder">
-                                    <option value="">Select a Leads type...</option>
-                                    @foreach($leads_types as $lead_type)
-                                        <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="row g-9 mb-7">
-                                <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
-                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_add_publisher" class="form-select form-select-solid fw-bolder">
+                            <div class="row g-9 mb-7 them">
+                                <div class="d-flex col-5 flex-column mb-7 fv-row">
+                                    <label class="fs-6 fw-bold mb-2">
+                                        <span class="required">Thematic</span>
+                                    </label>
+                                    <select name="thematics" aria-label="Select a Thematic" data-control="select2"
+                                            data-placeholder="Select a Thematic..."
+                                            data-dropdown-parent="#kt_modal_add_publisher"
+                                            class="form-select form-select-solid fw-bolder">
                                         <option value="">Select a Thematic...</option>
-                                        @foreach($costs_types as $cost_type)
-                                            <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
+                                        @foreach($thematics as $thematic)
+                                            <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
                                         @endforeach
                                     </select>
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid" name="unit_price">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                <div class="d-flex col-5 flex-column mb-7 fv-row">
+                                    <label class="fs-6 fw-bold mb-2">
+                                        <span class="required">Countries</span>
+                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                           title="Country of origination"></i>
+                                    </label>
+                                    <select name="country" aria-label="Select Countries"
+                                            data-placeholder="Select Countries..."
+                                            data-dropdown-parent="#kt_modal_add_publisher"
+                                            class="form-select form-select-solid fw-bolder" multiple="multiple">
+                                        <option value="">Select a Country...</option>
+
+                                    </select>
                                 </div>
-                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" max="100" class="form-control form-control-solid" name="sale_percentage">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                <div class="col-2 d-flex align-items-center">
+                                    <button type="button" class="btn btn-sm btn-icon btn-outline-secondary addThem">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                                  transform="rotate(-90 11.364 20.364)" fill="black"/>
+                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
+                                            </svg>
+                                        </span>
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3"  data-bs-dismiss="modal" data-kt-users-modal-action="cancel">
-                                Cancel
-                            </button>
-                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                <span class="indicator-label">Save</span>
-                                <span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="kt_modal_edit_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-650px">
-            <div class="modal-content">
-                <div class="modal-header" id="kt_modal_edit_user_header">
-                    <h2 class="fw-bolder">Edit publisher</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
-                        <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
-                    </div>
-                </div>
-                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                    <form id="kt_modal_edit_publisher_form" class="form" action="#">
-                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
-                            <div class="fv-row mb-7">
-                                <label class="required fw-bold fs-6 mb-2">Full Name</label>
-                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" value="Emma Smith"/>
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Thematic</span>
-                                </label>
-                                <select name="thematics" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_edit_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
-                                    <option value="">Select a Thematic...</option>
-                                    @foreach($thematics as $thematic)
-                                        <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Country</span>
-                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
-                                </label>
-                                <select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_edit_publisher" class="form-select form-select-solid fw-bolder" multiple="multiple">
-                                    <option value="">Select a Country...</option>
-                                    @foreach(\App\Helper\Countries::getCountries() as $key => $country)
-                                        <option value="{{ $key}}">{{ $country}}</option>
-                                    @endforeach
-                                </select>
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
                                     <span class="required">Leads type</span>
                                 </label>
-                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Leads type..." data-dropdown-parent="#kt_modal_edit_publisher" class="form-select form-select-solid fw-bolder">
+                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
+                                        data-placeholder="Select a Leads type..."
+                                        data-dropdown-parent="#kt_modal_add_publisher"
+                                        class="form-select form-select-solid fw-bolder">
                                     <option value="">Select a Leads type...</option>
                                     @foreach($leads_types as $lead_type)
                                         <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
@@ -438,7 +436,10 @@
                             <div class="row g-9 mb-7">
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <label class="required fs-6 fw-bold mb-2">Cost type</label>
-                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_edit_publisher" class="form-select form-select-solid fw-bolder">
+                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
+                                            data-placeholder="Select a Thematic..."
+                                            data-dropdown-parent="#kt_modal_add_publisher"
+                                            class="form-select form-select-solid fw-bolder">
                                         <option value="">Select a Cost type...</option>
                                         @foreach($costs_types as $cost_type)
                                             <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
@@ -455,12 +456,113 @@
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
+                                <div style="display: none"
+                                     class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
                                     <!--begin::Label-->
                                     <label class="required fs-6 fw-bold mb-2">Sale %</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="number" max="100" class="form-control form-control-solid" name="sale_percentage">
+                                    <input type="number" max="100" class="form-control form-control-solid"
+                                           name="sale_percentage">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
+                                    data-kt-users-modal-action="cancel">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                <span class="indicator-label">Save</span>
+                                <span class="indicator-progress">Please wait...
+												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="kt_modal_edit_publisher" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_edit_user_header">
+                    <h2 class="fw-bolder">Edit publisher</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
+                         data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                                  transform="rotate(-45 6 17.3137)" fill="black"/>
+											<rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                  transform="rotate(45 7.41422 6)" fill="black"/>
+										</svg>
+									</span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <form id="kt_modal_edit_publisher_form" class="form" action="#">
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll"
+                             data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                             data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                             data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                            <div class="fv-row mb-7">
+                                <label class="required fw-bold fs-6 mb-2">Full Name</label>
+                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
+                                       placeholder="Full name" value="Emma Smith"/>
+                            </div>
+                            <div class="thematics">
+
+                            </div>
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">Leads type</span>
+                                </label>
+                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
+                                        data-placeholder="Select a Leads type..."
+                                        data-dropdown-parent="#kt_modal_edit_publisher"
+                                        class="form-select form-select-solid fw-bolder">
+                                    <option value="">Select a Leads type...</option>
+                                    @foreach($leads_types as $lead_type)
+                                        <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="row g-9 mb-7">
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
+                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
+                                            data-placeholder="Select a Thematic..."
+                                            data-dropdown-parent="#kt_modal_edit_publisher"
+                                            class="form-select form-select-solid fw-bolder">
+                                        <option value="">Select a Cost type...</option>
+                                        @foreach($costs_types as $cost_type)
+                                            <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="number" class="form-control form-control-solid" name="unit_price">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <div style="display: none"
+                                     class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="number" max="100" class="form-control form-control-solid"
+                                           name="sale_percentage">
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -484,12 +586,15 @@
 @endsection
 
 @section('javascript')
+    <script>
+        let themath = $('.them').clone();
+    </script>
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
         let tr;
         let id;
-        $(document).on('click','button[data-kt-publisher-datatable-subtable="expand_row"]',function () {
+        $(document).on('click', 'button[data-kt-publisher-datatable-subtable="expand_row"]', function () {
             if (!$(this).hasClass('expanded')) {
                 $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').insertAfter($(this).parents('tr'));
                 $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').removeClass('d-none');
@@ -510,7 +615,24 @@
         let AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
 
         let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
-
+        $(document).on('click', '.addThem', function () {
+            var newTh = themath.clone();
+            $('select[name="thematics"]',$(this).parents('form')).each(function (e) {
+                $('select[name="thematics"] option[value="' + $(this).val() + '"]', newTh).attr('disabled', true);
+            });
+            newTh.insertAfter($(this).parents('.row'));
+            $(this).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
+                '</svg></span></button>');
+            $($('select[data-control="select2"]',newTh)).select2();
+            $($('select[name="country"]',newTh)).select2({
+                dropdownAdapter: dropdownAdapter,
+                multiple: true
+            });
+        });
+        $(document).on('click', '.del', function () {
+            $(this).parents('.row').remove();
+        });
         $('select[name="country"]').select2({
             dropdownAdapter: dropdownAdapter,
             multiple: true
@@ -518,10 +640,10 @@
         $('.expand_all').click(function () {
             if (!$(this).hasClass('expanded')) {
                 $(this).addClass('expanded');
-                $('button[data-kt-publisher-datatable-subtable="expand_row"]',document).removeClass('expanded').click();
-            }else {
+                $('button[data-kt-publisher-datatable-subtable="expand_row"]', document).removeClass('expanded').click();
+            } else {
                 $(this).removeClass('expanded');
-                $('button[data-kt-publisher-datatable-subtable="expand_row"]',document).addClass('expanded').click();
+                $('button[data-kt-publisher-datatable-subtable="expand_row"]', document).addClass('expanded').click();
             }
             let onBTN = $(this).find('.toggle-on');
             let offBTN = $(this).find('.toggle-off');
@@ -533,7 +655,7 @@
             column.visible($(this).is(':checked'));
             table.columns.adjust().draw();
         });
-        $('select[name="thematics"]').change(function () {
+        $(document).on('change', 'select[name="thematics"]', function () {
             var select = $(this);
             $.ajax({
                 method: 'POST',
@@ -544,11 +666,11 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
-                    $('select[name="country"]',select.parents('form')).empty();
+                    $('select[name="country"]', select.parents('.them')).empty();
                     if (data.success) {
-                        $.each(data.countries, function (index,country) {
-                            let sel = $.inArray(index,selectedCountries) != -1?'selected':'';
-                            $('select[name="country"]', select.parents('form')).append('<option value="' + index + '" '+sel+' >' + country + '</option>')
+                        $.each(data.countries, function (index, country) {
+                            let sel = $.inArray(index, selectedCountries[select.val()]) != -1 ? 'selected' : '';
+                            $('select[name="country"]', select.parents('.them')).append('<option value="' + index + '" ' + sel + ' >' + country + '</option>')
                         })
                     }
                 }
@@ -558,8 +680,8 @@
             minimumResultsForSearch: Infinity
         });
         var table = $("#kt_table_publishers").DataTable({
-            "order": [[ 1, "desc" ]]
-        } );
+            "order": [[1, "desc"]]
+        });
         $('[data-kt-publishers-table-filter="search"]').on('keyup', function (e) {
             table.search($(this).val()).draw();
         });
@@ -652,7 +774,7 @@
             $('#kt_modal_add_publisher_form').trigger('reset');
             $('#kt_modal_add_thematic_form select').change();
         });
-        let selectedCountries;
+        let selectedCountries = [];
         $('select[name="costs_types"]').change(function () {
             if ($(this).val() == 2) {
                 $('.sale_percentage').show();
@@ -728,20 +850,31 @@
                         if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').prop('selected', true);
                         if (data.publisher.thematics.length != 0) $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);
                         $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
-                        $('#kt_modal_edit_publisher_form select[name="country"] option:selected').prop('selected', false);
-                        $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').prop('selected', false);
+                        $('#kt_modal_edit_publisher_form .thematics').empty();
                         $.each(data.publisher.thematics, function () {
-                            $('#kt_modal_edit_publisher_form select[name="thematics"] option[value="' + this.id + '"]').prop('selected', true);
+                            let newThem = themath.clone();
+                            $($('select[name="thematics"] option[value="'+this.id+'"]',newThem)).attr('selected',true);
+                            selectedCountries[this.id] = JSON.parse(this.pivot.countries);
+                            $('#kt_modal_edit_publisher_form .thematics').append(newThem);
+                            $($('select[name="thematics"] option[value="'+this.id+'"]',newThem)).change();
+                            $($('select[data-control="select2"]',newThem)).select2();
+                            $($('select[name="country"]',newThem)).select2({
+                                dropdownAdapter: dropdownAdapter,
+                                multiple: true
+                            });
                         });
-                        $('#kt_modal_edit_publisher_form select[name="thematics"]').change();
-                        selectedCountries = JSON.parse(data.publisher.thematics[0].pivot.countries);
-                        $('#kt_modal_edit_publisher_form select[name="country"], #kt_modal_edit_publisher_form select[name="costs_types"], #kt_modal_edit_publisher_form select[name="leads_types"]').change();
+                       
+                        
                     }
                 }
             });
         });
         $('#kt_modal_add_publisher_form').on('submit', function (e) {
             e.preventDefault();
+            var thematics = [];
+            $('#kt_modal_add_publisher_form select[name="thematics"]').map(function(i, v){
+                thematics.push({'val':$(v).val(),'countries':$(v).parents('.them').find('select[name="country"]').val()});
+            });
             if (validator) {
                 validator.validate().then(function (status) {
                     if (status == 'Valid') {
@@ -758,8 +891,7 @@
                                 sale_percentage: $('#kt_modal_add_publisher_form input[name="sale_percentage"]').val(),
                                 unit_price: $('#kt_modal_add_publisher_form input[name="unit_price"]').val(),
                                 status: 1,
-                                countries: $('#kt_modal_add_publisher_form select[name="country"]').val(),
-                                thematics: $('#kt_modal_add_publisher_form select[name="thematics"]').val(),
+                                thematics: thematics,
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function (data) {
@@ -772,7 +904,7 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    table.row.add(['',data.publisher.id, data.publisher.name, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), $('#kt_modal_add_publisher_form select[name="country"]').map((O, K) => '<div class="badge badge-light-info">' + $(K).text() + '</div>').toArray().join(""), data.publisher.leads_types[0].name , data.publisher.costs_types[0].name, data.publisher.thematics[0].pivot.unit_price, data.publisher.thematics[0].pivot.sale_percentage,'NOW' ,'<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                                    table.row.add(['', data.publisher.id, data.publisher.name,data.publisher.name+data.publisher.id, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), $('#kt_modal_add_publisher_form select[name="country"]').map((O, K) => '<div class="badge badge-light-info">' + $(K).text() + '</div>').toArray().join(""), data.publisher.leads_types[0].name, data.publisher.costs_types[0].name, data.publisher.thematics[0].pivot.unit_price, data.publisher.thematics[0].pivot.sale_percentage, 'NOW', '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                                     '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                                     '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -807,6 +939,10 @@
         });
         $('#kt_modal_edit_publisher_form').on('submit', function (e) {
             e.preventDefault();
+            var thematics = [];
+            $('#kt_modal_edit_publisher_form select[name="thematics"]').map(function(i, v){
+                thematics.push({'val':$(v).val(),'countries':$(v).parents('.them').find('select[name="country"]').val()});
+            });
             if (validator1) {
                 validator1.validate().then(function (status) {
                     if (status == 'Valid') {
@@ -823,8 +959,7 @@
                                 costs_types: $('#kt_modal_edit_publisher_form select[name="costs_types"]').val(),
                                 sale_percentage: $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(),
                                 unit_price: $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(),
-                                countries: $('#kt_modal_edit_publisher_form select[name="country"]').val(),
-                                thematics: $('#kt_modal_edit_publisher_form select[name="thematics"]').val(),
+                                thematics: thematics,
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function (data) {
@@ -839,8 +974,8 @@
                                     });
                                     let DTdata = table.row(tr).data();
                                     DTdata[2] = data.publisher.name;
-                                    DTdata[3] = $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').map((O,V) => '<div class="badge badge-light">'+$(V).text()+'</div>').toArray().join('');
-                                    DTdata[4] = $('#kt_modal_edit_publisher_form select[name="country"] option:selected').map((O,V) => '<div class="badge badge-light">'+$(V).text()+'</div>').toArray().join('');
+                                    DTdata[3] = $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
+                                    DTdata[4] = $('#kt_modal_edit_publisher_form select[name="country"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
                                     DTdata[5] = $('#kt_modal_edit_publisher_form select[name="leads_types"] option:selected').text();
                                     DTdata[6] = $('#kt_modal_edit_publisher_form select[name="costs_types"] option:selected').text();
                                     DTdata[7] = $('#kt_modal_edit_publisher_form input[name="unit_price"]').val();
