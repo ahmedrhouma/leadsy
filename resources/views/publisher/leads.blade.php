@@ -158,6 +158,7 @@
                     <th>Web page name</th>
                     <th>Web page URL</th>
                     <th>Sending date</th>
+                    <th>Sale Status</th>
                     <th>Sale Incomes</th>
                     <th>Rejection</th>
                     <th>ID Advertiser</th>
@@ -175,9 +176,9 @@
         var table = $('#kt_leads_table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('admin.leads.list') }}",
+            ajax: "{{ route('publisher.leads.list') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'id_lead', name: 'id_lead'},
                 {data: 'campaign_id', name: 'campaign_id'},
                 {data: 'last_name', name: 'last_name'},
                 {data: 'first_name', name: 'first_name'},
@@ -188,6 +189,7 @@
                 {data: 'web_page_name', name: 'web_page_name'},
                 {data: 'web_page_url', name: 'web_page_url'},
                 {data: 'sending_date', name: 'sending_date'},
+                {data: 'sale_status', name: 'sale_status'},
                 {data: 'sale_income', name: 'sale_income'},
                 {data: 'rejection', name: 'rejection'},
                 {data: 'advertiser_id', name: 'advertiser_id'},
@@ -202,16 +204,21 @@
                 {
                     "render": function (data, type, row) {
                         if (data == "") {
-                            return '<div class="badge badge-light">No rejection</div>';
+                            return '';
                         }
                         return '<div class="badge badge-light">' + data + '</div>';
                     },
-                    "targets": 12
+                    "targets": 13
+                },{
+                    "render": function (data, type, row) {
+                        return '<div class="badge badge-light">' + data + '</div>';
+                    },
+                    "targets": 11
                 }, {
                     "render": function (data, type, row) {
                         return '';
                     },
-                    "targets": 14
+                    "targets": 15
                 },
             ]
         });

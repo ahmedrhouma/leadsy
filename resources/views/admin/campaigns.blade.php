@@ -254,7 +254,7 @@
                         </td>
                         <td>@foreach($campaign->countriesName as $country)
                                 <div class="badge badge-light fw-bolder m-1">
-                                    <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
+                                    <img src="{{asset('assets/media/flags/'.str_replace(' ','-',strtolower($country)).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
                                 </div>
                             @endforeach</td>
                         <td>
@@ -519,10 +519,10 @@
                         </div>
                     </div>
                     <div class="modal-footer flex-center">
-                        <button type="reset" id="kt_modal_add_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
+                        <button type="reset" id="kt_modal_edit_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
                             Cancel
                         </button>
-                        <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_modal_edit_campaign_submit" class="btn btn-primary">
                             <span class="indicator-label">Save changes</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -543,6 +543,9 @@
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>
     <script>
+        var id;
+        var tr;
+
         $(document).ready(function () {
             var table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
@@ -551,119 +554,128 @@
                 fixedColumns:   {
                     right: 1,
                 }*/
-            });w
-        })
-        $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
-            table.search($(this).val()).draw();
-        });
-        var id;
-        $('select[name="costs_types"]').change(function () {
-            if ($(this).val() == 2) {
-                $('.sale_percentage').show();
-                $('.cost_amount').hide();
+            });
+            $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
+                table.search($(this).val()).draw();
+            });
+            $('select[name="costs_types"]').change(function () {
+                if ($(this).val() == 2) {
+                    $('.sale_percentage').show();
+                    $('.cost_amount').hide();
 
-            } else {
-                $('.cost_amount').show();
-                $('.sale_percentage').hide();
-            }
-        });
-        $('.columnToggleBtn').on('click', function (e) {
-            var column = table.column($(this).attr('data-column'));
-            column.visible($(this).is(':checked'));
-            table.columns.adjust().draw();
-        });
-        $(document).on('click', '.row_edit', function () {
-            id = $(this).data('id');
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('admin.campaigns.show') }}',
-                dataType: 'JSON',
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('.indicator-progress').hide();
-                    $('.indicator-label').show();
-                    if (data.success) {
-                        $('#kt_modal_edit_campaign_form input[name="name"]').val(data.campaign.name);
-                        $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="costs_types"], #kt_modal_edit_campaign_form select[name="leads_types"]').change();
-                        $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(data.campaign.cost_amount);
-                        $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(data.campaign.cost_amount);
-                        $('#kt_modal_edit_campaign_form input[name="start_date"]').val(data.campaign.start_date);
-                        $('#kt_modal_edit_campaign_form input[name="end_date"]').val(data.campaign.end_date);
-                        $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
-                        $('#kt_modal_edit_campaign_form input[name="fee"]').val(data.campaign.fee);
-                        $('#kt_modal_edit_campaign_form select[name="fee_type"] option[value="' + data.campaign.fee_type + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form input[name="selling_price"]').val(data.campaign.selling_price);
-                        $('#kt_modal_edit_campaign_form input[name="buying_price"]').val(data.campaign.publishers.length != 0 ? data.campaign.publishers[0].pivot.buying_price : 0);
-                        $('#kt_modal_edit_campaign_form select[name="publisher"] option[value="' + (data.campaign.publishers.length != 0 ? data.campaign.publishers[0].id : 0) + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
-                        $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign_form select[name="country"] option:selected').attr('selected', false);
-                        $.each(JSON.parse(data.campaign.countries), function (country) {
-                            $('#kt_modal_edit_campaign_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
-                        });
-                        $('#kt_modal_edit_campaign_form select[name="country"]').change();
-                        $('#kt_modal_edit_campaign_form select[name="Thematic"] option[value="' + data.campaign.thematic_id + '"]').attr('selected', true);
-                        $('#kt_modal_edit_campaign').modal('show');
-                    }
+                } else {
+                    $('.cost_amount').show();
+                    $('.sale_percentage').hide();
                 }
             });
-
-        });
-        $('#kt_modal_edit_campaign_form').on('submit', function (e) {
-            e.preventDefault();
-
-            $('.indicator-progress').show();
-            $('.indicator-label').hide();
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('admin.campaigns.update') }}',
-                dataType: 'JSON',
-                data: {
-                    name: $('#kt_modal_edit_campaign_form input[name="name"]').val(),
-                    leads_type_id: $('#kt_modal_edit_campaign_form select[name="leads_types"]').val(),
-                    cost_type_id: $('#kt_modal_edit_campaign_form select[name="costs_types"]').val(),
-                    sale_percentage: $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(),
-                    cost_amount: $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(),
-                    start_date: $('#kt_modal_edit_campaign_form input[name="start_date"]').val(),
-                    end_date: $('#kt_modal_edit_campaign_form input[name="end_date"]').val(),
-                    leads_vmax: $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(),
-                    leads_volume: $('#kt_modal_edit_campaign_form select[name="leads_volume"]').val(),
-                    countries: $('#kt_modal_edit_campaign_form select[name="country"]').val(),
-                    thematic_id: $('#kt_modal_edit_campaign_form select[name="Thematic"]').val(),
-                    fee: $('#kt_modal_edit_campaign_form input[name="fee"]').val(),
-                    selling_price: $('#kt_modal_edit_campaign_form input[name="selling_price"]').val(),
-                    buying_price: $('#kt_modal_edit_campaign_form input[name="buying_price"]').val(),
-                    fee_type: $('#kt_modal_edit_campaign_form select[name="fee_type"]').val(),
-                    publisher_id: $('#kt_modal_edit_campaign_form select[name="publisher"]').val(),
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('.indicator-progress').hide();
-                    $('.indicator-label').show();
-                    if (data.success) {
-                        Swal.fire({
-                            text: "Campaign successfully updated",
-                            icon: "success",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    } else {
-                        Swal.fire({
-                            text: "Something went wrong ! please try later.",
-                            icon: "error",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
+            $('.columnToggleBtn').on('click', function (e) {
+                var column = table.column($(this).attr('data-column'));
+                column.visible($(this).is(':checked'));
+                table.columns.adjust().draw();
+            });
+            $(document).on('click', '.row_edit', function () {
+                id = $(this).data('id');
+                tr = $(this).parents('tr');
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('admin.campaigns.show') }}',
+                    dataType: 'JSON',
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('.indicator-progress').hide();
+                        $('.indicator-label').show();
+                        if (data.success) {
+                            $('#kt_modal_edit_campaign_form input[name="name"]').val(data.campaign.name);
+                            $('#kt_modal_edit_campaign_form select[name="leads_types"] option[value="' + data.campaign.leads_type_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="costs_types"] option[value="' + data.campaign.cost_type_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="costs_types"], #kt_modal_edit_campaign_form select[name="leads_types"]').change();
+                            $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(data.campaign.cost_amount);
+                            $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(data.campaign.cost_amount);
+                            $('#kt_modal_edit_campaign_form input[name="start_date"]').val(data.campaign.start_date);
+                            $('#kt_modal_edit_campaign_form input[name="end_date"]').val(data.campaign.end_date);
+                            $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
+                            $('#kt_modal_edit_campaign_form input[name="fee"]').val(data.campaign.fee);
+                            $('#kt_modal_edit_campaign_form select[name="fee_type"] option[value="' + data.campaign.fee_type + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form input[name="selling_price"]').val(data.campaign.selling_price);
+                            $('#kt_modal_edit_campaign_form input[name="buying_price"]').val(data.campaign.publishers.length != 0 ? data.campaign.publishers[0].pivot.buying_price : 0);
+                            $('#kt_modal_edit_campaign_form select[name="publisher"] option[value="' + (data.campaign.publishers.length != 0 ? data.campaign.publishers[0].id : 0) + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(data.campaign.leads_vmax);
+                            $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign_form select[name="country"] option:selected').attr('selected', false);
+                            $.each(JSON.parse(data.campaign.countries), function (country) {
+                                $('#kt_modal_edit_campaign_form select[name="country"] option[value="' + this + '"]').attr('selected', true);
+                            });
+                            $('#kt_modal_edit_campaign_form select[name="country"]').change();
+                            $('#kt_modal_edit_campaign_form select[name="Thematic"] option[value="' + data.campaign.thematic_id + '"]').attr('selected', true);
+                            $('#kt_modal_edit_campaign').modal('show');
+                        }
                     }
-                }
-            })
-        });
+                });
+
+            });
+            $('#kt_modal_edit_campaign_form').on('submit', function (e) {
+                e.preventDefault();
+
+                $('.indicator-progress').show();
+                $('.indicator-label').hide();
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('admin.campaigns.update') }}',
+                    dataType: 'JSON',
+                    data: {
+                        name: $('#kt_modal_edit_campaign_form input[name="name"]').val(),
+                        leads_type_id: $('#kt_modal_edit_campaign_form select[name="leads_types"]').val(),
+                        cost_type_id: $('#kt_modal_edit_campaign_form select[name="costs_types"]').val(),
+                        sale_percentage: $('#kt_modal_edit_campaign_form input[name="sale_percentage"]').val(),
+                        cost_amount: $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val(),
+                        start_date: $('#kt_modal_edit_campaign_form input[name="start_date"]').val(),
+                        end_date: $('#kt_modal_edit_campaign_form input[name="end_date"]').val(),
+                        leads_vmax: $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val(),
+                        leads_volume: $('#kt_modal_edit_campaign_form select[name="leads_volume"]').val(),
+                        countries: $('#kt_modal_edit_campaign_form select[name="country"]').val(),
+                        thematic_id: $('#kt_modal_edit_campaign_form select[name="Thematic"]').val(),
+                        fee: $('#kt_modal_edit_campaign_form input[name="fee"]').val(),
+                        selling_price: $('#kt_modal_edit_campaign_form input[name="selling_price"]').val(),
+                        buying_price: $('#kt_modal_edit_campaign_form input[name="buying_price"]').val(),
+                        fee_type: $('#kt_modal_edit_campaign_form select[name="fee_type"]').val(),
+                        publisher_id: $('#kt_modal_edit_campaign_form select[name="publisher"]').val(),
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (data) {
+                        $('.indicator-progress').hide();
+                        $('.indicator-label').show();
+                        if (data.success) {
+                            Swal.fire({
+                                text: "Campaign successfully updated",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            let DTdata = table.row(tr).data();
+                            DTdata[0] = data.campaign.publishers.map((O, V) => '<div class="badge badge-light">' + O.name + '</div>').join('');
+                            DTdata[1] = data.campaign.publishers[0].pivot.buying_price;
+                            DTdata[2] = data.campaign.selling_price;
+                            DTdata[3] = data.campaign.fee;
+                            table.row(tr).data(DTdata).draw();
+                            KTMenu.createInstances();
+                            $('#kt_modal_edit_campaign_cancel').click();
+                        } else {
+                            Swal.fire({
+                                text: "Something went wrong ! please try later.",
+                                icon: "error",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            });
+                        }
+                    }
+                })
+            });
+        })
+
     </script>
 @endsection

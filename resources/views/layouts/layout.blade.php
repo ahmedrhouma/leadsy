@@ -1429,7 +1429,7 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{{asset('assets/media/avatars/150-26.jpg')}}"/>
+                                                <img alt="Logo" src="@if(Storage::disk('public')->exists(auth()->user()->photo)){{Storage::url(auth()->user()->photo)}}@else{{asset('assets/media/svg/avatars/007-boy-2.svg')}}@endif"/>
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -1447,7 +1447,7 @@
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="profile.php" class="menu-link px-5">My Profile</a>
+                                        <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu separator-->

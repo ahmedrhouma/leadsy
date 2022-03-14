@@ -203,7 +203,6 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
         var table = $('#kt_leads_table').DataTable({
@@ -211,7 +210,7 @@
             serverSide: true,
             ajax: "{{ route('admin.leads.list') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'id_lead', name: 'id_lead'},
                 {data: 'advertiser_id', name: 'advertiser_id'},
                 {data: 'publisher_id', name: 'publisher_id'},
                 {data: 'first_name', name: 'first_name'},
@@ -239,14 +238,21 @@
             columnDefs:[
                 {
                     "render": function ( data, type, row ) {
-                        return data == "0"?'<div class="badge badge-light-success">Accepted</div>':'<div class="badge badge-light-danger">Rejected</div>'
-                    },
+                        if (data == "") {
+                            return '';
+                        }
+                        return '<div class="badge badge-light">' + data + '</div>';                    },
                     "targets": 14
                 },{
                     "render": function ( data, type, row ) {
                         return '<div class="badge badge-light-info">'+data+'</div>';
                     },
                     "targets": 12
+                },{
+                    "render": function ( data, type, row ) {
+                        return '';
+                    },
+                    "targets": 13
                 },{
                     "render": function ( data, type, row ) {
                         return '<div class="badge badge-light-info">'+data+'</div>';

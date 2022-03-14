@@ -65,7 +65,7 @@
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Country scope</th>
+                    {{--<th>Country scope</th>--}}
                     <th>Status</th>
                     <th>Starting date</th>
                     <th>Ending date</th>
@@ -80,13 +80,13 @@
                     <tr>
                         <td>{{ $thematic->id }}</td>
                         <td>{{ $thematic->name }}</td>
-                        <td>
+                        {{--<td>
                             @foreach($thematic->countries as $country)
                                 <div class="badge badge-light-info">
                                     <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country->countryName).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country->countryName}}
                                 </div>
                             @endforeach
-                        </td>
+                        </td>--}}
                         <td>
                             @if($thematic->status == 1)
                                 <div class="badge badge-light-success">Active</div>
@@ -163,7 +163,7 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="" name="name" required/>
                                 <!--end::Input-->
                             </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
+                            {{--<div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
                                     <span class="required">Countries</span>
@@ -176,7 +176,7 @@
                                         <option value="{{ $key}}">{{ $country}}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>--}}
                             <!--end::Input group-->
                             <div class="row g-9 mb-7">
                                 <!--begin::Col-->
@@ -268,7 +268,7 @@
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
-                            <div class="d-flex flex-column mb-7 fv-row">
+                            {{--<div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
                                     <span class="required">Countries</span>
@@ -283,7 +283,7 @@
                                     @endforeach
                                 </select>
                                 <!--end::Input-->
-                            </div>
+                            </div>--}}
 
                             <div class="row g-9 mb-7">
                                 <!--begin::Col-->
@@ -339,7 +339,6 @@
 @endsection
 
 @section('javascript')
-
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
@@ -434,8 +433,10 @@
             dropdownAdapter: dropdownAdapter,
             multiple: true
         });
+
         $(".dateStart").daterangepicker({
-                singleDatePicker: true,
+            autoUpdateInput: false,
+            singleDatePicker: true,
                 showDropdowns: true,
                 autoApply: true,
                 minYear: 2020,
@@ -443,9 +444,13 @@
                     format: 'YYYY-MM-DD'
                 }
             }
-        );
+        ).on("apply.daterangepicker", function (e, picker) {
+            picker.element.val(picker.startDate.format(picker.locale.format));
+        });
+
         $(".dateEnd").daterangepicker({
-                singleDatePicker: true,
+            autoUpdateInput: false,
+            singleDatePicker: true,
                 showDropdowns: true,
                 autoApply: true,
                 minYear: 2020,
@@ -453,7 +458,10 @@
                     format: 'YYYY-MM-DD'
                 }
             }
-        );
+        ).on("apply.daterangepicker", function (e, picker) {
+            picker.element.val(picker.startDate.format(picker.locale.format));
+        });
+
         $('#kt_modal_add_thematic_form').on('submit', function (e) {
             e.preventDefault();
             if (validator) {
@@ -470,7 +478,9 @@
                                 end_date: $('#kt_modal_add_thematic_form .dateEnd').val(),
                                 start_date: $('#kt_modal_add_thematic_form .dateStart').val(),
                                 status: 1,
+/*
                                 countries: $('#kt_modal_add_thematic_form select[name="country"]').val(),
+*/
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function (data) {
@@ -483,7 +493,7 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    table.row.add([data.thematic.id, data.thematic.name, data.thematic.countries.map((O, K) => '<div class="badge badge-light-info"><img src="http://127.0.0.1:8000/assets/media/flags/' + O.countryName + '.svg" class="me-4 w-15px" style="border-radius: 4px" alt="">' + O.countryName + '</div>').join(""), '<div class="badge badge-light-success">Active</div>', data.thematic.start_date, data.thematic.end_date, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                                    table.row.add([data.thematic.id, data.thematic.name, '<div class="badge badge-light-success">Active</div>', data.thematic.start_date, data.thematic.end_date, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                                     '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                                     '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -592,11 +602,13 @@
                         $('#kt_modal_edit_thematic_form input[name="name"]').val(data.thematic.name);
                         $('#kt_modal_edit_thematic_form .dateEnd').val(data.thematic.end_date);
                         $('#kt_modal_edit_thematic_form .dateStart').val(data.thematic.start_date);
+/*
                         $('#kt_modal_edit_thematic_form select[name="country"] option:selected').attr('selected', false);
-                        $.each(data.thematic.countries, function () {
+*/
+                       /* $.each(data.thematic.countries, function () {
                             $('#kt_modal_edit_thematic_form select[name="country"] option[value="' + this.country + '"]').prop('selected', true);
                         });
-                        $('#kt_modal_edit_thematic_form select[name="country"]').change();
+                        $('#kt_modal_edit_thematic_form select[name="country"]').change();*/
                         $('#kt_modal_edit_thematic').modal('show');
                     }
                 }
@@ -618,7 +630,9 @@
                                 end_date: $('#kt_modal_edit_thematic_form .dateEnd').val(),
                                 start_date: $('#kt_modal_edit_thematic_form .dateStart').val(),
                                 status: 1,
+/*
                                 countries: $('#kt_modal_edit_thematic_form select[name="country"]').val().length > 0 ? $('#kt_modal_edit_thematic_form select[name="country"]').val() : [],
+*/
                                 id: id,
                                 _token: '{{ csrf_token() }}'
                             },
@@ -639,6 +653,7 @@
                                     DTdata[2] = data.thematic.countries.map((O, K) => '<div class="badge badge-light-info"><img src="http://127.0.0.1:8000/assets/media/flags/' + O.countryName + '.svg" class="me-4 w-15px" style="border-radius: 4px" alt="">' + O.countryName + '</div>').join("");
                                     table.row(tr).data(DTdata).draw();
                                     KTMenu.createInstances();
+                                    $('#kt_modal_edit_thematic_cancel').click();
 
                                 } else {
                                     Swal.fire({

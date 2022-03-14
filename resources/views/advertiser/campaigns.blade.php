@@ -260,7 +260,7 @@
                                     <label class="required fs-6 fw-bold mb-2">Starting date</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid dateStart" placeholder="" name="start_date" value="">
+                                    <input class="form-control form-control-solid dateStart" placeholder="" name="start_date" value="" autocomplete="off">
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -271,7 +271,7 @@
                                     <label class="fs-6 fw-bold mb-2">Ending date</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="">
+                                    <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="" autocomplete="off">
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -304,7 +304,9 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder" multiple>
-
+                                    @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                        <option value="{{ $key}}">{{ $country}}</option>
+                                    @endforeach
                                 </select>
                                 <!--end::Input-->
                             </div>
@@ -616,6 +618,8 @@
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
+        let id ;
+        let tr ;
         $(document).ready(function () {
             let table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
@@ -655,7 +659,8 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            table.row.add([data.campaign.id, data.campaign.name, 'NOW', data.campaign.start_date, data.campaign.end_date, '<div class="badge badge-light-success">Active</div>', '<div class="badge badge-light">' + data.campaign.thematics.name + '</div>', data.campaign.countriesName.map((O) => '<div class="badge badge-light">' + O + '</div>').join(''), '<div class="badge badge-light">' + data.campaign.leads_types.name + '</div>', data.campaign.leads_vmax, '<div class="badge badge-light">' + data.campaign.costs_types.name + '</div>', data.campaign.cost_amount, 0, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                            var today = new Date();
+                            table.row.add([data.campaign.id, data.campaign.name, today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), data.campaign.start_date, data.campaign.end_date, '<div class="badge badge-light-success">Active</div>', '<div class="badge badge-light">' + data.campaign.thematics.name + '</div>', data.campaign.countriesName.map((O) => '<div class="badge badge-light">' + O + '</div>').join(''), '<div class="badge badge-light">' + data.campaign.leads_types.name + '</div>', data.campaign.leads_vmax, '<div class="badge badge-light">' + data.campaign.costs_types.name + '</div>', data.campaign.cost_amount, '', '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                             '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                             '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                             '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -671,7 +676,7 @@
                             '                                </div>\n' +
                             '                            </div>']).draw();
                             KTMenu.createInstances();
-                            $('#kt_modal_edit_campaign_cancel').click();
+                            $('#kt_modal_add_campaign_cancel').click();
                             $('#kt_modal_add_campaign_form select').change();
                         } else {
                             Swal.fire({
@@ -687,6 +692,7 @@
             });
             $(document).on('click', '.row_edit', function () {
                 id = $(this).data('id');
+                tr = $(this).parents('tr');
                 $.ajax({
                     method: 'POST',
                     url: '{{ route('admin.campaigns.show') }}',
@@ -712,8 +718,11 @@
                             $('#kt_modal_edit_campaign_form select[name="leads_volume"] option[value="' + data.campaign.leads_volume + '"]').attr('selected', true);
                             $('#kt_modal_edit_campaign_form select[name="country"] option:selected').attr('selected', false);
                             selectedCountries = JSON.parse(data.campaign.countries);
+                            selectedCountries.forEach(function(country){
+                                $('#kt_modal_edit_campaign_form select[name="country"] option[value="'+country+'"]').attr('selected', true);
+                            });
                             $('#kt_modal_edit_campaign_form select[name="Thematic"] option[value="' + data.campaign.thematic_id + '"]').attr('selected', true);
-                            $('#kt_modal_edit_campaign_form select[name="Thematic"]').change();
+                            $('#kt_modal_edit_campaign_form select[name="Thematic"],#kt_modal_edit_campaign_form select[name="country"]').change();
                             $('#kt_modal_edit_campaign').modal('show');
                         }
                     }
@@ -770,7 +779,7 @@
                 $('#kt_modal_add_campaign_form').trigger('reset');
                 $('#kt_modal_add_campaign_form select').change();
             });
-            $('select[name="Thematic"]').change(function () {
+            /*$('select[name="Thematic"]').change(function () {
                 var select = $(this);
                 $.ajax({
                     method: 'POST',
@@ -790,7 +799,7 @@
                         }
                     }
                 })
-            });
+            });*/
             $('#kt_modal_edit_campaign_form').on('submit', function (e) {
                 e.preventDefault();
 
@@ -825,6 +834,19 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+                            let DTdata = table.row(tr).data();
+                            DTdata[1] = data.campaign.name;
+                            DTdata[3] = $('#kt_modal_edit_campaign_form input[name="start_date"]').val();
+                            DTdata[4] = $('#kt_modal_edit_campaign_form input[name="end_date"]').val();
+                            DTdata[6] = $('#kt_modal_edit_campaign_form select[name="thematics"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
+                            DTdata[7] = $('#kt_modal_edit_campaign_form select[name="country"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
+                            DTdata[8] = $('#kt_modal_edit_campaign_form select[name="leads_types"] option:selected').text();
+                            DTdata[9] = $('#kt_modal_edit_campaign_form input[name="leads_vmax"]').val();
+                            DTdata[10] = $('#kt_modal_edit_campaign_form select[name="costs_types"] option:selected').text();
+                            DTdata[11] = $('#kt_modal_edit_campaign_form input[name="cost_amount"]').val();
+                            table.row(tr).data(DTdata).draw();
+                            KTMenu.createInstances();
+                            $('#kt_modal_edit_campaign_cancel').click();
                         } else {
                             Swal.fire({
                                 text: "Something went wrong ! please try later.",

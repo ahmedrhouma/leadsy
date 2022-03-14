@@ -198,8 +198,7 @@
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th></th>
                     <th>ID</th>
-                    <th class="min-w-125px">Name / login</th>
-                    <th class="min-w-200px">Default Password</th>
+                    <th class="min-w-125px">Name</th>
                     <th class="min-w-125px">Thematics</th>
                     <th class="min-w-125px">Country Scope</th>
                     <th class="min-w-125px">Leads Type</th>
@@ -216,6 +215,7 @@
                 <tbody class="text-gray-600 fw-bold">
                 <!--begin::Table row-->
                 @foreach($publishers as $publisher)
+
                     <tr>
                         <td>
                             @if($publisher->thematics->count() > 1)
@@ -244,12 +244,9 @@
                                 </button>
                             @endif
                         </td>
-                        <td>{{$publisher->id}}</td>
+                        <td>{{$publisher->id}} </td>
                         <td>
                             {{$publisher->name}}
-                        </td>
-                        <td>
-                            {{$publisher->name.$publisher->id}}</div>
                         </td>
                         <td>
                             <div class="badge badge-light">{{ $publisher->thematics->first()->name }}</div>
@@ -294,6 +291,12 @@
                                     <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">Edit</a>
                                 </div>
                                 <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $publisher->user->email }}" data-password="{{ str_replace(' ','',$publisher->name).'@'.$publisher->id }}">Credentials</a>
+                                </div>
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 sources" data-id="{{ $publisher->id }}">Sources</a>
+                                </div>
+                                <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 delete_row"
                                        data-id="{{ $publisher->id }}">Delete</a>
                                 </div>
@@ -302,39 +305,34 @@
 
                     </tr>
                     @foreach($publisher->thematics->skip(1) as $key => $thematic)
-
                         <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}"
                             class="d-none">
                             <td></td>
                             <td></td>
-                            <td></td>
                             <td>
                             </td>
                             <td>
-                                <div class="badge badge-light">{{ $thematic->name }}</div>
+                                <div class="badge badge-light fw-bolder">{{ $thematic->name }}</div>
                             </td>
                             <td>
                                 @foreach(json_decode($thematic->pivot->countries) as $country)
                                     <div class="badge badge-light fw-bolder"><img
-                                            src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}"
+                                            src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}"
                                             class="me-4 w-15px" style="border-radius: 4px"
                                             alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                                 @endforeach
                             </td>
                             <td>
-                                <div
-                                    class="badge badge-light fw-bolder">{{ $thematic->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                                {{ $thematic->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}
                             </td>
                             <td>
-                                <div
-                                    class="badge badge-light fw-bolder">{{ $thematic->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}</div>
+                                {{ $thematic->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}
                             </td>
                             <td>
-                                <div class="badge badge-light fw-bolder">{{ $thematic->pivot->unit_price }}</div>
+                                {{ $thematic->pivot->unit_price }}
                             </td>
                             <td>
-                                <div
-                                    class="badge badge-light fw-bolder">{{ $thematic->pivot->sale_percentage?? NULL}}</div>
+                                {{ $thematic->pivot->sale_percentage?? NULL}}
                             </td>
                             <td></td>
                             <td class="text-end">
@@ -377,6 +375,10 @@
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
                                        placeholder="Full name"/>
                             </div>
+                            <div class="fv-row mb-7">
+                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                            </div>
                             <div class="row g-9 mb-7 them">
                                 <div class="d-flex col-5 flex-column mb-7 fv-row">
                                     <label class="fs-6 fw-bold mb-2">
@@ -384,7 +386,6 @@
                                     </label>
                                     <select name="thematics" aria-label="Select a Thematic" data-control="select2"
                                             data-placeholder="Select a Thematic..."
-                                            data-dropdown-parent="#kt_modal_add_publisher"
                                             class="form-select form-select-solid fw-bolder">
                                         <option value="">Select a Thematic...</option>
                                         @foreach($thematics as $thematic)
@@ -400,10 +401,11 @@
                                     </label>
                                     <select name="country" aria-label="Select Countries"
                                             data-placeholder="Select Countries..."
-                                            data-dropdown-parent="#kt_modal_add_publisher"
                                             class="form-select form-select-solid fw-bolder" multiple="multiple">
                                         <option value="">Select a Country...</option>
-
+                                        @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                            <option value="{{ $key}}">{{ $country}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-2 d-flex align-items-center">
@@ -515,6 +517,10 @@
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
                                        placeholder="Full name" value="Emma Smith"/>
                             </div>
+                            <div class="fv-row mb-7">
+                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" value="Email"/>
+                            </div>
                             <div class="thematics">
 
                             </div>
@@ -583,11 +589,111 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="kt_modal_credentials_publisher" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_edit_user_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bolder">Default Credentials</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+										</svg>
+									</span>
+                    </div>
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div class="credentials_body"></div>
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <div class="modal fade" id="kt_modal_sources_publisher" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_edit_user_header">
+                    <h2 class="fw-bolder">Publisher Sources</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div class="sources_body">
+                        <div class="row g-9 mb-7 source_body">
+                            <div class="d-flex col-4 flex-column mb-7 fv-row">
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">Source</span>
+                                </label>
+                                <select name="source" aria-label="Select a Source" data-control="select2"
+                                        data-placeholder="Select a Source..."
+                                        class="form-select form-select-solid fw-bolder">
+                                    <option value="">Select a Source...</option>
+                                    <option value="1">Landing page</option>
+                                </select>
+                            </div>
+                            <div class="d-flex col-3 flex-column mb-7 fv-row">
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">Name</span>
+                                </label>
+                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                            </div>
+                            <div class="d-flex col-3 flex-column mb-7 fv-row">
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">URL</span>
+                                </label>
+                                <input type="text" name="URL" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                            </div>
+                            <div class="col-2 d-flex align-items-center">
+                                <button type="button" class="btn btn-sm btn-icon btn-outline-secondary addSource">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                                                  transform="rotate(-90 11.364 20.364)" fill="black"/>
+                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
+                                            </svg>
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary saveSources">
+                            <span class="indicator-label">Save changes</span>
+                            <span class="indicator-progress">Please wait...
+												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
-
 @section('javascript')
     <script>
         let themath = $('.them').clone();
+        let source = $('.source_body').clone();
     </script>
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
@@ -617,25 +723,77 @@
         let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
         $(document).on('click', '.addThem', function () {
             var newTh = themath.clone();
-            $('select[name="thematics"]',$(this).parents('form')).each(function (e) {
+            $('select[name="thematics"]', $(this).parents('form')).each(function (e) {
                 $('select[name="thematics"] option[value="' + $(this).val() + '"]', newTh).attr('disabled', true);
             });
             newTh.insertAfter($(this).parents('.row'));
             $(this).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                 '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
                 '</svg></span></button>');
-            $($('select[data-control="select2"]',newTh)).select2();
-            $($('select[name="country"]',newTh)).select2({
+            $($('select[data-control="select2"]', newTh)).select2();
+            $($('select[name="country"]', newTh)).select2({
+                dropdownAdapter: dropdownAdapter,
+                multiple: true
+            });
+        });
+        $(document).on('click', '.addSource', function () {
+            var newTh = source.clone();
+            newTh.insertAfter($(this).parents('.row'));
+            $(this).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
+                '</svg></span></button>');
+            $($('select[data-control="select2"]', newTh)).select2();
+            $($('select[name="country"]', newTh)).select2({
                 dropdownAdapter: dropdownAdapter,
                 multiple: true
             });
         });
         $(document).on('click', '.del', function () {
+            $('select[name="thematics"] option[value="' + $(this).parents('.row').find('select[name="thematics"]').val() + '"]', $(this).parents('form')).attr('disabled', false);
             $(this).parents('.row').remove();
         });
         $('select[name="country"]').select2({
             dropdownAdapter: dropdownAdapter,
             multiple: true
+        });
+        $(document).on('click', '.credentials', function () {
+            $('.credentials_body').html('Login : ' + $(this).data('email') + '<br> Pass : ' + $(this).data('password'));
+            $('#kt_modal_credentials_publisher').modal('show');
+        });
+        $(document).on('click', '.sources', function () {
+            id = $(this).data('id');
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('admin.publishers.sources') }}',
+                dataType: 'JSON',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    $('.source_body').empty();
+                    if (data.success) {
+                        $.each(data.landings, function (index, landing) {
+                            var newTh = source.clone();
+                            $('input[name="name"]', newTh).val(landing.name);
+                            $('input[name="URL"]', newTh).val(landing.url);
+                            $('select[name="source"] option[value="1"]', newTh).attr('selected', true);
+                            $('.addSource', newTh).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
+                                '</svg></span></button>');
+                            $('.source_body').append(newTh);
+                            $($('select[data-control="select2"]', newTh)).select2();
+                            $($('select[name="country"]', newTh)).select2({
+                                dropdownAdapter: dropdownAdapter,
+                                multiple: true
+                            });
+                        })
+                        var newTh = source.clone();
+                        $('.source_body').append(newTh);
+                    }
+                }
+            })
+            $('#kt_modal_sources_publisher').modal('show');
         });
         $('.expand_all').click(function () {
             if (!$(this).hasClass('expanded')) {
@@ -655,7 +813,7 @@
             column.visible($(this).is(':checked'));
             table.columns.adjust().draw();
         });
-        $(document).on('change', 'select[name="thematics"]', function () {
+        /*$(document).on('change', 'select[name="thematics"]', function () {
             var select = $(this);
             $.ajax({
                 method: 'POST',
@@ -675,7 +833,7 @@
                     }
                 }
             })
-        });
+        });*/
         $('select[name="leads_types"],select[name="costs_types"]').select2({
             minimumResultsForSearch: Infinity
         });
@@ -846,25 +1004,37 @@
                     if (data.success) {
                         $('#kt_modal_edit_publisher').modal('show');
                         $('#kt_modal_edit_publisher_form input[name="name"]').val(data.publisher.name);
-                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').prop('selected', true);
-                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').prop('selected', true);
+                        $('#kt_modal_edit_publisher_form input[name="email"]').val(data.publisher.user.email);
+                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').prop('selected', true).change();
+                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').prop('selected', true).change();
                         if (data.publisher.thematics.length != 0) $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);
                         $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
                         $('#kt_modal_edit_publisher_form .thematics').empty();
                         $.each(data.publisher.thematics, function () {
                             let newThem = themath.clone();
-                            $($('select[name="thematics"] option[value="'+this.id+'"]',newThem)).attr('selected',true);
-                            selectedCountries[this.id] = JSON.parse(this.pivot.countries);
+                            $($('select[name="thematics"] option[value="' + this.id + '"]', newThem)).attr('selected', true);
+                            selectedCountries = JSON.parse(this.pivot.countries);
+                            $.each(selectedCountries, function () {
+                                $('select[name="country"] option[value="' + this + '"]', newThem).attr('selected', true);
+                            });
+                            $('.addThem', newThem).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+                                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
+                                '</svg></span></button>');
                             $('#kt_modal_edit_publisher_form .thematics').append(newThem);
-                            $($('select[name="thematics"] option[value="'+this.id+'"]',newThem)).change();
-                            $($('select[data-control="select2"]',newThem)).select2();
-                            $($('select[name="country"]',newThem)).select2({
+                            $($('select[data-control="select2"]', newThem)).select2();
+                            $($('select[name="country"]', newThem)).select2({
                                 dropdownAdapter: dropdownAdapter,
                                 multiple: true
                             });
                         });
-                       
-                        
+                        let newThem = themath.clone();
+                        $('#kt_modal_edit_publisher_form .thematics').append(newThem);
+                        $($('select[data-control="select2"]', newThem)).select2();
+                        $($('select[name="country"]', newThem)).select2({
+                            dropdownAdapter: dropdownAdapter,
+                            multiple: true
+                        });
+
                     }
                 }
             });
@@ -872,8 +1042,11 @@
         $('#kt_modal_add_publisher_form').on('submit', function (e) {
             e.preventDefault();
             var thematics = [];
-            $('#kt_modal_add_publisher_form select[name="thematics"]').map(function(i, v){
-                thematics.push({'val':$(v).val(),'countries':$(v).parents('.them').find('select[name="country"]').val()});
+            $('#kt_modal_add_publisher_form select[name="thematics"]').map(function (i, v) {
+                thematics.push({
+                    'val': $(v).val(),
+                    'countries': $(v).parents('.them').find('select[name="country"]').val()
+                });
             });
             if (validator) {
                 validator.validate().then(function (status) {
@@ -886,6 +1059,7 @@
                             dataType: 'JSON',
                             data: {
                                 name: $('#kt_modal_add_publisher_form input[name="name"]').val(),
+                                email: $('#kt_modal_add_publisher_form input[name="email"]').val(),
                                 leads_types: $('#kt_modal_add_publisher_form select[name="leads_types"]').val(),
                                 costs_types: $('#kt_modal_add_publisher_form select[name="costs_types"]').val(),
                                 sale_percentage: $('#kt_modal_add_publisher_form input[name="sale_percentage"]').val(),
@@ -904,7 +1078,8 @@
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    table.row.add(['', data.publisher.id, data.publisher.name,data.publisher.name+data.publisher.id, data.publisher.thematics.map((O, K) => '<div class="badge badge-light-info">' + O.name + '</div>').join(""), $('#kt_modal_add_publisher_form select[name="country"]').map((O, K) => '<div class="badge badge-light-info">' + $(K).text() + '</div>').toArray().join(""), data.publisher.leads_types[0].name, data.publisher.costs_types[0].name, data.publisher.thematics[0].pivot.unit_price, data.publisher.thematics[0].pivot.sale_percentage, 'NOW', '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                                    var today = new Date();
+                                    table.row.add(['', data.publisher.id, data.publisher.name, data.publisher.thematics.map((O, K) => '<div class="badge badge-light">' + O.name + '</div>').join(""), $('#kt_modal_add_publisher_form select[name="country"] option:selected').map((O, K) => '<div class="badge badge-light">' + $(K).text() + '</div>').toArray().join(""), data.publisher.leads_types[0].name, data.publisher.costs_types[0].name, data.publisher.thematics[0].pivot.unit_price, data.publisher.thematics[0].pivot.sale_percentage, today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
                                     '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                                     '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -915,13 +1090,15 @@
                                     '                                <div class="menu-item px-3">' +
                                     '                                   <a href="#" class="menu-link px-3 edit_row" data-id="' + data.publisher.id + '">Edit</a>' +
                                     '                               </div>\n' +
+                                    '<div class="menu-item px-3">' +
+                                    '                                   <a href="#" class="menu-link px-3 credentials" data-email="' + data.publisher.user.email + '" data-password="' + data.publisher.name.replace(" ", "") + '@' + data.publisher.id + '">Credentials</a>' +
+                                    '                               </div>\n' +
                                     '                                <div class="menu-item px-3">\n' +
                                     '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.publisher.id + '">Delete</a>\n' +
                                     '                                </div>\n' +
                                     '                            </div>']).draw();
                                     KTMenu.createInstances();
                                     $('#kt_modal_add_publisher_form button[type="reset"]').click();
-
                                 } else {
                                     Swal.fire({
                                         text: "Something went wrong ! please try later.",
@@ -940,10 +1117,13 @@
         $('#kt_modal_edit_publisher_form').on('submit', function (e) {
             e.preventDefault();
             var thematics = [];
-            $('#kt_modal_edit_publisher_form select[name="thematics"]').map(function(i, v){
-                thematics.push({'val':$(v).val(),'countries':$(v).parents('.them').find('select[name="country"]').val()});
+            $('#kt_modal_edit_publisher_form select[name="thematics"]').map(function (i, v) {
+                if ($(this).val() != "" && $(v).parents('.them').find('select[name="country"]').val().length != 0) thematics.push({
+                    'val': $(v).val(),
+                    'countries': $(v).parents('.them').find('select[name="country"]').val()
+                });
             });
-            if (validator1) {
+            if (validator1 && thematics.length != 0) {
                 validator1.validate().then(function (status) {
                     if (status == 'Valid') {
                         $('.indicator-progress').show();
@@ -955,6 +1135,7 @@
                             data: {
                                 id: id,
                                 name: $('#kt_modal_edit_publisher_form input[name="name"]').val(),
+                                email: $('#kt_modal_edit_publisher_form input[name="email"]').val(),
                                 leads_types: $('#kt_modal_edit_publisher_form select[name="leads_types"]').val(),
                                 costs_types: $('#kt_modal_edit_publisher_form select[name="costs_types"]').val(),
                                 sale_percentage: $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(),
@@ -980,7 +1161,7 @@
                                     DTdata[6] = $('#kt_modal_edit_publisher_form select[name="costs_types"] option:selected').text();
                                     DTdata[7] = $('#kt_modal_edit_publisher_form input[name="unit_price"]').val();
                                     table.row(tr).data(DTdata).draw();
-
+                                    $('#kt_modal_edit_publisher_form button[data-bs-dismiss="modal"]').click();
                                 } else {
                                     Swal.fire({
                                         text: "Something went wrong ! please try later.",

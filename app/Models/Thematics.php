@@ -18,7 +18,7 @@ class Thematics extends Model
      */
     public function countries()
     {
-        return $this->hasMany(thematics_countries::class,'thematic_id');
+        return $this->hasMany(Thematics_countries::class,'thematic_id');
     }
 
     /**

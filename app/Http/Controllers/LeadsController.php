@@ -73,7 +73,6 @@ class LeadsController extends Controller
                 $q->where('publisher_id', '=', \auth()->user()->account->id);
             })->get();
         }
-
         return Datatables::of($data)
             ->addColumn('id_lead', function ($row) {
                 return $row->lead->id;
@@ -116,7 +115,8 @@ class LeadsController extends Controller
             ->addColumn('web_page_name', function ($row) {
                 return '';
             })->addColumn('country', function ($row) {
-                return Countries::getCountry(strtoupper($row->lead->country));
+                //return Countries::getCountry(strtoupper($row->lead->country));
+                return '';
             })->addColumn('web_page_url', function ($row) {
                 return '';
             })->addColumn('sale_status_comment', function ($row) {

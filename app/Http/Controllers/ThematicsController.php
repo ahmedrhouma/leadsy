@@ -24,10 +24,10 @@ class ThematicsController extends Controller
         }
         $thematic = Thematics::create($request->all());
         if ($thematic) {
-            foreach ($request->countries as $country) {
+            /*foreach ($request->countries as $country) {
                 $thematic->countries()->create(['country' => $country, 'status' => 1]);
             }
-            $thematic = $thematic->load('countries');
+            $thematic = $thematic->load('countries');*/
             return Response()->json(['success' => true, 'thematic' => $thematic]);
         }
         return Response()->json(['success' => false]);
@@ -35,7 +35,7 @@ class ThematicsController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), ['id' => 'required|exists:Thematics,id', 'name' => 'required', 'start_date' => 'required'], $messages = [
+        $validator = Validator::make($request->all(), ['id' => 'required|exists:thematics,id', 'name' => 'required', 'start_date' => 'required'], $messages = [
             'required' => 'The :attribute field is required.',
         ]);
         if ($validator->fails()) {
@@ -44,13 +44,13 @@ class ThematicsController extends Controller
         $thematic = Thematics::find($request->id);
         if ($thematic) {
             $thematic->update($request->all());
-            $thematic->countries()->delete();
+            /*$thematic->countries()->delete();
             if (isset($request->countries)) {
                 foreach ($request->countries as $country) {
                     $thematic->countries()->create(['country' => $country, 'status' => 1]);
                 }
             }
-            $thematic = $thematic->load('countries');
+            $thematic = $thematic->load('countries');*/
             return Response()->json(['success' => true, 'thematic' => $thematic]);
         }
         return Response()->json(['success' => false]);
@@ -60,7 +60,7 @@ class ThematicsController extends Controller
     {
         $thematic = Thematics::find($request->id);
         if ($thematic) {
-            return Response()->json(['success' => true, 'thematic' => $thematic->load('countries')]);
+            return Response()->json(['success' => true, 'thematic' => $thematic]);
         }
         return Response()->json(['success' => false]);
     }

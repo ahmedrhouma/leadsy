@@ -38,6 +38,6 @@ class CampaignsLeads extends Model
      */
     public function campaign()
     {
-        return $this->belongsTo(campaigns::class, 'campaign_id');
+        return $this->belongsTo(Campaigns::class, 'campaign_id');
     }
 }

@@ -61,10 +61,10 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($email.$request->ip());
         });
         Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('username', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
-            if ($user &&
-                Hash::check($request->password, $user->password)) {
+            if ($user && Hash::check($request->password, $user->password)) {
+
                 return $user;
             }
         });

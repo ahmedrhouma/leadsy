@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\CampaignPublisher;
-use App\Models\campaigns;
+use App\Models\Campaigns;
 use App\Models\CampaignsLeads;
 use App\Models\Leads;
 use App\Models\Publishers_thematics;
+use Cassandra\Session;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class DashboardController extends Controller
 {
@@ -19,7 +22,7 @@ class DashboardController extends Controller
         ];
         switch (auth()->user()->profile) {
             case 2:
-                $campaigns = campaigns::with('leads')->where('advertiser_id',auth()->user()->account->id)->withCount(['leads'])->get();
+                $campaigns = Campaigns::with('leads')->where('advertiser_id',auth()->user()->account->id)->withCount(['leads'])->get();
                 $options['leads'] =  $campaigns->sum('leads_count');
                 $options['campaigns'] = $campaigns->count();
                 $options['countries'] = count(array_unique(array_merge(...$campaigns->pluck('countriesName'))));
@@ -34,4 +37,5 @@ class DashboardController extends Controller
         }
         return view(auth()->user()->getAccountName().'.dashboard',$options);
     }
+
 }

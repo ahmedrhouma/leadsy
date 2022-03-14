@@ -7,7 +7,7 @@
     <meta property="og:locale" content="en_US"/>
     <meta property="og:type" content="article"/>
     <meta property="og:title" content="Leadsy"/>
-    <link rel="shortcut icon" href="/metronic8/demo9/assets/media/logos/favicon.ico"/>
+    <link rel="shortcut icon" href="{{asset('assets/media/logos/favicon.png')}}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
@@ -18,7 +18,7 @@
     <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(assets/media/illustrations/sigma-1/14.png">
         <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
             <a href="#" class="mb-12">
-                <img alt="Logo" src="{{asset('assets/media/logos/logo-1.svg')}}" class="h-40px"/>
+                <img alt="Logo" src="{{asset('assets/media/logos/logo.png')}}" class="h-60px"/>
             </a>
             <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                 <!--begin::Form-->
@@ -49,7 +49,7 @@
                         <input class="form-control form-control-lg form-control-solid" type="password" name="password"/>
                     </div>
                     <div class="text-center">
-                        <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                        <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-purple text-white w-100 mb-5">
                             <span class="indicator-label">Continue</span>
                             <span class="indicator-progress">Please wait...
 									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -60,9 +60,8 @@
         </div>
         <div class="d-flex flex-center flex-column-auto p-10">
             <div class="d-flex align-items-center fw-bold fs-6">
-                <a href="https://keenthemes.com" class="text-muted text-hover-primary px-2">About</a>
-                <a href="mailto:support@keenthemes.com" class="text-muted text-hover-primary px-2">Contact</a>
-                <a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2">Contact Us</a>
+                <a href="https://leadsy.pro" class="text-muted text-hover-primary px-2">About</a>
+                <a href="#" class="text-muted text-hover-primary px-2">Contact Us</a>
             </div>
         </div>
     </div>

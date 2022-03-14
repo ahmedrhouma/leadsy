@@ -48,22 +48,30 @@ class Publishers extends Model
      */
     public function campaigns()
     {
-        return $this->belongsToMany(campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
+        return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
     }
  /**
      * Get the user associated with the advertiser.
      */
-    public function userInfo()
+    public function user()
     {
         return $this->hasOne(User::class,'account_id')->where('profile','3');
     }
-    
+    /**
+     * Get the landing associated with the advertiser.
+     */
+    public function landings()
+    {
+        return $this->hasMany(LandingPages::class,'publisher_id');
+    }
+
     protected static function booted()
     {
         self::deleting(function ($model) {
             $model->thematics()->detach();
             $model->leadsTypes()->detach();
             $model->costsTypes()->detach();
+            $model->user()->delete();
         });
     }
 }

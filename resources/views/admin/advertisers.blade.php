@@ -240,13 +240,10 @@
                 <tbody class="text-gray-600 fw-bold">
                 <!--begin::Table row-->
                 @foreach($advertisers as $advertiser)
-                    <tr>
+                    <tr data-email="{{$advertiser->user->email}}">
                         <td>{{ $advertiser->id }}</td>
                         <!--begin::User=-->
                         <td>{{ $advertiser->name }}</td>
-                        <!--end::User=-->
-                        <!--begin::Role=-->
-                        <!--begin::Last login=-->
                         <td>
                             @if($advertiser->campaigns->count() != 0)
                                 @foreach(array_unique($advertiser->campaigns->each->thematics->pluck('name')->toArray()) as $thematic)
@@ -283,6 +280,9 @@
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 edit_row" data-id="{{ $advertiser->id }}">Edit</a>
+                                </div> <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $advertiser->user->email }}" data-password="{{ str_replace(' ','',$advertiser->name).'@'.$advertiser->id }}">Credentials</a>
                                 </div>
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
@@ -340,6 +340,14 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
+                                <!--end::Input-->
+                            </div>
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -404,8 +412,15 @@
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
                                 <!--end::Input-->
                             </div>
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                                <!--end::Input-->
+                            </div>
                             <!--end::Input group-->
-
                         </div>
                         <!--end::Scroll-->
                         <!--begin::Actions-->
@@ -422,6 +437,38 @@
                         <!--end::Actions-->
                     </form>
                     <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <div class="modal fade" id="kt_modal_credentials_advertiser" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_edit_user_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bolder">Default Credentials</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+										</svg>
+									</span>
+                    </div>
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <div class="credentials_body"></div>
                 </div>
                 <!--end::Modal body-->
             </div>
@@ -492,7 +539,12 @@
             tr = $(this).parents('tr');
             let data = table.row($(this).parents('tr')).data();
             $('#kt_modal_edit_advertiser_form input[name="name"]').val(data[1]);
+            $('#kt_modal_edit_advertiser_form input[name="email"]').val(tr.data('email'));
             $('#kt_modal_edit_advertiser').modal('show');
+        });
+        $(document).on('click', '.credentials', function () {
+            $('.credentials_body').html('Login : '+ $(this).data('email')+'<br> Pass : '+$(this).data('password'));
+            $('#kt_modal_credentials_advertiser').modal('show');
         });
         $('#kt_modal_add_advertiser_form').on('submit', function (e) {
             e.preventDefault();
@@ -504,6 +556,7 @@
                 dataType: 'JSON',
                 data: {
                     name: $('#kt_modal_add_advertiser_form input[name="name"]').val(),
+                    email: $('#kt_modal_add_advertiser_form input[name="email"]').val(),
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
@@ -530,13 +583,15 @@
                         '                                <div class="menu-item px-3">\n' +
                         '                                    <a href="#" class="menu-link px-3 edit_row" data-id="' + data.advertiser.id + '">Edit</a>\n' +
                         '                                </div>\n' +
-                        '                                <!--end::Menu item-->\n' +
-                        '                                <!--begin::Menu item-->\n' +
+                        '                                <div class="menu-item px-3">' +
+                            '                                   <a href="#" class="menu-link px-3 credentials" data-email="' + data.advertiser.user.email + '" data-password="'+data.advertiser.name.replace(" ", "")+'@'+data.advertiser.id+'">Credentials</a>' +
+                            '                               </div>\n' +
                         '                                <div class="menu-item px-3">\n' +
                         '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.advertiser.id + '">Delete</a>\n' +
                         '                                </div>\n' +
                         '                                <!--end::Menu item-->\n' +
                         '                            </div>']).draw();
+                        $('#kt_modal_add_advertiser_form button[data-bs-dismiss="modal"]').click();
                         KTMenu.createInstances();
                     } else {
                         Swal.fire({
@@ -561,6 +616,7 @@
                 data: {
                     id: id,
                     name: $('#kt_modal_edit_advertiser_form input[name="name"]').val(),
+                    email: $('#kt_modal_edit_advertiser_form input[name="email"]').val(),
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
@@ -574,6 +630,7 @@
                             timer: 1500
                         });
                         $(tr.find('td')[1]).text(data.advertiser.name);
+                        $('#kt_modal_edit_advertiser_form button[data-bs-dismiss="modal"]').click();
                     } else {
                         Swal.fire({
                             text: "Something went wrong ! please try later.",

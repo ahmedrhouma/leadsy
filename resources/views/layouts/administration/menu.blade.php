@@ -42,7 +42,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link @if (\Route::is('admin.negociation')) active @endif" href="negociation" title="Negociation room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('admin.negotiations')) active @endif" href="{{ route('admin.negotiations') }}" title="Negociation room" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: assets/media/icons/duotune/communication/com007.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">

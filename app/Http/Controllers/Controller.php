@@ -36,4 +36,40 @@ class Controller extends BaseController
             return ['content'=> $note->content,'created_at'=>$note->created_at->format('h:i d-M-Y')];
         });
     }
+    public function successfulResponse($options = [])
+    {
+        $default = [
+            'success' => true,
+            'alert' => [
+                'title' => trans('messages.operation_successful'),
+                'icon' => 'success',
+                'showConfirmButton' => false,
+                'timer' => 1500
+            ]
+        ];
+        return response()->json(array_merge_recursive_distinct($default, $options));
+    }
+
+    public function dataResponse($options = [])
+    {
+        $default = [
+            'success' => true,
+            'data' => []
+        ];
+        return response()->json(array_merge_recursive_distinct($default, $options));
+    }
+
+    public function failedResponse($options = [])
+    {
+        $default = [
+            'success' => false,
+            'alert' => [
+                'title' => trans('messages.operation_failed'),
+                'html' => trans('messages.reload_page_try_again'),
+                'icon' => 'error',
+                'showConfirmButton' => true,
+            ],
+        ];
+        return response()->json(array_merge_recursive_distinct($default, $options));
+    }
 }

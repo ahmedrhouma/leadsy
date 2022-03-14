@@ -133,16 +133,10 @@
                 </div>
                 <!--end::Toolbar-->
             </div>
-            <!--end::Card toolbar-->
         </div>
-        <!--end::Card header-->
-        <!--begin::Card body-->
         <div class="card-body pt-0">
-            <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_campaigns_table">
-                <!--begin::Table head-->
                 <thead>
-                <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th>ID</th>
                     <th>Name</th>
@@ -158,14 +152,10 @@
                     <th>Unit price</th>
                     <th>Actions</th>
                 </tr>
-                <!--end::Table row-->
                 </thead>
-                <!--end::Table head-->
-                <!--begin::Table body-->
                 <tbody class="text-gray-600 fw-bold">
                 @foreach($campaigns as $campaign)
                     <tr>
-
                         <td>{{$campaign->id}}</td>
                         <td>{{$campaign->name}}</td>
                         <td>{{$campaign->created_at}}</td>
@@ -192,38 +182,94 @@
                         <td>{{$campaign->leads_vmax}}</td>
                         <td>{{$campaign->costsTypes->name}}</td>
                         <td>{{$campaign->selling_price}}</td>
-                        <!--begin::Action=-->
                         <td class="text-end">
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                 <span class="svg-icon svg-icon-5 m-0">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 										<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
 									</svg>
 								</span>
-                                <!--end::Svg Icon--></a>
-                            <!--begin::Menu-->
+                            </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">View</a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" data-kt-subscriptions-table-filter="delete_row" class="menu-link px-3">Delete</a>
-                                </div>
-                                <!--end::Menu item-->
+                                @if((intval($campaign->leads_vmax) - intval($campaign->leads_count)) > 0)
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">Upload</a>
+                                    </div>
+                                @endif
                             </div>
-                            <!--end::Menu-->
                         </td>
-                        <!--end::Action=-->
                     </tr>
                 @endforeach
                 </tbody>
-                <!--end::Table body-->
             </table>
-            <!--end::Table-->
         </div>
-        <!--end::Card body-->
+    </div>
+    <div class="modal fade" id="kt_modal_upload_leads" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_edit_user_header">
+                    <h2 class="fw-bolder">Upload leads</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+										</svg>
+									</span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <form id="kt_modal_upload_leads_form" class="form" action="#">
+                        <div class="fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Source</label>
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" name="source">
+                                <option></option>
+                                <option value="1">Landing Page</option>
+                            </select>
+                        </div>
+                        <div class="fv-row fv-plugins-icon-container">
+                            <!--begin::Label-->
+                            <label class="required form-label">Source ID</label>
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" name="source_id">
+                                <option></option>
+                                @foreach($landings as $landing)
+                                    <option value="{{ $landing->id }}">{{ $landing->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="fv-row fv-plugins-icon-container">
+                            <div class="dropzone" id="kt_dropzonejs_example_1">
+                                <!--begin::Message-->
+                                <div class="dz-message needsclick">
+                                    <!--begin::Icon-->
+                                    <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                    <!--end::Icon-->
+
+                                    <!--begin::Info-->
+                                    <div class="ms-4">
+                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop file here or click to
+                                            upload.</h3>
+                                        <span class="fs-7 fw-bold text-gray-400">Upload your contacts csv file</span>
+                                    </div>
+                                    <!--end::Info-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary ">
+                                <span class="indicator-label">Upload</span>
+                                <span class="indicator-progress">Please wait...
+												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -231,10 +277,62 @@
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script>
+        let id;
+        let fileDT;
+        let myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+            url: "https://keenthemes.com/scripts/void.php",
+            paramName: "file",
+            maxFiles: 10,
+            maxFilesize: 10,
+            acceptedFiles: ".csv",
+            addRemoveLinks: true,
+            accept: function (file, done) {
+                fileDT = file;
+            }
+        });
         $(document).ready(function () {
+
             var table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
                 lengthMenu: [[5, 10, 20], [5, 10, 20]],
+            });
+            $(document).on('click', '.upload', function () {
+                id = $(this).data('id');
+                $('#kt_modal_upload_leads').modal('show');
+            });
+            $('#kt_modal_upload_leads_form').on('submit', function (e) {
+                e.preventDefault();
+                $('.indicator-progress').show();
+                $('.indicator-label').hide();
+                var form_data = new FormData();
+                form_data.append('file', fileDT);
+                form_data.append('id_campaign', id);
+                form_data.append('source', $('#kt_modal_upload_leads_form select[name="source"]').val());
+                form_data.append('source_id', $('#kt_modal_upload_leads_form select[name="source_id"]').val());
+                form_data.append('_token', '{{ csrf_token() }}');
+                $.ajax({
+                    url: '{{ route('publisher.leads.upload') }}',
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                text: data.count + " lead successfully uploaded",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            $('.indicator-progress').hide();
+                            $('.indicator-label').show();
+                            $('#kt_modal_upload_leads button[data-bs-dismiss="modal"]').click();
+                        }
+                    }
+                });
             });
             $('.columnToggleBtn').on('click', function (e) {
                 var column = table.column($(this).attr('data-column'));

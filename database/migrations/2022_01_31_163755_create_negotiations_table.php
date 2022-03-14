@@ -15,9 +15,12 @@ class CreateNegotiationsTable extends Migration
     {
         Schema::create('negotiations', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('status');
+            $table->unsignedTinyInteger('status');
+            $table->unsignedTinyInteger('part_type');
+            $table->integer('part_id');
             $table->foreignId('campaign_id')->constrained('campaigns');
-            $table->timestamps();
+            $table->date('start_date');
+            $table->date('end_date');
         });
     }
 

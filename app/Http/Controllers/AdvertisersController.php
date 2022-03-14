@@ -13,7 +13,7 @@ class AdvertisersController extends Controller
     public function index()
     {
         $advertisers = Advertisers::all();
-        $advertisers->load(['campaigns','campaigns.thematics']);
+        $advertisers->load(['campaigns','campaigns.thematics','user']);
         return view('admin.advertisers',['advertisers'=>$advertisers]);
     }
 
@@ -29,20 +29,22 @@ class AdvertisersController extends Controller
         $advertiser = Advertisers::create(['name' => $request->name, 'status' => 1]);
         if ($advertiser) {
             $user = User::create([
-                'username' => $request->name,
+                'username' => $advertiser->name,
+                'email' => $request->email,
                 'profile' => 2,
                 'account_id' => $advertiser->id,
                 'role' => 0,
                 'status' => 1,
-                'password' => Hash::make($request->name.$advertiser->id),
+                'password' => Hash::make(str_replace(' ','',$advertiser->name).'@'.$advertiser->id),
             ]);
+            $advertiser->load('user');
             return Response()->json(['success' => true, 'advertiser' => $advertiser]);
         }
         return Response()->json(['success' => false]);
     }
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), ['id' => 'required|exists:Advertisers,id', 'name' => 'required'], $messages = [
+        $validator = Validator::make($request->all(), ['id' => 'required|exists:advertisers,id', 'name' => 'required'], $messages = [
             'required' => 'The :attribute field is required.',
         ]);
         if ($validator->fails()) {
@@ -50,7 +52,9 @@ class AdvertisersController extends Controller
         }
         $advertiser = Advertisers::find($request->id);
         if ($advertiser) {
+            $advertiser->load('user');
             $advertiser->update(['name' => $request->name]);
+            $advertiser->user->update(['email' => $request->email]);
             if ($advertiser->wasChanged()){
                 return Response()->json(['success' => true, 'advertiser' => $advertiser]);
             }
@@ -61,6 +65,7 @@ class AdvertisersController extends Controller
     {
         $advertiser = Advertisers::find($request->id);
         if ($advertiser) {
+            $advertiser->load('user');
             return Response()->json(['success' => true, 'publisher' => $advertiser]);
         }
         return Response()->json(['success' => false]);

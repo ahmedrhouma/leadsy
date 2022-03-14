@@ -17,12 +17,12 @@ class Advertisers extends Model
      */
     public function campaigns()
     {
-        return $this->hasMany(campaigns::class,'advertiser_id');
+        return $this->hasMany(Campaigns::class,'advertiser_id');
     }
      /**
      * Get the user associated with the advertiser.
      */
-    public function userInfo()
+    public function user()
     {
         return $this->hasOne(User::class,'account_id')->where('profile','2');
     }
@@ -31,6 +31,6 @@ class Advertisers extends Model
      */
     public function publishers()
     {
-        return $this->belongsToMany(campaigns::class, 'campaign_publishers', 'campaign_id', 'publisher_id')->withPivot(['buying_price']);
+        return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'campaign_id', 'publisher_id')->withPivot(['buying_price']);
     }
 }
