@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Campaigns extends Model
 {
     use HasFactory;
+    const status = [
+        0 => 'Active',
+        1 => 'In negotiation',
+        2 => 'Finished',
+    ];
     protected $guarded = [
         'id'
     ];

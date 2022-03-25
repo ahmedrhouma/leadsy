@@ -13,7 +13,7 @@
                 <!--begin: Pic-->
                 <div class="me-7 mb-4">
                     <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                        <img src="@if(Storage::disk('public')->exists(auth()->user()->photo)){{Storage::url(auth()->user()->photo)}}@else{{asset('assets/media/svg/avatars/blank.svg')}}@endif" alt="image"/>
+                        <img src="{{auth()->user()->photo}}" alt="image"/>
                     </div>
                 </div>
                 <!--end::Pic-->
@@ -123,7 +123,7 @@
                         <label class="col-lg-4 col-form-label fw-bold fs-6">Avatar</label>
                         <div class="col-lg-8">
                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('{{asset('assets/media/svg/avatars/blank.svg')}}')">
-                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url(@if(Storage::disk('public')->exists(auth()->user()->photo)){{Storage::url(auth()->user()->photo)}}@endif)"></div>
+                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{auth()->user()->photo}})"></div>
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                     <i class="bi bi-pencil-fill fs-7"></i>
                                     <input type="file" name="avatar" accept=".png, .jpg, .jpeg"/>

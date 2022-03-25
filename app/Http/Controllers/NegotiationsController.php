@@ -23,7 +23,7 @@ class NegotiationsController extends Controller
                         $q->whereNotIn('profile', [User::ADMIN_PROFILE]);
                     });
                 }]);
-            }])->get();
+            }])->orderBy('created_at','DESC')->get();
             $options['negotiations']->map(function ($counts) {
                 return $counts->total_unread = $counts->negotiations->pluck('unread_messages_count')->sum();
             });
@@ -31,9 +31,11 @@ class NegotiationsController extends Controller
         } elseif (auth()->user()->profile == 2) {
             $options['negotiations'] = Negotiations::with(['advertiser', 'campaign', 'lastMessage'])->withCount(['unreadMessages' => function ($q) {
                 return $q->where('receiver_id', auth()->user()->id);
-            }])->get();
+            }])->orderBy('start_date','DESC')->get();
         } elseif (auth()->user()->profile == 3) {
-            $options['negotiations'] = Negotiations::with('publisher', 'campaign', 'lastMessage')->get();
+            $options['negotiations'] = Negotiations::with('publisher', 'campaign', 'lastMessage')->withCount(['unreadMessages' => function ($q) {
+                return $q->where('receiver_id', auth()->user()->id);
+            }])->orderBy('start_date','DESC')->get();
         }
         return view(auth()->user()->getAccountName() . '.negotiations', $options);
     }
@@ -61,7 +63,7 @@ class NegotiationsController extends Controller
         $publishers = [];
         foreach ($request->publishers as $publisherId) {
             if ($publisher = Publishers::find($publisherId)) {
-                $negotiation = Negotiations::updateOrCreate(['campaign_id' => $request->campaign_id, 'part_type' => Negotiations::PART_TYPE_PUBLISHER, 'part_id' => $publisherId], ['campaign_id' => $request->campaign_id, 'part_type' => Negotiations::PART_TYPE_PUBLISHER, 'part_id' => $publisherId, 'status' => 1, 'start_date' => date('Y-m-d')]);
+                $negotiation = Negotiations::updateOrCreate(['campaign_id' => $request->campaign_id, 'part_type' => Negotiations::PART_TYPE_PUBLISHER, 'part_id' => $publisherId], ['campaign_id' => $request->campaign_id, 'part_type' => Negotiations::PART_TYPE_PUBLISHER, 'part_id' => $publisherId, 'status' => 0, 'start_date' => date('Y-m-d')]);
                 if ($negotiation->wasRecentlyCreated) {
                     $publishers[] = ['publisher_id' => $publisher->user->id, 'negotiation_id' => $negotiation->id];
                 }
@@ -85,12 +87,12 @@ class NegotiationsController extends Controller
         $campaign = Campaigns::find($request->campaign_id);
         $campaign->update([
             'selling_price' => $request->selling_price
-        ]);
+]);
         foreach ($request->buying_price as $buying_price){
-            CampaignPublisher::where(['campaign_id'=>$request->campaign_id,'publisher_id'=>$buying_price['id']])->update(['buying_price'=>$buying_price['value']]);
+            CampaignPublisher::updateOrCreate(['campaign_id'=>$request->campaign_id,'publisher_id'=>$buying_price['id']],['buying_price'=>$buying_price['value'],'campaign_id'=>$request->campaign_id,'publisher_id'=>$buying_price['id'],'status'=>1,'start_date'=>date('Y-m-d h:i:s')]);
         }
         return Response()->json([
-            'success' => $campaign->wasChanged()
+            'success' => true
         ]);
     }
 }

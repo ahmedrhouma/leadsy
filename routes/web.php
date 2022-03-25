@@ -1,8 +1,9 @@
 <?php
 
 use App\Models\Publishers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\App;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +14,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/lang/{locale}', function ($locale) {
+    if (!in_array($locale, ['en', 'fr'])) {
+        abort(400);
+    }
+   App::setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+})->name('lang.change');
 Route::get('/profile',[\App\Http\Controllers\ProfileController::class,'index'])->middleware('auth')->name('profile');
 Route::post('/profile/update',[\App\Http\Controllers\ProfileController::class,'update'])->middleware('auth')->name('profile.update');
 
 Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
-
     Route::get('/leads',[\App\Http\Controllers\LeadsController::class,'index'])->name('admin.leads');
     Route::post('/thematic/countries', [\App\Http\Controllers\ThematicsController::class,'countries'])->name('admin.thematics.countries');
     Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('admin.campaigns.show');
     Route::post('/publisher/sources', [\App\Http\Controllers\PublishersController::class,'sources'])->name('admin.publishers.sources');
-
 });
+
 Route::group(['prefix'=>'admin', 'middleware' => ['auth','checkRole:admin']], function () {
     Route::get('/dashboard',[\App\Http\Controllers\DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/reports',[\App\Http\Controllers\ReportsController::class,'reports'])->name('admin.reports');
@@ -51,6 +59,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth','checkRole:admin']], fu
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('admin.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('admin.campaigns.destroy');
     Route::post('/campaigns/show', [\App\Http\Controllers\CampaignsController::class,'show'])->name('admin.campaigns.show');
+    Route::post('/campaigns/view', [\App\Http\Controllers\CampaignsController::class,'view'])->name('admin.campaigns.view');
+    Route::post('/campaigns/negotiations', [\App\Http\Controllers\CampaignsController::class,'negotiations'])->name('admin.campaigns.negotiationsHeader');
 
     Route::get('/publishers',[\App\Http\Controllers\PublishersController::class,'index'])->name('admin.publishers');
     Route::post('/publisher', [\App\Http\Controllers\PublishersController::class,'store'])->name('admin.publishers.store');
@@ -96,6 +106,8 @@ Route::group(['prefix'=>'publisher', 'middleware' => ['auth','checkRole:publishe
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('publisher.campaigns.destroy');
 
     Route::get('/offers', [\App\Http\Controllers\CampaignsController::class,'offers'])->name('publisher.offers');
+    Route::get('/opportunities', [\App\Http\Controllers\CampaignsController::class,'opportunities'])->name('publisher.opportunities');
+    Route::post('/opportunities/request', [\App\Http\Controllers\CampaignsController::class,'requestNegotiation'])->name('publisher.opportunities.request');
     Route::get('/reports',[\App\Http\Controllers\ReportsController::class,'reports'])->name('publisher.reports');
 
     Route::get('/negotiations',[\App\Http\Controllers\NegotiationsController::class,'index'])->name('publisher.negotiations');
@@ -110,3 +122,9 @@ Route::group(['prefix'=>'publisher', 'middleware' => ['auth','checkRole:publishe
 Route::get('/error',function (){
     return view('error');
 })->name('error');
+Route::get('/',function (){
+    if (\Illuminate\Support\Facades\Auth::check()){
+        return redirect(route(Auth::user()->getAccountName().'.dashboard'));
+    }
+    return redirect('login');
+});

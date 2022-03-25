@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Thematic list
+    @lang('admin/thematics.page_title')
 @endsection
 @section('pageDescription')
-    List of all thematics
+    @lang('admin/thematics.page_description')
 @endsection
 @section('css')
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
@@ -26,7 +26,7 @@
 						</svg>
 					</span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-thematics-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                    <input type="text" data-kt-thematics-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="@lang('datatables.search')"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -46,7 +46,7 @@
 								<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Add Thematic
+                        @lang('admin/thematics.add_thematic')
                     </button>
                     <!--end::Add Thematic-->
                 </div>
@@ -63,13 +63,13 @@
                 <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>@lang('admin/thematics.id')</th>
+                    <th>@lang('admin/thematics.name')</th>
                     {{--<th>Country scope</th>--}}
-                    <th>Status</th>
-                    <th>Starting date</th>
-                    <th>Ending date</th>
-                    <th class="min-w-70px">Actions</th>
+                    <th>@lang('admin/thematics.status')</th>
+                    <th>@lang('admin/thematics.starting_date')</th>
+                    <th>@lang('admin/thematics.ending_date')</th>
+                    <th class="min-w-70px">@choice('admin/thematics.actions',2)</th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -107,10 +107,10 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $thematic->id }}">Edit</a>
+                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $thematic->id }}">@lang('admin/thematics.edit')</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 delete_row" data-id="{{ $thematic->id }}">Delete</a>
+                                    <a href="#" class="menu-link px-3 delete_row" data-id="{{ $thematic->id }}">@lang('admin/thematics.delete')</a>
                                 </div>
                             </div>
                         </td>
@@ -134,7 +134,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header" id="kt_modal_add_thematic_header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bolder">Add new thematic</h2>
+                        <h2 class="fw-bolder">@lang('admin/thematics.add_new_thematic')</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
@@ -157,7 +157,7 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Name</label>
+                                <label class="required fs-6 fw-bold mb-2">@lang('admin/thematics.name')</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" class="form-control form-control-solid" placeholder="" name="name" required/>
@@ -182,7 +182,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Starting date</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/thematics.starting_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateStart" name="startDate" required autocomplete="off">
@@ -193,7 +193,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="fs-6 fw-bold mb-2">Ending date</label>
+                                    <label class="fs-6 fw-bold mb-2">@lang('admin/thematics.ending_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateEnd" name="endDate" autocomplete="off">
@@ -213,10 +213,10 @@
                     <div class="modal-footer flex-center">
                         <!--begin::Button-->
                         <button type="reset" id="kt_modal_add_thematic_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
-                            Cancel
+                            @lang('admin/thematics.cancel')
                         </button>
                         <button type="submit" id="kt_modal_add_thematic_submit" class="btn btn-primary">
-                            <span class="indicator-label">Save</span>
+                            <span class="indicator-label">@lang('admin/thematics.save')</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -238,7 +238,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header" id="kt_modal_edit_thematic_header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bolder">Edit thematic</h2>
+                        <h2 class="fw-bolder">@lang('admin/thematics.edit_thematic')</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
@@ -261,7 +261,7 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Name</label>
+                                <label class="required fs-6 fw-bold mb-2">@lang('admin/thematics.name')</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" class="form-control form-control-solid" placeholder="" name="name"/>
@@ -284,33 +284,18 @@
                                 </select>
                                 <!--end::Input-->
                             </div>--}}
-
                             <div class="row g-9 mb-7">
-                                <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Starting date</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/thematics.starting_date')</label>
                                     <input class="form-control form-control-solid dateStart" name="startDate">
-                                    <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                                <!--end::Col-->
-                                <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="fs-6 fw-bold mb-2">Ending date</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
+                                    <label class="fs-6 fw-bold mb-2">@lang('admin/thematics.ending_date')</label>
                                     <input class="form-control form-control-solid dateEnd" name="endDate">
-                                    <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                                <!--end::Col-->
                             </div>
-                            <!--begin::Input group-->
-                            <!--end::Input group-->
                         </div>
                         <!--end::Scroll-->
                     </div>
@@ -319,12 +304,12 @@
                     <div class="modal-footer flex-center">
                         <!--begin::Button-->
                         <button type="reset" id="kt_modal_edit_thematic_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
-                            Cancel
+                            @lang('admin/thematics.cancel')
                         </button>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_modal_edit_thematic_submit" class="btn btn-primary">
-                            <span class="indicator-label">Save Changes</span>
+                            <span class="indicator-label">@lang('admin/thematics.save_changes')</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -344,7 +329,13 @@
     <script>
         let tr;
         let id;
-        let table = $("#kt_thematics_table").DataTable();
+        let table = $("#kt_thematics_table").DataTable({
+            "language": {
+                "zeroRecords": '@lang('datatables.zeroRecords')',
+                "info": '@lang('datatables.info')',
+                "infoEmpty": '@lang('datatables.infoEmpty')',
+            }
+        });
         $('[data-kt-thematics-filter="search"]').on('keyup', function (e) {
             table.search($(this).val()).draw();
         });
@@ -488,12 +479,12 @@
                                 $('.indicator-label').show();
                                 if (data.success) {
                                     Swal.fire({
-                                        text: "Thematic successfully created",
+                                        text: "{{trans('alert.success_action',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans('actions.created')])}}",
                                         icon: "success",
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    table.row.add([data.thematic.id, data.thematic.name, '<div class="badge badge-light-success">Active</div>', data.thematic.start_date, data.thematic.end_date, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions\n' +
+                                    table.row.add([data.thematic.id, data.thematic.name, '<div class="badge badge-light-success">Active</div>', data.thematic.start_date, data.thematic.end_date, '<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">@choice('admin/thematics.action',2)\n' +
                                     '                                <span class="svg-icon svg-icon-5 m-0">\n' +
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
                                     '<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>\n' +
@@ -502,17 +493,17 @@
                                     '                            </a>\n' +
                                     '                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">\n' +
                                     '                                <div class="menu-item px-3">' +
-                                    '                                   <a href="#" class="menu-link px-3 edit_row" data-id="' + data.thematic.id + '">Edit</a>' +
+                                    '                                   <a href="#" class="menu-link px-3 edit_row" data-id="' + data.thematic.id + '">@lang('admin/thematics.edit')</a>' +
                                     '                               </div>\n' +
                                     '                                <div class="menu-item px-3">\n' +
-                                    '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.thematic.id + '">Delete</a>\n' +
+                                    '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.thematic.id + '">@lang('admin/thematics.delete')</a>\n' +
                                     '                                </div>\n' +
                                     '                            </div>']).draw();
                                     KTMenu.createInstances();
                                     $('#kt_modal_add_thematic_cancel').click();
                                 } else {
                                     Swal.fire({
-                                        text: "Something went wrong ! please try later.",
+                                        text: "@lang('alert.error_general_text')",
                                         icon: "error",
                                         customClass: {
                                             confirmButton: "btn btn-primary"
@@ -524,7 +515,7 @@
                                 $('.indicator-progress').hide();
                                 $('.indicator-label').show();
                                 Swal.fire({
-                                    text: "Something went wrong ! please try later.",
+                                    text: "@lang('alert.error_general_text')",
                                     icon: "error",
                                     customClass: {
                                         confirmButton: "btn btn-primary"
@@ -545,7 +536,7 @@
             let id = $(this).data('id');
             Swal.fire({
                 icon: 'warning',
-                title: 'Your really want to delete this thematic ?',
+                title: "{{trans('alert.validation_message',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans('actions.delete')])}}",
                 showCancelButton: true,
                 confirmButtonText: "Yes Delete It",
                 cancelButtonText: 'Cancel',
@@ -566,7 +557,7 @@
                         success: function (data) {
                             if (data.success) {
                                 Swal.fire({
-                                    text: "Thematic successfully Removed",
+                                    text: "{{trans('alert.success_action',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans_choice('actions.delete',2)])}}",
                                     icon: "success",
                                     showConfirmButton: false,
                                     timer: 1500
@@ -574,7 +565,7 @@
                                 table.row(tr).remove().draw();
                             } else {
                                 Swal.fire({
-                                    text: "Something went wrong ! please try later.",
+                                    text: "@lang('alert.error_general_text')",
                                     icon: "error",
                                     customClass: {
                                         confirmButton: "btn btn-primary"
@@ -641,7 +632,7 @@
                                 $('.indicator-label').show();
                                 if (data.success) {
                                     Swal.fire({
-                                        text: "Thematic successfully updated",
+                                        text: "{{trans('alert.success_action',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans_choice('actions.update',2)])}}",
                                         icon: "success",
                                         showConfirmButton: false,
                                         timer: 1500
@@ -657,7 +648,7 @@
 
                                 } else {
                                     Swal.fire({
-                                        text: "Something went wrong ! please try later.",
+                                        text: "@lang('alert.error_general_text')",
                                         icon: "error",
                                         customClass: {
                                             confirmButton: "btn btn-primary"

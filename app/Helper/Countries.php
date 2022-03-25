@@ -4,6 +4,8 @@
 namespace App\Helper;
 
 
+use Illuminate\Support\Facades\Lang;
+
 class Countries
 {
     protected Static $countries = array(
@@ -514,7 +516,7 @@ class Countries
      */
     public static function getCountry($country)
     {
-        return static::$countries['en'][$country];
+        return static::$countries[Lang::locale()][$country];
     }
 
     /**
@@ -523,6 +525,6 @@ class Countries
      */
     public static function getCountries()
     {
-        return static::$countries['en'];
+        return static::$countries[Lang::locale()];
     }
 }

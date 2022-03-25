@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{Lang::locale()}}">
 <!--begin::Head-->
 <head>
     <base href="">
@@ -13,6 +13,7 @@
     <meta property="og:title" content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme"/>
     <meta property="og:url" content="https://keenthemes.com/metronic"/>
     <meta property="og:site_name" content="Keenthemes | Metronic"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8"/>
     <link rel="shortcut icon" href="/media/logos/favicon.ico"/>
     <!--begin::Fonts-->
@@ -29,7 +30,6 @@
     <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <!--end::Global Stylesheets Bundle-->
     @yield('css')
-
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -38,6 +38,8 @@
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root">
     <!--begin::Page-->
+    @routes
+
     <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Aside-->
         @admin
@@ -1075,7 +1077,8 @@
                                                         <!--end::Symbol-->
                                                         <!--begin::Title-->
                                                         <div class="mb-0 me-2">
-                                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">Banner {{asset('')}}assets</a>
+                                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">Banner {{asset('')}}
+                                                                assets</a>
                                                             <div class="text-gray-400 fs-7">Collection of banner
                                                                 images
                                                             </div>
@@ -1108,7 +1111,8 @@
                                                         <!--end::Symbol-->
                                                         <!--begin::Title-->
                                                         <div class="mb-0 me-2">
-                                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">Icon {{asset('')}}assets</a>
+                                                            <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bolder">Icon {{asset('')}}
+                                                                assets</a>
                                                             <div class="text-gray-400 fs-7">Collection of SVG icons
                                                             </div>
                                                         </div>
@@ -1429,7 +1433,7 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="@if(Storage::disk('public')->exists(auth()->user()->photo)){{Storage::url(auth()->user()->photo)}}@else{{asset('assets/media/svg/avatars/007-boy-2.svg')}}@endif"/>
+                                                <img alt="Logo" src="{{ auth()->user()->photo }}"/>
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -1447,7 +1451,7 @@
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                        <a href="{{ route('profile') }}" class="menu-link px-5">@lang('header.my_profile')</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu separator-->
@@ -1456,26 +1460,34 @@
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
                                         <a href="#" class="menu-link px-5">
-													<span class="menu-title position-relative">Language
-													<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-													<img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/united-states.svg')}}" alt=""/></span></span>
+                                             <span class="menu-title position-relative">@lang('header.language')
+                                                 @if(Lang::locale() == "en")
+                                                     <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@lang('header.english')
+                                                        <img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/united-states.svg')}}" alt=""/>
+                                                     </span>
+                                                 @elseif(Lang::locale() == "fr")
+                                                     <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@lang('header.french')
+                                                        <img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/france.svg')}}" alt=""/>
+                                                     </span>
+                                                 @endif
+                                            </span>
                                         </a>
                                         <!--begin::Menu sub-->
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="" class="menu-link d-flex px-5 active">
+                                                <a href="{{ route('lang.change','en') }}" class="menu-link d-flex px-5 @if(Lang::locale() == "en") active @endif">
 														<span class="symbol symbol-20px me-4">
 															<img class="rounded-1" src="{{asset('assets/media/flags/united-states.svg')}}" alt=""/>
-														</span>English</a>
+														</span>@lang('header.english')</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="" class="menu-link d-flex px-5">
+                                                <a href="{{ route('lang.change','fr') }}" class="menu-link d-flex px-5 @if(Lang::locale() == "fr") active @endif">
 														<span class="symbol symbol-20px me-4">
 															<img class="rounded-1" src="{{asset('assets/media/flags/france.svg')}}" alt=""/>
-														</span>French</a>
+														</span>@lang('header.french')</a>
                                             </div>
                                             <!--end::Menu item-->
                                         </div>
@@ -1484,7 +1496,7 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="menu-link px-5">Sign Out</a>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="menu-link px-5">@lang('header.sign_out')</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                             @csrf
                                         </form>
@@ -1523,7 +1535,14 @@
 <!--begin::Global Javascript Bundle(used by all pages)-->
 <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 @yield('javascript')
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Custom Javascript(used by this page)-->

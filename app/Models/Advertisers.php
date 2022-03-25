@@ -33,4 +33,11 @@ class Advertisers extends Model
     {
         return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'campaign_id', 'publisher_id')->withPivot(['buying_price']);
     }
+    /**
+     * Get the publishers associated with the advertiser.
+     */
+    public function negotiations()
+    {
+        return $this->hasMany(Negotiations::class, 'part_id')->where('part_type',Negotiations::PART_TYPE_ADVERTISER);
+    }
 }

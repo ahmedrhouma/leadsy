@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Publishers list
+    @lang('admin/publishers.page_title')
 @endsection
 @section('pageDescription')
-    List of all publishers
+    @lang('admin/publishers.page_description')
 @endsection
 @section('css')
     <style>
@@ -32,7 +32,7 @@
 					</span>
                     <!--end::Svg Icon-->
                     <input type="text" data-kt-publishers-table-filter="search"
-                           class="form-control form-control-solid w-250px ps-14" placeholder="Search"/>
+                           class="form-control form-control-solid w-250px ps-14" placeholder="@lang('datatables.search')"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -52,23 +52,23 @@
                                     fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Columns
+                        <!--end::Svg Icon-->@choice('datatables.column',2)
                     </button>
                     <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true"
                          id="kt-toolbar-filter">
                         <div class="px-7 py-5">
-                            <div class="fs-4 text-dark fw-bolder">Columns</div>
+                            <div class="fs-4 text-dark fw-bolder">@choice('datatables.column',2)</div>
                         </div>
                         <div class="separator border-gray-200"></div>
                         <div class="px-7 py-5">
                             <div class="mb-10">
-                                <label class="form-label fs-5 fw-bold mb-3">Columns :</label>
+                                <label class="form-label fs-5 fw-bold mb-3">@choice('datatables.column',2) :</label>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="0"/>
-                                        <span class="form-check-label text-gray-600">ID</span>
+                                        <span class="form-check-label text-gray-600">@lang('admin/publishers.id')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -76,7 +76,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="1"/>
-                                        <span class="form-check-label text-gray-600">Name</span>
+                                        <span class="form-check-label text-gray-600">@lang('admin/publishers.name')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -84,7 +84,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="2"/>
-                                        <span class="form-check-label text-gray-600">Thematics</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.thematic',2)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -92,7 +92,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="3"/>
-                                        <span class="form-check-label text-gray-600">Country Scope</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.country_scope',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -100,7 +100,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="4"/>
-                                        <span class="form-check-label text-gray-600">Leads Type</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.leads_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -108,7 +108,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="5"/>
-                                        <span class="form-check-label text-gray-600">Cost type</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.cost_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -116,7 +116,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="6"/>
-                                        <span class="form-check-label text-gray-600">Unit Price</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.unit_price',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -124,7 +124,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="7"/>
-                                        <span class="form-check-label text-gray-600">Sale%</span>
+                                        <span class="form-check-label text-gray-600">@lang('admin/publishers.sale')%</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -132,7 +132,7 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="8"/>
-                                        <span class="form-check-label text-gray-600">Creation date</span>
+                                        <span class="form-check-label text-gray-600">@lang('admin/publishers.creation_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -140,48 +140,34 @@
                                         class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox"
                                                checked="ckeched" data-column="9"/>
-                                        <span class="form-check-label text-gray-600">Actions</span>
+                                        <span class="form-check-label text-gray-600">@choice('admin/publishers.action',2)</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <button type="button" class="btn btn-light-primary me-3 expand_all toggle">
-                        Expand All
+                        @lang('datatables.expand_all')
                         <span class="svg-icon svg-icon-3 m-0 toggle-off">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<rect opacity="0.5" x="11" y="18" width="12"
-                                                                              height="2" rx="1"
-                                                                              transform="rotate(-90 11 18)"
-                                                                              fill="black"></rect>
-																		<rect x="6" y="11" width="12" height="2" rx="1"
-                                                                              fill="black"></rect>
-																	</svg>
-																</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                                <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                            </svg>
+                        </span>
                         <span class="svg-icon svg-icon-3 m-0 toggle-on">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<rect x="6" y="11" width="12" height="2" rx="1"
-                                                                              fill="black"></rect>
-																	</svg>
-																</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                            </svg>
+                        </span>
                     </button>
-                    <!--end::Menu 1-->
-                    <!--end::Filter-->
-                    <!--begin::Add publisher-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_add_publisher">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_publisher">
                         <span class="svg-icon svg-icon-2">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none">
-								<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                      transform="rotate(-90 11.364 20.364)" fill="black"/>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+								<rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black"/>
 								<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Add publisher
+                        @lang('admin/publishers.add_publisher')
                     </button>
                     <!--end::Add publisher-->
                 </div>
@@ -197,16 +183,16 @@
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th></th>
-                    <th>ID</th>
-                    <th class="min-w-125px">Name</th>
-                    <th class="min-w-125px">Thematics</th>
-                    <th class="min-w-125px">Country Scope</th>
-                    <th class="min-w-125px">Leads Type</th>
-                    <th class="min-w-125px">Cost type</th>
-                    <th class="min-w-125px">Unit Price</th>
-                    <th class="min-w-125px">Sale%</th>
-                    <th class="min-w-125px">Creation date</th>
-                    <th class="text-end min-w-100px">Actions</th>
+                    <th>@lang('admin/publishers.id')</th>
+                    <th class="min-w-125px">@lang('admin/publishers.name')</th>
+                    <th class="min-w-125px">@choice('admin/publishers.thematic',1)</th>
+                    <th class="min-w-125px">@choice('admin/publishers.country_scope',1)</th>
+                    <th class="min-w-125px">@choice('admin/publishers.lead_type',1)</th>
+                    <th class="min-w-125px">@choice('admin/publishers.cost_type',1)</th>
+                    <th class="min-w-125px">@choice('admin/publishers.unit_price',1)</th>
+                    <th class="min-w-125px">@lang('admin/publishers.sale')%</th>
+                    <th class="min-w-125px">@lang('admin/publishers.creation_date')</th>
+                    <th class="text-end min-w-100px">@choice('admin/publishers.action',2)</th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -288,17 +274,17 @@
                                 class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4"
                                 data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">Edit</a>
+                                    <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">@choice('actions.edit',1)</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $publisher->user->email }}" data-password="{{ str_replace(' ','',$publisher->name).'@'.$publisher->id }}">Credentials</a>
+                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $publisher->user->email }}" data-password="{{ str_replace(' ','',$publisher->name).'@'.$publisher->id }}">@lang('admin/publishers.credentials')</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 sources" data-id="{{ $publisher->id }}">Sources</a>
+                                    <a href="#" class="menu-link px-3 sources" data-id="{{ $publisher->id }}">@lang('admin/publishers.sources')</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 delete_row"
-                                       data-id="{{ $publisher->id }}">Delete</a>
+                                       data-id="{{ $publisher->id }}">@choice('actions.delete',1)</a>
                                 </div>
                             </div>
                         </td>
@@ -350,18 +336,15 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_add_user_header">
-                    <h2 class="fw-bolder">Add publisher</h2>
+                    <h2 class="fw-bolder">@lang('admin/publishers.add_publisher')</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
                          data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                                  transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                                  transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
                     </div>
                 </div>
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
@@ -371,18 +354,18 @@
                              data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
                              data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                             <div class="fv-row mb-7">
-                                <label class="required fw-bold fs-6 mb-2">Full Name</label>
+                                <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.full_name')</label>
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
                                        placeholder="Full name"/>
                             </div>
                             <div class="fv-row mb-7">
-                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.email')</label>
                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
                             </div>
                             <div class="row g-9 mb-7 them">
                                 <div class="d-flex col-5 flex-column mb-7 fv-row">
                                     <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">Thematic</span>
+                                        <span class="required">@choice('admin/publishers.thematic',1)</span>
                                     </label>
                                     <select name="thematics" aria-label="Select a Thematic" data-control="select2"
                                             data-placeholder="Select a Thematic..."
@@ -395,7 +378,7 @@
                                 </div>
                                 <div class="d-flex col-5 flex-column mb-7 fv-row">
                                     <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">Countries</span>
+                                        <span class="required">@choice('admin/publishers.country',2)</span>
                                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                            title="Country of origination"></i>
                                     </label>
@@ -423,7 +406,7 @@
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Leads type</span>
+                                    <span class="required">@choice('admin/publishers.lead_type',2)</span>
                                 </label>
                                 <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
                                         data-placeholder="Select a Leads type..."
@@ -437,7 +420,7 @@
                             </div>
                             <div class="row g-9 mb-7">
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
+                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
                                     <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
                                             data-placeholder="Select a Thematic..."
                                             data-dropdown-parent="#kt_modal_add_publisher"
@@ -451,7 +434,7 @@
                                 </div>
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.amount')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" class="form-control form-control-solid" name="unit_price">
@@ -461,7 +444,7 @@
                                 <div style="display: none"
                                      class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" max="100" class="form-control form-control-solid"
@@ -477,7 +460,7 @@
                                 Cancel
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                <span class="indicator-label">Save</span>
+                                <span class="indicator-label">@lang('actions.save')</span>
                                 <span class="indicator-progress">Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
@@ -492,18 +475,18 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_edit_user_header">
-                    <h2 class="fw-bolder">Edit publisher</h2>
+                    <h2 class="fw-bolder">@lang('admin/publishers.edit_publisher')</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
                          data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                                  transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                                  transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                      transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
                     </div>
                 </div>
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
@@ -513,12 +496,12 @@
                              data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
                              data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                             <div class="fv-row mb-7">
-                                <label class="required fw-bold fs-6 mb-2">Full Name</label>
+                                <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.full_name')</label>
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
                                        placeholder="Full name" value="Emma Smith"/>
                             </div>
                             <div class="fv-row mb-7">
-                                <label class="required fw-bold fs-6 mb-2">Email</label>
+                                <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.email')</label>
                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" value="Email"/>
                             </div>
                             <div class="thematics">
@@ -526,7 +509,7 @@
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Leads type</span>
+                                    <span class="required">@choice('admin/publishers.lead_type',2)</span>
                                 </label>
                                 <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
                                         data-placeholder="Select a Leads type..."
@@ -540,7 +523,7 @@
                             </div>
                             <div class="row g-9 mb-7">
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
+                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
                                     <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
                                             data-placeholder="Select a Thematic..."
                                             data-dropdown-parent="#kt_modal_edit_publisher"
@@ -554,7 +537,7 @@
                                 </div>
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
+                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.amount',2)</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" class="form-control form-control-solid" name="unit_price">
@@ -564,7 +547,7 @@
                                 <div style="display: none"
                                      class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" max="100" class="form-control form-control-solid"
@@ -576,12 +559,13 @@
                         </div>
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-                                Cancel
+                                @lang('actions.cancel')
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-publishers-modal-action="submit">
-                                <span class="indicator-label">Save changes</span>
+                                <span class="indicator-label">@lang('actions.save_changes')</span>
                                 <span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
                             </button>
                         </div>
                     </form>
@@ -597,17 +581,17 @@
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_edit_user_header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Default Credentials</h2>
+                    <h2 class="fw-bolder">@lang('admin/publishers.default_credentials')</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
                     </div>
                 </div>
                 <!--end::Modal header-->
@@ -625,7 +609,7 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_edit_user_header">
-                    <h2 class="fw-bolder">Publisher Sources</h2>
+                    <h2 class="fw-bolder">@lang('admin/publishers.publisher_sources')</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -640,18 +624,16 @@
                         <div class="row g-9 mb-7 source_body">
                             <div class="d-flex col-4 flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Source</span>
+                                    <span class="required">@lang('admin/publishers.sources')</span>
                                 </label>
-                                <select name="source" aria-label="Select a Source" data-control="select2"
-                                        data-placeholder="Select a Source..."
-                                        class="form-select form-select-solid fw-bolder">
+                                <select name="source" aria-label="Select a Source" data-control="select2" data-placeholder="Select a Source..." class="form-select form-select-solid fw-bolder">
                                     <option value="">Select a Source...</option>
                                     <option value="1">Landing page</option>
                                 </select>
                             </div>
                             <div class="d-flex col-3 flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Name</span>
+                                    <span class="required">@lang('admin/publishers.name')</span>
                                 </label>
                                 <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"/>
                             </div>
@@ -677,10 +659,10 @@
                     </div>
                     <div class="text-center pt-15">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-                            Cancel
+                            @lang('actions.cancel')
                         </button>
                         <button type="button" class="btn btn-primary saveSources">
-                            <span class="indicator-label">Save changes</span>
+                            <span class="indicator-label">@lang('actions.save_changes')</span>
                             <span class="indicator-progress">Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -838,7 +820,12 @@
             minimumResultsForSearch: Infinity
         });
         var table = $("#kt_table_publishers").DataTable({
-            "order": [[1, "desc"]]
+            "order": [[1, "desc"]],
+            "language": {
+                "zeroRecords": '@lang('datatables.zeroRecords')',
+                "info": '@lang('datatables.info')',
+                "infoEmpty": '@lang('datatables.infoEmpty')',
+            }
         });
         $('[data-kt-publishers-table-filter="search"]').on('keyup', function (e) {
             table.search($(this).val()).draw();
@@ -977,7 +964,7 @@
                                 table.row(tr).remove().draw();
                             } else {
                                 Swal.fire({
-                                    text: "Something went wrong ! please try later.",
+                                    text: "@lang('alert.error_general_text')",
                                     icon: "error",
                                     customClass: {
                                         confirmButton: "btn btn-primary"
@@ -1101,7 +1088,7 @@
                                     $('#kt_modal_add_publisher_form button[type="reset"]').click();
                                 } else {
                                     Swal.fire({
-                                        text: "Something went wrong ! please try later.",
+                                        text: "@lang('alert.error_general_text')",
                                         icon: "error",
                                         customClass: {
                                             confirmButton: "btn btn-primary"

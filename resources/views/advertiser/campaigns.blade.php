@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Campaigns list
+    @lang('advert/campaigns.page_title')
 @endsection
 @section('pageDescription')
-    List of all campaigns
+    @lang('advert/campaigns.page_title')
 @endsection
 @section('content')
     <div class="card">
@@ -22,99 +22,96 @@
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-subscription-table-toolbar="base">
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                         <span class="svg-icon svg-icon-2">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Columns
+                        @choice('datatables.column',2)
                     </button>
                     <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
-                        <!--begin::Header-->
                         <div class="px-7 py-5">
-                            <div class="fs-4 text-dark fw-bolder">Columns</div>
+                            <div class="fs-4 text-dark fw-bolder">@choice('datatables.column',2)</div>
                         </div>
                         <div class="separator border-gray-200"></div>
                         <div class="px-7 py-5">
                             <div class="mb-10">
-                                <label class="form-label fs-5 fw-bold mb-3">Columns :</label>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="0"/>
-                                        <span class="form-check-label text-gray-600">ID</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.id')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="1"/>
-                                        <span class="form-check-label text-gray-600">Name</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.name')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
-                                        <span class="form-check-label text-gray-600">Creation date</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.creation_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
-                                        <span class="form-check-label text-gray-600">Starting date</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.starting_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
-                                        <span class="form-check-label text-gray-600">Ending date</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.ending_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
-                                        <span class="form-check-label text-gray-600">Status</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.status')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
-                                        <span class="form-check-label text-gray-600">Thematic</span>
+                                        <span class="form-check-label text-gray-600">@choice('advert/campaigns.thematic',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
-                                        <span class="form-check-label text-gray-600">Country scope</span>
+                                        <span class="form-check-label text-gray-600">@choice('advert/campaigns.country_scope',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
-                                        <span class="form-check-label text-gray-600">Leads type</span>
+                                        <span class="form-check-label text-gray-600">@choice('advert/campaigns.lead_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
-                                        <span class="form-check-label text-gray-600">Expected leads volume + Value</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.expected_leads_volume')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="10"/>
-                                        <span class="form-check-label text-gray-600">Cost type</span>
+                                        <span class="form-check-label text-gray-600">@choice('advert/campaigns.cost_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="11"/>
-                                        <span class="form-check-label text-gray-600">Max fixed amount</span>
+                                        <span class="form-check-label text-gray-600">@lang('advert/campaigns.max_fixed_amount')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="12"/>
-                                        <span class="form-check-label text-gray-600">Unit price</span>
+                                        <span class="form-check-label text-gray-600">@choice('advert/campaigns.unit_price',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -135,7 +132,7 @@
 								<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
 							</svg>
 						</span>
-                    <!--end::Svg Icon-->Add Campaign
+                    Add Campaign
                 </button>
             </div>
         </div>
@@ -143,19 +140,19 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_campaigns_table">
                 <thead>
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Creation date</th>
-                    <th>Starting date</th>
-                    <th>Ending date</th>
-                    <th>Status</th>
-                    <th>Thematic</th>
-                    <th>Country scope</th>
-                    <th>Leads type</th>
-                    <th>Expected leads volume + Value</th>
-                    <th>Cost type</th>
-                    <th>Max fixed amount</th>
-                    <th>Unit price</th>
+                    <th>@lang('advert/campaigns.id')</th>
+                    <th>@lang('advert/campaigns.name')</th>
+                    <th>@lang('advert/campaigns.creation_date')</th>
+                    <th>@lang('advert/campaigns.starting_date')</th>
+                    <th>@lang('advert/campaigns.ending_date')</th>
+                    <th>@lang('advert/campaigns.status')</th>
+                    <th>@choice('advert/campaigns.thematic',1)</th>
+                    <th>@choice('advert/campaigns.country_scope',1)</th>
+                    <th>@choice('advert/campaigns.lead_type',1)</th>
+                    <th>@lang('advert/campaigns.expected_leads_volume')</th>
+                    <th>@choice('advert/campaigns.cost_type',1)</th>
+                    <th>@lang('advert/campaigns.max_fixed_amount')</th>
+                    <th>@choice('advert/campaigns.unit_price',1)</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -200,10 +197,10 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 row_edit" data-id="{{ $campaign->id }}">Edit</a>
+                                    <a href="#" class="menu-link px-3 row_edit" data-id="{{ $campaign->id }}">@choice('actions.edit',1)</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" data-id="{{ $campaign->id }}" class="menu-link px-3 row_delete">Delete</a>
+                                    <a href="#" data-id="{{ $campaign->id }}" class="menu-link px-3 row_delete">@choice('actions.delete',1)</a>
                                 </div>
                             </div>
                         </td>
@@ -223,7 +220,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header" id="kt_modal_add_campaign_header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bolder">Add new campaign</h2>
+                        <h2 class="fw-bolder">@lang('advert/campaigns.add_campaign')</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div id="kt_modal_add_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
@@ -246,7 +243,7 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Name</label>
+                                <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.name')</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" class="form-control form-control-solid" placeholder="" name="name"/>
@@ -257,7 +254,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Starting date</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.starting_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateStart" placeholder="" name="start_date" value="" autocomplete="off">
@@ -268,7 +265,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="fs-6 fw-bold mb-2">Ending date</label>
+                                    <label class="fs-6 fw-bold mb-2">@lang('advert/campaigns.ending_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="" autocomplete="off">
@@ -281,7 +278,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Thematic</span>
+                                    <span class="required">@choice('advert/campaigns.thematic',1)</span>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
@@ -298,7 +295,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Country</span>
+                                    <span class="required">@choice('advert/campaigns.country',1)</span>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
                                 </label>
                                 <!--end::Label-->
@@ -315,7 +312,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Leads type</span>
+                                    <span class="required">@choice('advert/campaigns.lead_type',1)</span>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
@@ -333,7 +330,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Expected Leads Volume</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.expected_leads_volume')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="leads_volume" aria-label="Select a lead volume" data-control="select2" data-placeholder="Select a Lead volume..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
@@ -348,7 +345,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Max leads</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.max_leads')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid" placeholder="" name="leads_vmax">
@@ -362,7 +359,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
+                                    <label class="required fs-6 fw-bold mb-2">@choice('advert/campaigns.cost_type',1)</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="costs_types" aria-label="Select a Cost type" data-control="select2" data-placeholder="Select a Cost type..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
@@ -378,7 +375,7 @@
                                 <!--begin::Col-->
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container cost_amount">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.amount')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" step="0.1" class="form-control form-control-solid" name="cost_amount">
@@ -387,7 +384,7 @@
                                 </div>
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.sale') %</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" max="100" step="0.1" class="form-control form-control-solid" name="sale_percentage">
@@ -399,10 +396,10 @@
                     </div>
                     <div class="modal-footer flex-center">
                         <button type="reset" id="kt_modal_add_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
-                            Cancel
+                            @lang('actions.cancel')
                         </button>
                         <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
-                            <span class="indicator-label">Save</span>
+                            <span class="indicator-label">@lang('actions.save')</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -424,7 +421,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header" id="kt_modal_edit_campaign_header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bolder">Edit campaign</h2>
+                        <h2 class="fw-bolder">@lang('advert/campaigns.edit_campaign')</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div id="kt_modal_edit_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
@@ -447,7 +444,7 @@
                             <!--begin::Input group-->
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
-                                <label class="required fs-6 fw-bold mb-2">Name</label>
+                                <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.name')</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text" class="form-control form-control-solid" required placeholder="" name="name"/>
@@ -458,7 +455,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Starting date</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.starting_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateStart" required placeholder="" name="start_date" value="">
@@ -469,7 +466,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Ending date</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.ending_date')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="">
@@ -482,7 +479,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Thematic</span>
+                                    <span class="required">@choice('advert/campaigns.thematic',1)</span>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
@@ -498,7 +495,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Country</span>
+                                    <span class="required">@choice('advert/campaigns.country',1)</span>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
                                 </label>
                                 <!--end::Label-->
@@ -515,7 +512,7 @@
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">Leads type</span>
+                                    <span class="required">@choice('advert/campaigns.lead_type',1)</span>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
@@ -532,7 +529,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Expected Leads Volume</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.expected_leads_volume')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="leads_volume" aria-label="Select a lead volume" data-control="select2" data-placeholder="Select a Lead volume..." data-dropdown-parent="#kt_modal_edit_campaign_form" class="form-select form-select-solid fw-bolder">
@@ -546,7 +543,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Max leads</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.max_leads')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input class="form-control form-control-solid" placeholder="" name="leads_vmax">
@@ -560,7 +557,7 @@
                                 <!--begin::Col-->
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Cost type</label>
+                                    <label class="required fs-6 fw-bold mb-2">@choice('advert/campaigns.cost_type',1)</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <select name="costs_types" aria-label="Select a Cost type" data-control="select2" data-placeholder="Select a Cost type..." data-dropdown-parent="#kt_modal_edit_campaign_form" class="form-select form-select-solid fw-bolder" required>
@@ -575,7 +572,7 @@
                                 <!--begin::Col-->
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container cost_amount">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Amount</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.amount')</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" step="0.1" class="form-control form-control-solid" name="cost_amount">
@@ -584,7 +581,7 @@
                                 </div>
                                 <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
                                     <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">Sale %</label>
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.sale') %</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="number" max="100" step="0.1" class="form-control form-control-solid" name="sale_percentage">
@@ -596,10 +593,10 @@
                     </div>
                     <div class="modal-footer flex-center">
                         <button type="reset" id="kt_modal_edit_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
-                            Cancel
+                            @lang('actions.cancel')
                         </button>
                         <button type="submit" id="kt_modal_edit_campaign_submit" class="btn btn-primary">
-                            <span class="indicator-label">Save changes</span>
+                            <span class="indicator-label">@lang('actions.save_changes')</span>
                             <span class="indicator-progress">Please wait...
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -624,6 +621,11 @@
             let table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
                 lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                "language": {
+                "zeroRecords": '@lang('datatables.zeroRecords')',
+                    "info": '@lang('datatables.info')',
+                    "infoEmpty": '@lang('datatables.infoEmpty')',
+                }
             });
             $('#kt_modal_add_campaign_form').on('submit', function (e) {
                 e.preventDefault();
@@ -654,7 +656,7 @@
                         $('.indicator-label').show();
                         if (data.success) {
                             Swal.fire({
-                                text: "Campaign successfully created",
+                                text: "{{ trans('alert.success_action',['action' => trans_choice('actions.create',2),'attribute'=>trans_choice('advert/campaigns.campaign',1)])}}",
                                 icon: "success",
                                 showConfirmButton: false,
                                 timer: 1500
@@ -695,7 +697,7 @@
                 tr = $(this).parents('tr');
                 $.ajax({
                     method: 'POST',
-                    url: '{{ route('admin.campaigns.show') }}',
+                    url: '{{ route('advertiser.campaigns.show') }}',
                     dataType: 'JSON',
                     data: {
                         id: id,

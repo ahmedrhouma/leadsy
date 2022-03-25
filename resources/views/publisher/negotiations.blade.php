@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Leads Negotiation
+    @lang('publisher/negotiations.page_title')
 @endsection
 @section('pageDescription')
-    Negotiation room
+    @lang('publisher/negotiations.page_description')
 @endsection
 @section('css')
     <style>
@@ -31,30 +31,27 @@
                             </svg>
                         </span>
                         <input type="text" class="form-control form-control-solid px-15" name="search" value="" placeholder="Search by campaign ID or campaign Name">
-                        <!--end::Input-->
                     </form>
-                    <!--end::Form-->
                 </div>
-                <!--end::Card header-->
-                <!--begin::Card body-->
                 <div class="card-body pt-5" id="kt_chat_contacts_body">
-                    <!--begin::List-->
-                    <div class="scroll-y me-n5 pe-5 " data-kt-scroll="true" data-kt-scroll-max-height="39vh" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px" style="max-height: 696px;">
+                    <div class="scroll-y me-n5 pe-5 " data-kt-scroll="true" data-kt-scroll-max-height="70vh" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px">
                         @foreach($negotiations as $negotiation)
                             <div class="separator separator-dashed d-none"></div>
-                            <a href="#" class="d-flex flex-stack py-4 bg-hover-light rounded px-2 campaign_item" data-id="{{ $negotiation->campaign->id }}" data-negotiation="{{ $negotiation->id }}">
+                            <a href="#" class="d-flex flex-stack py-4 bg-hover-light rounded px-2 campaign_item" data-id="{{ $negotiation->campaign->id }}" data-negotiation="{{ $negotiation->id }}" @if(!is_null($negotiation->lastMessage)) data-receiver_id="{{ $negotiation->lastMessage->receiver_id == auth()->id()?$negotiation->lastMessage->sender_id:$negotiation->lastMessage->receiver_id}}" @endif >
                                 <div class="d-flex align-items-center">
                                     <div class="symbol symbol-45px symbol-circle">
                                         <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder id">{{ $negotiation->campaign->id }}</span>
                                     </div>
-                                    <div class="ms-5">
-                                        <span class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 name">{{ $negotiation->campaign->name }}</span>
-                                        <div class="fw-bold text-muted"></div>
+                                    <div class="ms-5 mw-125px">
+                                        <span class="fs-5 fw-bold text-truncate  text-gray-600 text-hover-primary mb-2 name">{{ $negotiation->campaign->name }}</span>
+                                        @if($negotiation->lastMessage)
+                                            <div class="fs-7 @if(is_null($negotiation->lastMessage->message_read) && $negotiation->lastMessage->receiver_id == auth()->id())fw-bolder@else fw-bold @endif text-truncate  text-gray-900 lastmessage">{{ $negotiation->lastMessage?($negotiation->lastMessage->sender_id == auth()->user()->id ?'You : ':'').$negotiation->lastMessage->message_content:'' }}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column align-items-end ms-2">
-                                    <span class="text-muted fs-7 mb-1">5 hrs</span>
-                                    <span class="badge badge-sm badge-circle badge-light-success">2</span>
+                                    <span class="text-muted fs-7 mb-1">{{ !is_null($negotiation->lastMessage)?$negotiation->lastMessage->message_sent->diffforhumans():'' }}</span>
+                                    <span class="badge badge-sm badge-circle badge-light-success messages_count_{{ $negotiation->id }}">{{ $negotiation->unread_messages_count }}</span>
                                 </div>
                             </a>
                         @endforeach
@@ -66,9 +63,8 @@
         <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 card card-flush h-lg-100" id="negotiations_main">
             <div class="card-body p-0">
                 <div class="card-px text-center pt-20 mt-10">
-                    <h2 class="fs-2x fw-bolder mb-10">Welcome to the Negotiations Room</h2>
-                    <p class="text-gray-400 fs-4 fw-bold mb-10">Select a campaign from the list on left.
-                        <br>Negotiate your campaign leads price with all privacy and secure method.</p>
+                    <h2 class="fs-2x fw-bolder mb-10">@lang('admin/negotiations.negotiations_main_title')</h2>
+                    <p class="text-gray-400 fs-4 fw-bold mb-10">@lang('admin/negotiations.negotiations_main_subtitle')</p>
                 </div>
                 <div class="text-center px-4">
                     <img class="mw-100 mh-300px" alt="" src="{{asset('assets/media/illustrations/sketchy-1/5.png')}}">
@@ -76,14 +72,68 @@
             </div>
         </div>
         <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10" id="negotiations_content" style="display: none">
+            <div class="card mb-5">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="row mb-4">
+                                <div class="col-3">
+                                    <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.id')</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_id"></div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.name')</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_name"></div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.starting_date')</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_start_at"></div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.selling_price',1)</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_buying_price"></div>
+                                </div>
+                            </div>
+                            <div class="collapse" id="more_info">
+                                <div class="row mb-4">
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.thematic',1)</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_thematic"></div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.country_scope',1)</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_countries"></div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.leads_type',1)</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_leads_type"></div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.costs_type',1)</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_cost_type"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col -1">
+                            <button type="button" data-bs-target="#more_info" data-bs-toggle="collapse" class="btn btn-sm btn-light btn-active-light-primary">
+                                <span class="svg-icon svg-icon-5 m-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card" id="kt_chat_messenger">
                 <div class="card-header" id="kt_chat_messenger_header">
                     <!--begin::Title-->
                     <div class="card-title">
                         <!--begin::User-->
                         <div class="d-flex justify-content-center flex-column me-3">
-                            <a href="#" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">Campaign
-                                FR</a>
+                            <a href="#" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 campaign_name"></a>
                             <!--begin::Info-->
                             <div class="mb-0 lh-1">
                                 <span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
@@ -94,371 +144,43 @@
                         <!--end::User-->
                     </div>
                     <!--end::Title-->
-                    <!--begin::Card toolbar-->
-                    <div class="card-toolbar">
-                        <!--begin::Menu-->
-                        <div class="me-n3">
-                            <button class="btn btn-sm btn-icon btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                <i class="bi bi-three-dots fs-2"></i>
-                            </button>
-                            <!--begin::Menu 3-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
-                                <!--begin::Heading-->
-                                <div class="menu-item px-3">
-                                    <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Contacts</div>
-                                </div>
-                                <!--end::Heading-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_users_search">Add
-                                        Contact</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_invite_friends">Invite
-                                        Contacts
-                                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Specify a contact email to send an invitation" aria-label="Specify a contact email to send an invitation"></i></a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                    <a href="#" class="menu-link px-3">
-                                        <span class="menu-title">Groups</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <!--begin::Menu sub-->
-                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="" data-bs-original-title="Coming soon">Create
-                                                Group</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="" data-bs-original-title="Coming soon">Invite
-                                                Members</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="" data-bs-original-title="Coming soon">Settings</a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu sub-->
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3 my-1">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="tooltip" title="" data-bs-original-title="Coming soon">Settings</a>
-                                </div>
-                                <!--end::Menu item-->
-                            </div>
-                            <!--end::Menu 3-->
-                        </div>
-                        <!--end::Menu-->
-                    </div>
-                    <!--end::Card toolbar-->
                 </div>
                 <div class="card-body" id="kt_chat_messenger_body">
                     <!--begin::Messages-->
                     <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="50vh" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_chat_messenger_body" data-kt-scroll-offset="-2px" style="max-height: 39vh">
-                        <div class="d-flex justify-content-end mb-10 d-none" data-kt-element="template-out">
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-column align-items-end">
-                                <!--begin::User-->
-                                <div class="d-flex align-items-center mb-2">
-                                    <!--begin::Details-->
-                                    <div class="me-3">
-                                        <span class="text-muted fs-7 mb-1">Just now</span>
-                                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">You</a>
-                                    </div>
-                                    <!--end::Details-->
-                                    <!--begin::Avatar-->
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="http://localhost/v2/assets/media/avatars/150-26.jpg">
-                                    </div>
-                                    <!--end::Avatar-->
-                                </div>
-                                <!--end::User-->
-                                <!--begin::Text-->
-                                <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text"></div>
-                                <!--end::Text-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <div class="d-flex justify-content-start mb-10 d-none" data-kt-element="template-in">
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-column align-items-start">
-                                <!--begin::User-->
-                                <div class="d-flex align-items-center mb-2">
-                                    <!--begin::Avatar-->
-                                    <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="http://localhost/v2/assets/media/avatars/150-15.jpg">
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::Details-->
-                                    <div class="ms-3">
-                                        <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">Brian
-                                            Cox</a>
-                                        <span class="text-muted fs-7 mb-1">Just now</span>
-                                    </div>
-                                    <!--end::Details-->
-                                </div>
-                                <!--end::User-->
-                                <!--begin::Text-->
-                                <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">
-                                    Right before vacation season we have the next Big Deal for you.
-                                </div>
-                                <!--end::Text-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
+
                     </div>
-                    <!--end::Messages-->
                 </div>
-                <!--end::Card body-->
-                <!--begin::Card footer-->
                 <div class="card-footer pt-4" id="kt_chat_messenger_footer">
                     <div class="d-flex flex-stack">
-                        <textarea class="form-control form-control-flush me-3" rows="1" id="msg_content" placeholder="Type a message"></textarea>
-                        <button class="btn btn-primary" type="button" id="send_msg">Send</button>
+                        <textarea class="form-control form-control-flush me-3" rows="1" id="msg_content" placeholder="@lang('admin/negotiations.type_a_message')"></textarea>
+                        <button class="btn btn-primary" type="button" id="send_msg">@lang('admin/negotiations.send')</button>
                     </div>
-                    <!--end::Toolbar-->
                 </div>
-                <!--end::Card footer-->
             </div>
-            <!--end::Messenger-->
         </div>
     </div>
 @endsection
 @section('javascript')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <script src="{{ asset('assets/plugins/custom/moment/moment-timezone-with-data.min.js') }}"></script>
     <script>
         var sender_id = '{{ auth()->user()->id }}';
-        var receiver_id = null;
-        var negotiation_id;
-        var campaign;
-        var conn = new WebSocket('ws://localhost:8090');
-        conn.onopen = function (e) {
-            conn.send(JSON.stringify({
-                action: "attach",
-                user_id: sender_id,
-                role: 3,
-            }));
-        };
-        conn.onmessage = function (e) {
-            let msg = JSON.parse(e.data);
-            switch (msg.action) {
-                case 'attachNegotiation':
-                    if (negotiation_id == msg.negotiation_id) {
-                        receiver_id = msg.sender_id;
-                    }
-                    $('.campaign_item[data-negotiation="' + msg.negotiation_id + '"]').data('receiver_id', msg.sender_id);
-                    break;
-                case 'message':
-                    if ($('.campaign_item[data-negotiation="' + msg.negotiation_id + '"]').data('receiver_id') != msg.sender_id) {
-                        $('.campaign_item[data-negotiation="' + msg.negotiation_id + '"]').data('receiver_id', msg.sender_id);
-                    }
-                    if (msg.negotiation_id == negotiation_id) {
-                        if (msg.sender_id == sender_id) {
-                            $('#kt_chat_messenger_body').children().append(`<div class="d-flex justify-content-end mb-10">
-                                <div class="d-flex flex-column align-items-end">
-                                <div class="d-flex align-items-center mb-2">
-                                <div class="me-3">
-                                <span class="text-muted fs-7 mb-1">${moment.utc(msg.message_sent).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('YYYY-MM-DD HH:mm:ss')}</span>
-                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">You</a>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle">
-                                <img alt="Pic" src="{{auth()->user()->photo}}">
-                                </div>
-                                </div>
-                                <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text">
-                                ${msg.content}
-                                </div>
-                                </div>
-                                </div>`);
-                        } else {
-                            $('#kt_chat_messenger_body').children().append(`<div class="d-flex justify-content-start mb-10">
-                                    <div class="d-flex flex-column align-items-start">
-                                    <div class="d-flex align-items-center mb-2">
-                                    <div class="symbol symbol-35px symbol-circle">
-                                    <img alt="Pic" src="${msg.sender_avatar}">
-                                    </div>
-                                    <div class="ms-3">
-                                    <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">${msg.sender_name}</a>
-                                    <span class="text-muted fs-7 mb-1">${moment.utc(msg.message_sent).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('YYYY-MM-DD HH:mm:ss')}</span>
-                                    </div>
-                                    </div>
-                                    <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">
-                                    ${msg.content}
-                                    </div>
-                                    </div>
-                                    </div>`);
-                        }
-                        $('#kt_chat_messenger_body').children().scrollTop(1E10);
-                    }
-                    break;
-                case 'writing':
-                    if (msg.negotiation_id == negotiation_id) {
-                        if (msg.status == 1) {
-                            if ($('.writing').length == 0) {
-                                let element = $(`<div class="d-flex justify-content-start mb-10 writing">
-                                    <div class="d-flex flex-column align-items-start">
-                                    <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">
-                                    writing ...
-                                    </div>
-                                    </div>
-                                    </div>`);
-                                element.hide();
-                                $('#kt_chat_messenger_body').children().append(element)
-                                element.show('slow');
-                            }
-                        } else {
-                            $('.writing').hide('slow').remove();
-                        }
-                        $('#kt_chat_messenger_body').children().scrollTop(1E10);
-                    }
-                    break;
-            }
-        };
-        $('.campaign_item').click(function () {
-            $('.campaign_item.active').removeClass('active');
-            $(this).addClass('active');
-            negotiation_id = $(this).data('negotiation');
-            receiver_id = $(this).data('receiver_id');
-            switchConversation(negotiation_id);
-        });
-        $('input[name="search"]').keyup(function () {
-            $this = $(this);
-            $(".campaign_item").each(function () {
-                if ($(this).find(".name").text().toLowerCase().indexOf($this.val()) >= 0 || $(this).find(".id").text().toLowerCase().indexOf($this.val()) >= 0) {
-                    $(this).show();
-                    $(this).addClass('d-flex');
-                } else {
-                    $(this).hide();
-                    $(this).removeClass('d-flex');
-                }
-            });
-        });
-        /*        $(document).on('click', '.chat-item', function () {
-                    $('.chat-item.active').removeClass('active');
-                    $(this).addClass('active');
-                    negotiation_id = $(this).data('negotiation');
-                    receiver_id = $(this).data('receiver_id');
-                    switchConversation($(this).data('type'), $(this).data('id'), $(this).data('negotiation'));
-                });*/
-        $('#send_msg').click(function () {
-            if ($('#msg_content').val().replace(/\s/g, '').length !== 0) {
-                sendMessage({
-                    action: "message",
-                    sender_id: sender_id,
-                    receiver_id: receiver_id,
-                    negotiation_id: negotiation_id,
-                    role: 3,
-                    content: $('#msg_content').val(),
-                });
-                $('#msg_content').val('');
-            }
-        });
-        $('#msg_content').keypress(function (e) {
-            if (e.keyCode == 13) {
-                $("#send_msg").trigger("click");
-                $("#msg_content").trigger("focusout");
-                setTimeout(()=>$("#msg_content").trigger("focusin"),20);
-                return false;
-            }
-        });
-        $('#msg_content').on("focusout", function (e) {
-            if (receiver_id != null) {
-                sendMessage({
-                    action: "writing",
-                    status: 0,
-                    sender_id: sender_id,
-                    receiver_id: receiver_id,
-                    negotiation_id: negotiation_id
-                });
-            }
-        });
-        $('#msg_content').on("focusin", function (e) {
-            if (receiver_id != null) {
-                sendMessage({
-                    action: "writing",
-                    status: 1,
-                    sender_id: sender_id,
-                    receiver_id: receiver_id,
-                    negotiation_id: negotiation_id
-                });
-            }
-        });
-        var switchConversation = function (negotiation) {
-            $('#kt_chat_messenger_body').children().empty();
-            $.ajax({
-                url: '{{ route('publisher.negotiations.messages') }}',
-                method: 'POST',
-                dataType: 'JSON',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: negotiation,
-                },
-                success: function (data) {
-                    $('#kt_chat_messenger_body').children().empty();
-                    if (data.data.length != 0) {
-                        $.each(data.data, function () {
-                            if (this.sender_id == receiver_id) {
-                                $('#kt_chat_messenger_body').children().prepend(`<div class="d-flex justify-content-start mb-10">
-                                    <div class="d-flex flex-column align-items-start">
-                                    <div class="d-flex align-items-center mb-2">
-                                    <div class="symbol symbol-35px symbol-circle">
-                                    <img alt="Pic" src="http://localhost/v2/assets/media/avatars/150-15.jpg">
-                                    </div>
-                                    <div class="ms-3">
-                                    <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">${this.sender}</a>
-                                    <span class="text-muted fs-7 mb-1">${moment.utc(this.message_sent).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('YYYY-MM-DD HH:mm:ss')}</span>
-                                    </div>
-                                    </div>
-                                    <div class="p-5 rounded bg-light-info text-dark fw-bold mw-lg-400px text-start" data-kt-element="message-text">
-                                    ${this.message_content}
-                                    </div>
-                                    </div>
-                                    </div>`);
-                            } else if (this.sender_id == sender_id) {
-                                $('#kt_chat_messenger_body').children().prepend(`<div class="d-flex justify-content-end mb-10">
-                                <div class="d-flex flex-column align-items-end">
-                                <div class="d-flex align-items-center mb-2">
-                                <div class="me-3">
-                                <span class="text-muted fs-7 mb-1">${moment.utc(this.message_sent).tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('YYYY-MM-DD HH:mm:ss')}</span>
-                                <a href="#" class="fs-5 fw-bolder text-gray-900 text-hover-primary ms-1">You</a>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle">
-                                <img alt="Pic" src="http://localhost/v2/assets/media/avatars/150-26.jpg">
-                                </div>
-                                </div>
-                                <div class="p-5 rounded bg-light-primary text-dark fw-bold mw-lg-400px text-end" data-kt-element="message-text">
-                                ${this.message_content}
-                                </div>
-                                </div>
-                                </div>`);
-                            }
-                        });
-                    } else {
-                        $('#kt_chat_messenger_body').children().append('<div class="text-center startNegotiation"><h2 class="fs-2x fw-bolder mb-10">No negotiation started yet</h2><img width="200" height="200" src="{{ asset('assets/media/illustrations/sigma-1/16.png') }}"></div>');
-                    }
-                    $('#negotiations_main').hide();
-                    $('#negotiations_content').show();
-                    $('#kt_chat_messenger_body').children().scrollTop(1E10);
-                }
-            });
-        };
-        var sendMessage = function (msg) {
-            if ($('.startNegotiation').length != 0)$('.startNegotiation').remove();
-            if (conn.readyState === WebSocket.OPEN) {
-                conn.send(JSON.stringify(msg));
-            }
-        }
+        var sender_name = '{{ auth()->user()->username }}';
+        var sender_avatar = '{{ auth()->user()->photo }}';
+        var role = {{ auth()->user()->profile }};
+        moment.locale('{{ Lang::locale() }}');
     </script>
+    <script src="{{ asset('assets/js/custom/chat/conn.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/chat/pub_adv/connFunctions.js') }}"></script>
+    @if(Request::has('negotiation'))
+        <script>
+            $(document).ready(function () {
+                $('a[data-negotiation="{{ Request::get('negotiation') }}"]').click();
+            })
+        </script>
+    @endif
+
 @endsection
+
 
 

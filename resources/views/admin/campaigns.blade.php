@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Campaigns list
+     @lang('admin/advertisers.page_title')
 @endsection
 @section('pageDescription')
-    List of all campaigns
+    @lang('admin/advertisers.page_description')
 @endsection
 @section('css')
     <style>
@@ -21,7 +21,6 @@
             height: auto !important
         }
     </style>
-
 @endsection
 @section('content')
     <div class="card">
@@ -235,8 +234,8 @@
                         <td>{{$campaign->publishers[0]->pivot->buying_price??''}}</td>
                         <td>{{$campaign->selling_price}}</td>
                         <td>{{$campaign->fee}}</td>
-                        <td>{{$campaign->advertisers->id}}</td>
-                        <td>{{$campaign->advertisers->name}}</td>
+                        <td>{{$campaign->advertiser->id}}</td>
+                        <td>{{$campaign->advertiser->name}}</td>
                         <td>{{$campaign->id}}</td>
                         <td>{{$campaign->name}}</td>
                         <td>{{$campaign->created_at}}</td>
@@ -665,7 +664,7 @@
                             $('#kt_modal_edit_campaign_cancel').click();
                         } else {
                             Swal.fire({
-                                text: "Something went wrong ! please try later.",
+                                text: "@lang('alert.error_general_text')",
                                 icon: "error",
                                 customClass: {
                                     confirmButton: "btn btn-primary"

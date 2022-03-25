@@ -50,7 +50,16 @@ class Publishers extends Model
     {
         return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
     }
- /**
+
+    /**
+     * Get the campaigns associated with the publisher.
+     */
+    public function negotiations()
+    {
+        return $this->hasMany(Negotiations::class, 'part_id')->where('part_type',Negotiations::PART_TYPE_PUBLISHER);
+    }
+
+    /**
      * Get the user associated with the advertiser.
      */
     public function user()

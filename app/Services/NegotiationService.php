@@ -16,9 +16,10 @@ class NegotiationService
     }
 
     public function storeMessage($sender,$receiver,$content,$negotiation_id){
+
         $message = ($this->model)::find($negotiation_id)->messages()->create([
             'sender_id' => $sender,
-            'receiver_id ' => $receiver,
+            'receiver_id' => $receiver,
             'message_content' => $content,
             'message_status' => 0,
             'message_sent' => date('Y-m-d H:i:s'),

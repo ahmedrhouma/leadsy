@@ -54,7 +54,7 @@
                     </a>
                 </div>
                 <div class="menu-item py-3">
-                    <a class="menu-link" href="#" title="Opportunities" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                    <a class="menu-link @if (\Route::is('publisher.opportunities')) active @endif" href="{{route('publisher.opportunities')}}" title="Opportunities" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

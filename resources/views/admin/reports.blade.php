@@ -253,6 +253,11 @@
                     total
                 );
             }
+            "language": {
+                "zeroRecords": '@lang('datatables.zeroRecords')',
+                "info": '@lang('datatables.info')',
+                "infoEmpty": '@lang('datatables.infoEmpty')',
+            }
         });
         var publishersTable = $('#publishers_reports_table').DataTable({
             processing: true,
@@ -328,7 +333,11 @@
                     total
                 );
             }
-
+            "language": {
+                "zeroRecords": '@lang('datatables.zeroRecords')',
+                "info": '@lang('datatables.info')',
+                "infoEmpty": '@lang('datatables.infoEmpty')',
+            }
         });
         $('.filter_advertiser').on('keyup',function () {
             advertisersTable.columns($(this).data('row')).search($(this).val()).draw();

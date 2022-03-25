@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Campaigns list
+    @lang('publisher/campaigns.page_title')
 @endsection
 @section('pageDescription')
-    List of all campaigns
+    @lang('publisher/campaigns.page_title')
 @endsection
 @section('content')
     <div class="card">
@@ -32,93 +32,92 @@
 								<path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black"/>
 							</svg>
 						</span>
-                        <!--end::Svg Icon-->Columns
+                        <!--end::Svg Icon-->@choice('datatables.column',2)
                     </button>
                     <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
                         <!--begin::Header-->
                         <div class="px-7 py-5">
-                            <div class="fs-4 text-dark fw-bolder">Columns</div>
+                            <div class="fs-4 text-dark fw-bolder">@choice('datatables.column',2)</div>
                         </div>
                         <div class="separator border-gray-200"></div>
                         <div class="px-7 py-5">
                             <div class="mb-10">
-                                <label class="form-label fs-5 fw-bold mb-3">Columns :</label>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="0"/>
-                                        <span class="form-check-label text-gray-600">ID</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.id')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="1"/>
-                                        <span class="form-check-label text-gray-600">Name</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.name')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="2"/>
-                                        <span class="form-check-label text-gray-600">Creation date</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.creation_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="3"/>
-                                        <span class="form-check-label text-gray-600">Starting date</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.starting_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="4"/>
-                                        <span class="form-check-label text-gray-600">Ending date</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.ending_date')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="5"/>
-                                        <span class="form-check-label text-gray-600">Status</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.status')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="6"/>
-                                        <span class="form-check-label text-gray-600">Thematic</span>
+                                        <span class="form-check-label text-gray-600">@choice('publisher/campaigns.thematic',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="7"/>
-                                        <span class="form-check-label text-gray-600">Country scope</span>
+                                        <span class="form-check-label text-gray-600">@choice('publisher/campaigns.country_scope',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="8"/>
-                                        <span class="form-check-label text-gray-600">Leads type</span>
+                                        <span class="form-check-label text-gray-600">@choice('publisher/campaigns.lead_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="9"/>
-                                        <span class="form-check-label text-gray-600">Expected leads volume + Value</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.expected_leads_volume')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="10"/>
-                                        <span class="form-check-label text-gray-600">Cost type</span>
+                                        <span class="form-check-label text-gray-600">@choice('publisher/campaigns.cost_type',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="11"/>
-                                        <span class="form-check-label text-gray-600">Max fixed amount</span>
+                                        <span class="form-check-label text-gray-600">@lang('publisher/campaigns.max_fixed_amount')</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
                                     <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
                                         <input class="form-check-input columnToggleBtn" type="checkbox" checked="ckeched" data-column="12"/>
-                                        <span class="form-check-label text-gray-600">Unit price</span>
+                                        <span class="form-check-label text-gray-600">@choice('publisher/campaigns.unit_price',1)</span>
                                     </label>
                                 </div>
                                 <div class="d-flex flex-column flex-wrap fw-bold">
@@ -138,18 +137,18 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_campaigns_table">
                 <thead>
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Creation date</th>
-                    <th>Starting date</th>
-                    <th>Ending date</th>
-                    <th>Status</th>
-                    <th>Thematic</th>
-                    <th>Country scope</th>
-                    <th>Leads type</th>
-                    <th>Expected leads volume + Value</th>
-                    <th>Cost type</th>
-                    <th>Unit price</th>
+                    <th>@lang('publisher/campaigns.id')</th>
+                    <th>@lang('publisher/campaigns.name')</th>
+                    <th>@lang('publisher/campaigns.creation_date')</th>
+                    <th>@lang('publisher/campaigns.starting_date')</th>
+                    <th>@lang('publisher/campaigns.ending_date')</th>
+                    <th>@lang('publisher/campaigns.status')</th>
+                    <th>@choice('publisher/campaigns.thematic',1)</th>
+                    <th>@choice('publisher/campaigns.country_scope',1)</th>
+                    <th>@choice('publisher/campaigns.lead_type',1)</th>
+                    <th>@lang('publisher/campaigns.expected_leads_volume')</th>
+                    <th>@choice('publisher/campaigns.cost_type',1)</th>
+                    <th>@choice('publisher/campaigns.unit_price',1)</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -193,7 +192,7 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 @if((intval($campaign->leads_vmax) - intval($campaign->leads_count)) > 0)
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">Upload</a>
+                                        <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">@lang('actions.upload')</a>
                                     </div>
                                 @endif
                             </div>
@@ -208,20 +207,19 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_edit_user_header">
-                    <h2 class="fw-bolder">Upload leads</h2>
+                    <h2 class="fw-bolder">@lang('publisher/campaigns.upload_leads')</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
-											<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
-										</svg>
-									</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
                     </div>
                 </div>
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                     <form id="kt_modal_upload_leads_form" class="form" action="#">
                         <div class="fv-row fv-plugins-icon-container">
-                            <!--begin::Label-->
                             <label class="required form-label">Source</label>
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" name="source">
                                 <option></option>
@@ -229,8 +227,7 @@
                             </select>
                         </div>
                         <div class="fv-row fv-plugins-icon-container">
-                            <!--begin::Label-->
-                            <label class="required form-label">Source ID</label>
+                            <label class="required form-label">@lang('publisher/campaigns.source_id')</label>
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" name="source_id">
                                 <option></option>
                                 @foreach($landings as $landing)
@@ -240,30 +237,21 @@
                         </div>
                         <div class="fv-row fv-plugins-icon-container">
                             <div class="dropzone" id="kt_dropzonejs_example_1">
-                                <!--begin::Message-->
                                 <div class="dz-message needsclick">
-                                    <!--begin::Icon-->
                                     <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-                                    <!--end::Icon-->
-
-                                    <!--begin::Info-->
                                     <div class="ms-4">
-                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">Drop file here or click to
-                                            upload.</h3>
-                                        <span class="fs-7 fw-bold text-gray-400">Upload your contacts csv file</span>
+                                        <h3 class="fs-5 fw-bolder text-gray-900 mb-1">@lang('publisher/campaigns.drop_file_title')</h3>
+                                        <span class="fs-7 fw-bold text-gray-400">@lang('publisher/campaigns.drop_file_subtitle')</span>
                                     </div>
-                                    <!--end::Info-->
                                 </div>
                             </div>
                         </div>
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">@lang('actions.cancel')</button>
                             <button type="submit" class="btn btn-primary ">
-                                <span class="indicator-label">Upload</span>
+                                <span class="indicator-label">@lang('actions.upload')</span>
                                 <span class="indicator-progress">Please wait...
-												<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
                     </form>
@@ -295,6 +283,11 @@
             var table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
                 lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                "language": {
+                    "zeroRecords": '@lang('datatables.zeroRecords')',
+                    "info": '@lang('datatables.info')',
+                    "infoEmpty": '@lang('datatables.infoEmpty')',
+                }
             });
             $(document).on('click', '.upload', function () {
                 id = $(this).data('id');
