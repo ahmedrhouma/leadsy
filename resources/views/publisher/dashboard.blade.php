@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-    Dashboard
+    @lang('admin/dashboard.dashboard')
 @endsection
 @section('pageDescription')
-    Dashboard
+    @lang('admin/dashboard.dashboard')
 @endsection
 @section('content')
     <div class="row gy-5 g-xl-10">
@@ -32,12 +32,12 @@
                                 <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                                     <div class="d-flex align-items-center mb-2">
                                         <span class="fs-2x fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $saleLeads }}</span>
-                                        <span class="badge badge-light-primary fs-base">{{ round(($saleLeads/$allLeads)*100,2) }}%</span>
+                                        <span class="badge badge-light-primary fs-base">{{ round(($saleLeads/$allLeads),2)*100 }}%</span>
                                     </div>
                                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.sale_leads')</span>
                                 </a>
                             </div>
-                        </div>
+                        </div>{{--
                         <div class="col-md-6 col-sm-12">
                             <div class="card card-stretch">
                                 <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
@@ -47,7 +47,7 @@
                                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.countries_scope')</span>
                                 </a>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
                 <div class="col-xxl-4 mb-5">

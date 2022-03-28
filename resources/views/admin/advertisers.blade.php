@@ -3,7 +3,18 @@
     @lang('admin/advertisers.page_title')
 @endsection
 @section('pageDescription')
- @endsection
+@endsection
+@section('css')
+    <style>
+        .ellipsis {
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            display: inline-block;
+            width: 250px;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="card">
         <div class="card-header border-0 pt-6">
@@ -20,18 +31,18 @@
             </div>
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    {{--<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_export_users">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
-                        <span class="svg-icon svg-icon-2">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1" transform="rotate(90 12.75 4.25)" fill="black"/>
-								<path d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z" fill="black"/>
-								<path d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z" fill="#C4C4C4"/>
-							</svg>
-						</span>
-                        Export
-                    </button>--}}
-                    <!--end::Export-->
+                {{--<button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_export_users">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
+                    <span class="svg-icon svg-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1" transform="rotate(90 12.75 4.25)" fill="black"/>
+                            <path d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z" fill="black"/>
+                            <path d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z" fill="#C4C4C4"/>
+                        </svg>
+                    </span>
+                    Export
+                </button>--}}
+                <!--end::Export-->
                     <!--begin::Add Advertiser-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_advertiser">
                         <span class="svg-icon svg-icon-2">
@@ -142,8 +153,8 @@
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
                     <th class="min-w-125px">@lang('admin/advertisers.id')</th>
                     <th class="min-w-125px">@lang('admin/advertisers.name')</th>
-                    <th class="min-w-125px">@choice('admin/advertisers.thematic',2)</th>
-                    <th class="min-w-125px">@choice('admin/advertisers.country_scope',1)</th>
+                    <th class="mw-250px">@choice('admin/advertisers.thematic',2)</th>
+                    <th class="mw-250px">@choice('admin/advertisers.country_scope',1)</th>
                     <th class="min-w-125px">@lang('admin/advertisers.creation_date')</th>
                     <th class="text-end min-w-100px">@choice('admin/advertisers.action',2)</th>
                 </tr>
@@ -153,19 +164,26 @@
                     <tr data-email="{{$advertiser->user->email}}">
                         <td>{{ $advertiser->id }}</td>
                         <td>{{ $advertiser->name }}</td>
-                        <td>
+                        <td >
+                            <div class="ellipsis">
                             @if($advertiser->campaigns->count() != 0)
                                 @foreach(array_unique($advertiser->campaigns->each->thematics->pluck('name')->toArray()) as $thematic)
                                     <div class="badge badge-light">{{ $thematic }}</div>
                                 @endforeach
                             @endif
+                            </div>
+
                         </td>
                         <td>
-                            @if($advertiser->campaigns->count() != 0)
-                                @foreach(array_unique(array_merge(...$advertiser->campaigns->pluck('countriesName'))) as $country)
-                                    <div class="badge badge-light"><img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}</div>
-                                @endforeach
-                            @endif
+                            <div class="ellipsis">
+                                @if($advertiser->campaigns->count() != 0)
+                                    @foreach(array_unique(array_merge(...$advertiser->campaigns->pluck('countriesName'))) as $country)
+                                        <div class="badge badge-light">
+                                            <img src="{{asset('assets/media/flags/'.str_replace(' ','-',$country).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                         </td>
                         <td>{{ $advertiser->created_at }}</td>
                         <td class="text-end">
@@ -175,7 +193,7 @@
 										<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"/>
 									</svg>
 								</span>
-                             </a>
+                            </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 edit_row" data-id="{{ $advertiser->id }}">@choice('actions.edit',1)</a>
@@ -206,7 +224,7 @@
                     <h2 class="fw-bolder">@lang('admin/advertisers.add_advertiser')</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -248,7 +266,7 @@
                         <!--end::Scroll-->
                         <!--begin::Actions-->
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3"   data-bs-dismiss="modal" data-kt-users-modal-action="cancel">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" data-kt-users-modal-action="cancel">
                                 @lang('actions.cancel')
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
@@ -278,7 +296,7 @@
                     <h2 class="fw-bolder">@lang('admin/advertisers.edit_advertiser')</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -317,7 +335,7 @@
                         <!--end::Scroll-->
                         <!--begin::Actions-->
                         <div class="text-center pt-15">
-                            <button type="reset" class="btn btn-light me-3"   data-bs-dismiss="modal" data-kt-advertises-modal-action="cancel">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" data-kt-advertises-modal-action="cancel">
                                 @lang('actions.cancel')
                             </button>
                             <button type="submit" class="btn btn-primary" data-kt-advertises-modal-action="submit">
@@ -341,7 +359,7 @@
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_edit_user_header">
                     <h2 class="fw-bolder">@lang('admin/advertisers.default_credentials')</h2>
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"   data-bs-dismiss="modal">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
@@ -429,7 +447,7 @@
             $('#kt_modal_edit_advertiser').modal('show');
         });
         $(document).on('click', '.credentials', function () {
-            $('.credentials_body').html('Login : '+ $(this).data('email')+'<br> Pass : '+$(this).data('password'));
+            $('.credentials_body').html('Login : ' + $(this).data('email') + '<br> Pass : ' + $(this).data('password'));
             $('#kt_modal_credentials_advertiser').modal('show');
         });
         $('#kt_modal_add_advertiser_form').on('submit', function (e) {
@@ -470,8 +488,8 @@
                         '                                    <a href="#" class="menu-link px-3 edit_row" data-id="' + data.advertiser.id + '">Edit</a>\n' +
                         '                                </div>\n' +
                         '                                <div class="menu-item px-3">' +
-                            '                                   <a href="#" class="menu-link px-3 credentials" data-email="' + data.advertiser.user.email + '" data-password="'+data.advertiser.name.replace(" ", "")+'@'+data.advertiser.id+'">Credentials</a>' +
-                            '                               </div>\n' +
+                        '                                   <a href="#" class="menu-link px-3 credentials" data-email="' + data.advertiser.user.email + '" data-password="' + data.advertiser.name.replace(" ", "") + '@' + data.advertiser.id + '">Credentials</a>' +
+                        '                               </div>\n' +
                         '                                <div class="menu-item px-3">\n' +
                         '                                    <a href="#" class="menu-link px-3 delete_row" data-id="' + data.advertiser.id + '">Delete</a>\n' +
                         '                                </div>\n' +

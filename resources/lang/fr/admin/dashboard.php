@@ -11,7 +11,7 @@ return [
     'countries' => 'Pays',
     'all_leads' => 'Tous les prospects',
     'top_publishers' => 'Principaux éditeurs',
-    'top_10_publishers' => 'Les 10 meilleurs éditeurs',
+    'top_5_publishers' => 'Les 5 meilleurs éditeurs',
     'all_publishers' => 'Tous les éditeurs',
     'publisher' => 'Editeur',
     'total_leads' => 'Total des prospects',

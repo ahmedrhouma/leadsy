@@ -11,7 +11,7 @@ return [
     'countries' => 'countries',
     'all_leads' => 'All leads',
     'top_publishers' => 'Top Publishers',
-    'top_10_publishers' => 'Top 10 publishers',
+    'top_5_publishers' => 'Top 5 publishers',
     'all_publishers' => 'All publishers',
     'publisher' => 'Publisher',
     'total_leads' => 'Total Leads',

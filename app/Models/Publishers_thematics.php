@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Helper\Countries;
+use App\Traits\Log;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Publishers_thematics extends Model
 {
-    use HasFactory;
+    use HasFactory,Log;
     protected $guarded = [
         'id'
     ];

@@ -2,7 +2,7 @@
     <div class="col-11">
         <div class="row mb-4">
             <div class="col-3">
-                <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.id')</div>
+                <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.campaign_id')</div>
                 <div class="fw-bolder text-gray-800 fs-6 campaign_id">{{$campaign->id}}</div>
             </div>
             <div class="col-3">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-3">
                     <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.thematic',1)</div>
-                    <div class="fw-bolder text-gray-800 fs-6 campaign_thematic">{{$campaign->thematicsname}}</div>
+                    <div class="fw-bolder text-gray-800 fs-6 campaign_thematic">{{ $campaign->thematics->name }}</div>
                 </div>
                 <div class="col-3">
                     <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.country_scope',1)</div>
@@ -77,17 +77,17 @@
         @foreach($campaign->negotiations as $negotiation)
             <li class="nav-item">
                 @if($negotiation->part_type == 1)
-                <a href="javascript:" class="nav-link text-active-primary py-5 pe-6 chat-item position-relative {{$negotiation->unread_messages_count > 0 ? 'attach' : ''}}" data-price="{{$campaign->selling_price }}" data-id="{{$negotiation->advertiser->user->id }}" data-account="{{$negotiation->advertiser->id }}" data-type="{{$negotiation->part_type }}" data-negotiation="{{$negotiation->id }}">
-                    <div class="symbol symbol-45px symbol-circle">
-                        <img alt="Pic" src="{{$negotiation->advertiser->user->photo }}">
-                        <div class="symbol-badge bg-danger start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2 connection_{{$negotiation->advertiser->user->id}}"></div>
-                    </div>
-                    <span class="d-flex flex-column align-items-start ms-5">
+                    <a href="javascript:" class="nav-link text-active-primary py-5 pe-6 chat-item position-relative {{$negotiation->unread_messages_count > 0 ? 'attach' : ''}}" data-price="{{$campaign->selling_price }}" data-id="{{$negotiation->advertiser->user->id }}" data-account="{{$negotiation->advertiser->id }}" data-type="{{$negotiation->part_type }}" data-negotiation="{{$negotiation->id }}">
+                        <div class="symbol symbol-45px symbol-circle">
+                            <img alt="Pic" src="{{$negotiation->advertiser->user->photo }}">
+                            <div class="symbol-badge bg-danger start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2 connection_{{$negotiation->advertiser->user->id}}"></div>
+                        </div>
+                        <span class="d-flex flex-column align-items-start ms-5">
                         <span class="fs-4 fw-bolder name">{{$negotiation->advertiser->name }}</span>
                             <span class="fs-8 text-gray-500">@choice('admin/negotiations.advertiser',1)</span>
                     </span>
-                    <span class="bullet bullet-dot bg-success h-8px w-8px position-absolute translate-middle top-25 start-100 animation-blink {{$negotiation->unread_messages_count == 0? 'd-none' : ''}} bull_{{$negotiation->id}}"></span>
-                </a>
+                        <span class="bullet bullet-dot bg-success h-8px w-8px position-absolute translate-middle top-25 start-100 animation-blink {{$negotiation->unread_messages_count == 0? 'd-none' : ''}} bull_{{$negotiation->id}}"></span>
+                    </a>
                 @elseif($negotiation->part_type == 2)
                     <a href="javascript:" class="nav-link text-active-primary py-5 pe-6 chat-item position-relative {{$negotiation->unread_messages_count > 0 ? 'attach' : ''}}" data-price="{{$campaign->selling_price }}" data-id="{{$negotiation->publisher->user->id }}" data-account="{{$negotiation->publisher->id }}" data-type="{{$negotiation->part_type }}" data-negotiation="{{$negotiation->id }}">
                         <div class="symbol symbol-45px symbol-circle">

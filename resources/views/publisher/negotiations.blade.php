@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="d-flex flex-column align-items-end ms-2">
                                     <span class="text-muted fs-7 mb-1">{{ !is_null($negotiation->lastMessage)?$negotiation->lastMessage->message_sent->diffforhumans():'' }}</span>
-                                    <span class="badge badge-sm badge-circle badge-light-success messages_count_{{ $negotiation->id }}">{{ $negotiation->unread_messages_count }}</span>
+                                    <span class="badge badge-sm badge-circle badge-light-primary messages_count_{{ $negotiation->id }}">{{ $negotiation->unread_messages_count }}</span>
                                 </div>
                             </a>
                         @endforeach
@@ -59,7 +59,6 @@
                 </div>
             </div>
         </div>
-
         <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10 card card-flush h-lg-100" id="negotiations_main">
             <div class="card-body p-0">
                 <div class="card-px text-center pt-20 mt-10">
@@ -86,16 +85,20 @@
                                     <div class="fw-bolder text-gray-800 fs-6 campaign_name"></div>
                                 </div>
                                 <div class="col-3">
-                                    <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.starting_date')</div>
-                                    <div class="fw-bolder text-gray-800 fs-6 campaign_start_at"></div>
+                                    <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.advertiser_id',1)</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_advertiser_id"></div>
                                 </div>
                                 <div class="col-3">
-                                    <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.selling_price',1)</div>
-                                    <div class="fw-bolder text-gray-800 fs-6 campaign_buying_price"></div>
+                                    <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.starting_date')</div>
+                                    <div class="fw-bolder text-gray-800 fs-6 campaign_start_at"></div>
                                 </div>
                             </div>
                             <div class="collapse" id="more_info">
                                 <div class="row mb-4">
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.selling_price',1)</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_buying_price"></div>
+                                    </div>
                                     <div class="col-3">
                                         <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.thematic',1)</div>
                                         <div class="fw-bolder text-gray-800 fs-6 campaign_thematic"></div>
@@ -108,9 +111,15 @@
                                         <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.leads_type',1)</div>
                                         <div class="fw-bolder text-gray-800 fs-6 campaign_leads_type"></div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-3">
                                         <div class="fw-bold text-gray-600 fs-7">@choice('admin/negotiations.costs_type',1)</div>
                                         <div class="fw-bolder text-gray-800 fs-6 campaign_cost_type"></div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="fw-bold text-gray-600 fs-7">@lang('admin/negotiations.expected_leads_volume')</div>
+                                        <div class="fw-bolder text-gray-800 fs-6 campaign_max_volume"></div>
                                     </div>
                                 </div>
                             </div>
@@ -129,24 +138,17 @@
             </div>
             <div class="card" id="kt_chat_messenger">
                 <div class="card-header" id="kt_chat_messenger_header">
-                    <!--begin::Title-->
                     <div class="card-title">
-                        <!--begin::User-->
                         <div class="d-flex justify-content-center flex-column me-3">
                             <a href="#" class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1 campaign_name"></a>
-                            <!--begin::Info-->
                             <div class="mb-0 lh-1">
                                 <span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
                                 <span class="fs-7 fw-bold text-muted">Active</span>
                             </div>
-                            <!--end::Info-->
                         </div>
-                        <!--end::User-->
                     </div>
-                    <!--end::Title-->
                 </div>
                 <div class="card-body" id="kt_chat_messenger_body">
-                    <!--begin::Messages-->
                     <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="50vh" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_chat_messenger_body" data-kt-scroll-offset="-2px" style="max-height: 39vh">
 
                     </div>

@@ -72,4 +72,18 @@ class Controller extends BaseController
         ];
         return response()->json(array_merge_recursive_distinct($default, $options));
     }
+
+    public function setLog($options = [])
+    {
+        $default = [
+            'success' => false,
+            'alert' => [
+                'title' => trans('messages.operation_failed'),
+                'html' => trans('messages.reload_page_try_again'),
+                'icon' => 'error',
+                'showConfirmButton' => true,
+            ],
+        ];
+        return response()->json(array_merge_recursive_distinct($default, $options));
+    }
 }

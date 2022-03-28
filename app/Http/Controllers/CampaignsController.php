@@ -136,7 +136,7 @@ class CampaignsController extends Controller
      */
     public function negotiations(Request $request)
     {
-        $campaign = Campaigns::with(['publishers', 'advertiser.user', 'thematics', 'leadsTypes', 'costsTypes', 'campaignPublishers', 'negotiations.publisher.user', 'negotiations.advertiser.user', 'negotiations' => function ($q) {
+        $campaign = Campaigns::with(['publishers','thematics', 'advertiser.user', 'thematics', 'leadsTypes', 'costsTypes', 'campaignPublishers', 'negotiations.publisher.user', 'negotiations.advertiser.user', 'negotiations' => function ($q) {
             $q->withCount(['unreadMessages' => function ($q) {
                 $q->whereHas('sender', function ($q) {
                     $q->where('profile', '!=', session('profile'));

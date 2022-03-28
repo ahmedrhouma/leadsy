@@ -5,6 +5,17 @@
 @section('pageDescription')
     @lang('publisher/campaigns.page_title')
 @endsection
+@section('css')
+    <style>
+        .ellipsis {
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="card">
         <!--begin::Card header-->
@@ -195,6 +206,12 @@
                                         <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">@lang('actions.upload')</a>
                                     </div>
                                 @endif
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 view" data-id="{{ $campaign->id }}">@lang('actions.view')</a>
+                                </div>
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3 stop" data-id="{{ $campaign->id }}">@lang('actions.stop')</a>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -255,6 +272,15 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="campaign_details_modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body scroll-y campaign_details_body">
+
                 </div>
             </div>
         </div>
@@ -334,6 +360,21 @@
             });
             $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
                 table.search($(this).val()).draw();
+            });
+
+        });
+        $(document).on('click','.view',function () {
+            $.ajax({
+                url: route('publisher.campaigns.view'),
+                method: 'POST',
+                data: {
+                    id: $(this).data('id'),
+                    _token : '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    $('.campaign_details_body').html(data);
+                    $('#campaign_details_modal').modal('show');
+                }
             });
         });
     </script>

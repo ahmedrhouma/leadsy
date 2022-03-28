@@ -23,4 +23,8 @@ return [
     'full_name' => 'Nom complet',
     'default_credentials' => 'Identifiants par défaut',
     'publisher_sources' => "Sources de l'éditeur",
+    'changed' => 'Modifié',
+    'not_changed' => 'Non modifié',
+    'login' => 'Identifier',
+    'password' => 'Mot de passe',
 ];

@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="d-flex flex-column align-items-end ms-2">
                                     <span class="text-muted fs-7 mb-1">{{ !is_null($negotiation->lastMessage)?$negotiation->lastMessage->message_sent->diffforhumans():'' }}</span>
-                                    <span class="badge badge-sm badge-circle badge-light-success messages_count_{{ $negotiation->id }}">{{ $negotiation->unread_messages_count }}</span>
+                                    <span class="badge badge-sm badge-circle badge-light-primary messages_count_{{ $negotiation->id }}">{{ $negotiation->unread_messages_count }}</span>
                                 </div>
                             </a>
                         @endforeach

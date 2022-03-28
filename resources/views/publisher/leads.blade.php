@@ -158,7 +158,6 @@
                     <th>@lang('publisher/leads.sale_income')</th>
                     <th>@lang('publisher/leads.rejection')</th>
                     <th>@lang('publisher/leads.advertiser_id')</th>
-                    <th class="min-w-100px">Actions</th>
                 </tr>
                 </thead>
             </table>
@@ -189,12 +188,6 @@
                 {data: 'sale_income', name: 'sale_income'},
                 {data: 'rejection', name: 'rejection'},
                 {data: 'advertiser_id', name: 'advertiser_id'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
             ],
             columnDefs: [
                 {
@@ -210,12 +203,7 @@
                         return '<div class="badge badge-light">' + data + '</div>';
                     },
                     "targets": 11
-                }, {
-                    "render": function (data, type, row) {
-                        return '';
-                    },
-                    "targets": 15
-                },
+                }
             ],
             "language": {
                 "zeroRecords": '@lang('datatables.zeroRecords')',

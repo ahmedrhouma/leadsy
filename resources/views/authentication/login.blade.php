@@ -18,14 +18,15 @@
     <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(assets/media/illustrations/sigma-1/14.png">
         <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
             <a href="#" class="mb-12">
-                <img alt="Logo" src="{{asset('assets/media/logos/logo.png')}}" class="h-60px"/>
+                <img alt="Logo" src="{{asset('assets/media/logos/logo.png')}}" class="h-100px"/>
             </a>
             <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
                 <!--begin::Form-->
                 <form class="form w-100" autocomplete id="kt_sign_in_form" action="" method="POST">
                     @csrf
                     <div class="text-center mb-10">
-                        <h1 class="text-dark mb-3">Sign In to Leadsy</h1>
+                        <h1 class="text-dark mb-3">Welcome back!</h1>
+                        <div class="text-gray-400 fw-bold fs-4">Sign In to your account</div>
                         {{--<div class="text-gray-400 fw-bold fs-4">New Here?
                             <a href="/metronic8/demo9/../demo9/authentication/layouts/basic/sign-up.html" class="link-primary fw-bolder">Create
                                 an Account</a></div>--}}

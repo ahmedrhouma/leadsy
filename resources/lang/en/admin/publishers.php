@@ -23,4 +23,6 @@ return [
     'full_name' => 'Full name',
     'default_credentials' => 'Default Credentials',
     'publisher_sources' => 'Publisher Sources',
+    'changed' => 'Changed',
+    'not_changed' => 'Not Changed',
 ];

@@ -9,7 +9,7 @@
     <div class="row mb-5 mb-xl-8 g-5 g-xl-8">
         <div class="col-md-2 col-sm-6">
             <div class="card card-stretch">
-                <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+                <a href="{{ route('admin.advertisers') }}" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                     <span class="fs-2x fw-bolder d-block text-gray-800 me-2 mb-2 lh-1 ls-n2  mb-4">{{ $advertisers_count }}</span>
                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.advertisers')</span>
                 </a>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-2 col-sm-6">
             <div class="card card-stretch">
-                <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+                <a href="{{ route('admin.publishers') }}" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                     <span class="fs-2x fw-bolder d-block text-gray-800 me-2 mb-2 lh-1 ls-n2  mb-4">{{ $publishers_count }}</span>
                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.publishers')</span>
                 </a>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-2 col-sm-6">
             <div class="card card-stretch">
-                <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+                <a href="{{ route('admin.campaigns') }}" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                     <span class="fs-2x fw-bolder d-block text-gray-800 me-2 mb-2 lh-1 ls-n2  mb-4">{{ $campaigns_count }}</span>
                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.active_campaigns')</span>
                 </a>
@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-2 col-sm-6">
             <div class="card card-stretch">
-                <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+                <a href="{{ route('admin.negotiations') }}" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                     <span class="fs-2x fw-bolder d-block text-gray-800 me-2 mb-2 lh-1 ls-n2  mb-4">{{ $negotiations }}</span>
                     <span class="fs-5 fw-bolder text-muted">@lang('admin/dashboard.inProgress_negotiations')</span>
                 </a>
@@ -49,7 +49,7 @@
         </div>
         <div class="col-md-2 col-sm-6">
             <div class="card card-stretch">
-                <a href="#" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
+                <a href="{{ route('admin.leads') }}" class="btn btn-flex btn-text-gray-800 btn-icon-gray-400 btn-active-color-primary bg-body flex-column justfiy-content-start align-items-start text-start w-100 p-10">
                     <div class="d-flex align-items-center mb-2">
                         <span class="fs-2x fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $saleLeads }}</span>
                         <span class="badge badge-light-primary fs-base">{{ ($saleLeads/$allLeads)*100 }}%</span>
@@ -103,7 +103,7 @@
                         <div class="card-header pt-7">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder text-gray-800">@lang('admin/dashboard.top_publishers')</span>
-                                <span class="text-gray-400 mt-1 fw-bold fs-6">@lang('admin/dashboard.top_10_publishers')</span>
+                                <span class="text-gray-400 mt-1 fw-bold fs-6">@lang('admin/dashboard.top_5_publishers')</span>
                             </h3>
                             <div class="card-toolbar">
                                 <a href="{{ route('admin.publishers') }}" class="btn btn-sm btn-light">@lang('admin/dashboard.all_publishers')</a>
@@ -153,43 +153,65 @@
                         <div class="card-body pt-5">
                             @foreach($campaigns as $campaign)
                                 <div class="d-flex flex-stack">
-                                    <!--begin::Wrapper-->
                                     <div class="d-flex align-items-center me-3">
                                         <div class="symbol symbol-40px me-4">
                                             <div class="symbol-label fs-4 fw-bold bg-primary text-inverse-danger">{{ $campaign->id }}</div>
                                         </div>
                                         <div class="flex-grow-1">
-                                            <!--begin::Text-->
-                                            <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder lh-0">{{ $campaign->name }}</a>
-                                            <!--end::Text-->
-                                            <!--begin::Description-->
+                                            <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bolder lh-0 campaign_details" data-id="{{ $campaign->id }}">{{ $campaign->name }}</a>
                                             <span class="text-gray-400 fw-bold d-block fs-6">@lang('admin/dashboard.max_leads') : {{ $campaign->leads_vmax }}</span>
-                                            <!--end::Description=-->
                                         </div>
-                                        <!--end::Section-->
                                     </div>
-                                    <!--end::Wrapper-->
-                                    <!--begin::Statistics-->
                                     <div class="d-flex align-items-center w-100 mw-125px">
-                                        <!--begin::Progress-->
                                         <div class="progress h-6px w-100 me-2 bg-light-success">
                                             <div class="progress-bar bg-success" role="progressbar" style="width: {{ ($campaign->leads_count/$campaign->leads_vmax)*100 }}%" aria-valuenow="{{ ($campaign->leads_count/$campaign->leads_vmax)*100 }}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <!--end::Progress-->
-                                        <!--begin::Value-->
                                         <span class="text-gray-400 fw-bold">{{ ($campaign->leads_count/$campaign->leads_vmax)*100 }}%</span>
-                                        <!--end::Value-->
                                     </div>
-                                    <!--end::Statistics-->
                                 </div>
                                 <div class="separator separator-dashed my-3"></div>
                             @endforeach
                         </div>
-                        <!--end::Body-->
                     </div>
-                    <!--end::List widget 21-->
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="campaign_details_modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y campaign_details_body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('javascript')
+    <script>
+        $(document).on('click', '.campaign_details', function () {
+            $.ajax({
+                url: route('admin.campaigns.view'),
+                method: 'POST',
+                data: {
+                    id: $(this).data('id'),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    $('.campaign_details_body').html(data);
+                    $('#campaign_details_modal').modal('show');
+                }
+            });
+        });
+    </script>
 @endsection

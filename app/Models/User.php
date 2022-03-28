@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Log;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,Log;
     const ADMIN_PROFILE = 1;
     const ADVERTISER_PROFILE = 2;
     const PUBLISHER_PROFILE = 3;

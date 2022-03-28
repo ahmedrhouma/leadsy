@@ -8,6 +8,7 @@ return [
     'starting_date' => 'Date de début',
     'ending_date' => 'Date de fin',
     'advertiser_name' => "Nom de l'annonceur",
+    'advertiser_id' => "ID   de l'annonceur",
     'thematic' => 'Thématique|Thématiques',
     'country_scope' => 'Pays scope|Pays scopes',
     'country' => 'Pays|Pays',

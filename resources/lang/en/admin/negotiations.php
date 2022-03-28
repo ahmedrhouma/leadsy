@@ -1,7 +1,8 @@
 <?php
 return [
     'id' => 'ID ',
-    'page_title' => 'Leads Negotiation',
+    'campaign_id' => 'Campaign ID',
+    'page_title' => 'Negotiations',
     'negotiation' => 'Negotiation|Negotiations',
     'page_description' => 'Negotiation room',
     'negotiations_main_title' => 'Welcome to the Negotiations Room',
@@ -13,6 +14,7 @@ return [
     'starting_date' => 'Starting date',
     'ending_date' => 'Ending date',
     'advertiser_name' => 'Advertiser name',
+    'advertiser_id' => 'Advertiser ID',
     'thematic' => 'Thematic|Thematics',
     'country_scope' => 'Country scope|Country scopes',
     'leads_type' => 'Leads type|Leads types',

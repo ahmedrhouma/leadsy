@@ -185,7 +185,7 @@
                     <th></th>
                     <th>@lang('admin/publishers.id')</th>
                     <th class="min-w-125px">@lang('admin/publishers.name')</th>
-                    <th class="min-w-125px">@choice('admin/publishers.thematic',1)</th>
+                    <th class="min-w-125px">@choice('admin/publishers.thematic',2)</th>
                     <th class="min-w-125px">@choice('admin/publishers.country_scope',1)</th>
                     <th class="min-w-125px">@choice('admin/publishers.lead_type',1)</th>
                     <th class="min-w-125px">@choice('admin/publishers.cost_type',1)</th>
@@ -205,28 +205,18 @@
                     <tr>
                         <td>
                             @if($publisher->thematics->count() > 1)
-                                <button type="button"
-                                        class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px"
-                                        data-kt-publisher-datatable-subtable="expand_row"
-                                        data-id="{{ $publisher->id }}">
+                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $publisher->id }}">
                                 <span class="svg-icon svg-icon-3 m-0 toggle-off">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<rect opacity="0.5" x="11" y="18" width="12"
-                                                                              height="2" rx="1"
-                                                                              transform="rotate(-90 11 18)"
-                                                                              fill="black"></rect>
-																		<rect x="6" y="11" width="12" height="2" rx="1"
-                                                                              fill="black"></rect>
-																	</svg>
-																</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                                        </svg>
+                                    </span>
                                     <span class="svg-icon svg-icon-3 m-0 toggle-on">
-																	<svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                         height="24" viewBox="0 0 24 24" fill="none">
-																		<rect x="6" y="11" width="12" height="2" rx="1"
-                                                                              fill="black"></rect>
-																	</svg>
-																</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                                        </svg>
+                                    </span>
                                 </button>
                             @endif
                         </td>
@@ -277,7 +267,7 @@
                                     <a href="#" class="menu-link px-3 edit_row" data-id="{{ $publisher->id }}">@choice('actions.edit',1)</a>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $publisher->user->email }}" data-password="{{ str_replace(' ','',$publisher->name).'@'.$publisher->id }}">@lang('admin/publishers.credentials')</a>
+                                    <a href="#" class="menu-link px-3 credentials" data-email="{{ $publisher->user->email }}" data-password="{{ str_replace(' ','',$publisher->name).'@'.$publisher->id }}" data-changed="{{ \Illuminate\Support\Facades\Hash::check(str_replace(' ','',$publisher->name).'@'.$publisher->id,$publisher->user->password)?0:1 }}">@lang('admin/publishers.credentials')</a>
                                 </div>
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 sources" data-id="{{ $publisher->id }}">@lang('admin/publishers.sources')</a>
@@ -598,6 +588,26 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                     <div class="credentials_body"></div>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="mb-5">
+                            <div class="fs-6 fw-bolder mb-1">@lang('admin/publishers.login')</div>
+                            <div class="fw-bold text-gray-600 login"></div>
+                        </div>
+                        <div class="ms-auto">
+
+                        </div>
+                        <!--end::Action-->
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="mb-5">
+                            <div class="fs-6 fw-bolder mb-1">@lang('admin/publishers.password')</div>
+                            <div class="fw-bold text-gray-600 password"></div>
+                        </div>
+                        <div class="ms-auto status">
+
+                        </div>
+                        <!--end::Action-->
+                    </div>
                 </div>
                 <!--end::Modal body-->
             </div>
@@ -701,7 +711,6 @@
         let DropdownSearch = $.fn.select2.amd.require('select2/dropdown/search');
         let CloseOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
         let AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
-
         let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
         $(document).on('click', '.addThem', function () {
             var newTh = themath.clone();
@@ -739,7 +748,9 @@
             multiple: true
         });
         $(document).on('click', '.credentials', function () {
-            $('.credentials_body').html('Login : ' + $(this).data('email') + '<br> Pass : ' + $(this).data('password'));
+            $('.login').text($(this).data('email'));
+            $('.password').text($(this).data('password'));
+            $('.status').html($(this).data('changed') == 1 ? '<span class="badge badge-danger">{{ trans('admin/publishers.changed') }}</span>':'<span class="badge badge-light">{{ trans('admin/publishers.not_changed') }}</span>');
             $('#kt_modal_credentials_publisher').modal('show');
         });
         $(document).on('click', '.sources', function () {

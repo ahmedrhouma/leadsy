@@ -3,6 +3,7 @@
 return [
     'id' => 'ID',
     'page_title' => 'Thematic list',
+    'thematic' => 'Thematic',
     'page_description' => 'List of all thematics',
     'name' => 'Name',
     'status' => 'Status',

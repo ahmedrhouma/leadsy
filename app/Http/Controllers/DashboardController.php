@@ -33,7 +33,7 @@ class DashboardController extends Controller
                 $options['countriesCount'] = Leads::all()->groupBy('country')->count();
                 $options['leads'] = Leads::all()->count();
                 $options['leadsByCountry'] = Leads::all()->groupBy('country')->map(fn($leads, $cnt)=> ['country'=>$cnt,'count'=>$leads->count()]);
-                $options['publishers'] = Publishers::withCount('leads')->orderBy('leads_count','DESC')->take(10)->get();
+                $options['publishers'] = Publishers::withCount('leads')->orderBy('leads_count','DESC')->take(5)->get();
                 $options['campaigns'] = Campaigns::where('status',1)->withCount('leads')->orderBy('leads_count','DESC')->take(10)->get();
                 break;
             case 2:

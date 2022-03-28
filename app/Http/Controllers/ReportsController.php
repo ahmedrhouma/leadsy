@@ -73,4 +73,8 @@ class ReportsController extends Controller
             })
             ->make(true);
     }
+    public function banPublisher(Request $request)
+    {
+
+    }
 }

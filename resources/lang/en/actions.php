@@ -6,6 +6,8 @@ return [
     'delete' => 'Delete|Deleted',
     'invite' => 'Invite|Invited',
     'edit' => 'Edit|Edited',
+    'view' => 'View',
+    'stop' => 'Stop',
     'cancel' => 'Cancel',
     'save' => 'Save',
     'save_changes' => 'Save changes',

@@ -149,22 +149,11 @@ class NegociationMessageController extends Controller implements MessageComponen
                 }
                 break;
             case 'invitation':
-                if (isset($content['content']) && $content != "") {
-                    if ($message = $this->negotiation->storeMessage($content['sender_id'], (isset($content['receiver_id']) ? $content['receiver_id'] : NULL), $content['content'], $content['negotiation_id'])) {
-                        $content['status'] = self::SUCCESS_MESSAGE_STATUS;
-                        if (isset($this->users[$content['receiver_id']])) {
-                            $this->connections[$this->users[$content['receiver_id']]]->send(json_encode($content));
-                        }
-                    } else {
-                        $conn->send(json_encode([
-                            'action' => 'message',
-                            'sender_id' => $content['sender_id'],
-                            'status' => self::ERROR_MESSAGE_STATUS
-                        ]));
-                    }
-                }
                 if (isset($this->users[$content['receiver_id'] ?? ''])) {
                     $this->connections[$this->users[$content['receiver_id']]]->send($msg);
+                }
+                if (isset($content['content']) && $content['content'] != "") {
+                    $message = $this->negotiation->storeMessage($content['sender_id'], (isset($content['receiver_id']) ? $content['receiver_id'] : NULL), $content['content'], $content['negotiation_id']);
                 }
                 break;
             case 'attachNegotiation':

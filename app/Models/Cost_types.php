@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Log;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cost_types extends Model
 {
-    use HasFactory;
+    use HasFactory,Log;
 
     /**
      * Get the cost types associated with the publisher.

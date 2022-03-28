@@ -191,7 +191,6 @@
                     <th>Rejection</th>
                     <th>ID Campaign</th>
                     <th>Campaign Name</th>
-                    <th>Actions</th>
                 </tr>
                 <!--end::Table row-->
                 </thead>
@@ -226,13 +225,7 @@
                 {data: 'sale_status_comment', name: 'sale_status_comment'},
                 {data: 'rejection', name: 'rejection'},
                 {data: 'campaign_id', name: 'campaign_id'},
-                {data: 'campaign_name', name: 'campaign_name'},
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
+                {data: 'campaign_name', name: 'campaign_name'}
             ],
 
             columnDefs:[
@@ -258,12 +251,7 @@
                         return '<div class="badge badge-light-info">'+data+'</div>';
                     },
                     "targets": 5
-                },{
-                    "render": function ( data, type, row ) {
-                        return '';
-                    },
-                    "targets": 17
-                },
+                }
             ]
         });
         table.on('draw',function () {

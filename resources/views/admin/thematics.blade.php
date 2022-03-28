@@ -79,7 +79,7 @@
                 @foreach($thematics as $thematic)
                     <tr>
                         <td>{{ $thematic->id }}</td>
-                        <td>{{ $thematic->name }}</td>
+                        <td class="text-capitalize">{{ $thematic->name }}</td>
                         {{--<td>
                             @foreach($thematic->countries as $country)
                                 <div class="badge badge-light-info">
@@ -536,7 +536,7 @@
             let id = $(this).data('id');
             Swal.fire({
                 icon: 'warning',
-                title: "{{trans('alert.validation_message',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans('actions.delete')])}}",
+                title: "{{trans('alert.validation_message',['attribute'=>trans('admin/thematics.thematic'),'action'=>trans_choice('actions.delete',1)])}}",
                 showCancelButton: true,
                 confirmButtonText: "Yes Delete It",
                 cancelButtonText: 'Cancel',
@@ -639,13 +639,11 @@
                                     });
                                     let DTdata = table.row(tr).data();
                                     DTdata[1] = data.thematic.name;
-                                    DTdata[4] = data.thematic.start_date;
-                                    DTdata[5] = data.thematic.end_date;
-                                    DTdata[2] = data.thematic.countries.map((O, K) => '<div class="badge badge-light-info"><img src="http://127.0.0.1:8000/assets/media/flags/' + O.countryName + '.svg" class="me-4 w-15px" style="border-radius: 4px" alt="">' + O.countryName + '</div>').join("");
+                                    DTdata[3] = data.thematic.start_date;
+                                    DTdata[4] = data.thematic.end_date;
+                                    //DTdata[2] = data.thematic.countries.map((O, K) => '<div class="badge badge-light-info"><img src="http://127.0.0.1:8000/assets/media/flags/' + O.countryName + '.svg" class="me-4 w-15px" style="border-radius: 4px" alt="">' + O.countryName + '</div>').join("");
                                     table.row(tr).data(DTdata).draw();
                                     KTMenu.createInstances();
-                                    $('#kt_modal_edit_thematic_cancel').click();
-
                                 } else {
                                     Swal.fire({
                                         text: "@lang('alert.error_general_text')",
@@ -655,7 +653,7 @@
                                         }
                                     });
                                 }
-                                $('#kt_modal_edit_thematic_cancel').click();
+                                $('#kt_modal_edit_thematic').modal('hide');
                             }
                         })
                     }

@@ -20,4 +20,10 @@ return [
     'campaigns_reports' => 'Campaigns reports',
     'total' => 'Total',
     'filter' => 'Filter',
+    'ban_publisher' => 'Exclure éditeur',
+    'reason' => 'Raison',
+    'bad_leads' => 'Mauvais prospects',
+    'bad_communication' => 'Mauvaise communication',
+    'Less_than_agreed' => 'Moins que convenu',
+    'Other' => 'Autre',
 ];

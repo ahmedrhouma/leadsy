@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('pageTitle')
-     @lang('admin/advertisers.page_title')
+     @lang('admin/campaigns.page_title')
 @endsection
 @section('pageDescription')
-    @lang('admin/advertisers.page_description')
+    @lang('admin/campaigns.page_description')
 @endsection
 @section('css')
     <style>
@@ -225,10 +225,9 @@
                 <tbody class="text-gray-600 fw-bold">
                 @foreach($campaigns as $campaign)
                     <tr>
-
                         <td>
                             @foreach($campaign->publishers as $publisher)
-                                <div class="badge badge-light">{{$campaign->publishers[0]->name}}</div>
+                                <div class="badge badge-light" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark"  title="ID : {{ $publisher->id }}">{{$campaign->publishers[0]->name}}</div>
                             @endforeach
                         </td>
                         <td>{{$campaign->publishers[0]->pivot->buying_price??''}}</td>
