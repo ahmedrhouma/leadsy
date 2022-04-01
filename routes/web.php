@@ -84,7 +84,7 @@ Route::group(['prefix'=>'advert', 'middleware' => ['auth','checkRole:advertiser'
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('advertiser.campaigns.destroy');
 
     Route::get('/publishers/reports',[\App\Http\Controllers\ReportsController::class,'publishersReports'])->name('advertiser.publishers.reports');
-    Route::post('/publishers/ban',[\App\Http\Controllers\ReportsController::class,'publishersReports'])->name('advertiser.publisher.ban');
+    Route::post('/publishers/ban',[\App\Http\Controllers\ReportsController::class,'banPublisher'])->name('advertiser.publisher.ban');
     Route::get('/reports',[\App\Http\Controllers\ReportsController::class,'reports'])->name('advertiser.reports');
 
     Route::get('/negotiations',[\App\Http\Controllers\NegotiationsController::class,'index'])->name('advertiser.negotiations');
@@ -106,8 +106,12 @@ Route::group(['prefix'=>'publisher', 'middleware' => ['auth','checkRole:publishe
     Route::post('/campaigns/update', [\App\Http\Controllers\CampaignsController::class,'update'])->name('publisher.campaigns.update');
     Route::delete('/campaigns', [\App\Http\Controllers\CampaignsController::class,'destroy'])->name('publisher.campaigns.destroy');
     Route::post('/campaigns/view', [\App\Http\Controllers\CampaignsController::class,'view'])->name('publisher.campaigns.view');
+    Route::post('/campaigns/stop', [\App\Http\Controllers\CampaignsController::class,'stop'])->name('publisher.campaigns.stop');
+    Route::post('/thematic/show', [\App\Http\Controllers\CampaignsController::class,'thematic'])->name('publisher.thematic.show');
 
     Route::get('/offers', [\App\Http\Controllers\CampaignsController::class,'offers'])->name('publisher.offers');
+    Route::post('/offer/add', [\App\Http\Controllers\CampaignsController::class,'addOffer'])->name('publisher.offers.add');
+    Route::post('/offer/destroy', [\App\Http\Controllers\CampaignsController::class,'destroyOffer'])->name('publisher.offers.destroy');
     Route::get('/opportunities', [\App\Http\Controllers\CampaignsController::class,'opportunities'])->name('publisher.opportunities');
     Route::post('/opportunities/request', [\App\Http\Controllers\CampaignsController::class,'requestNegotiation'])->name('publisher.opportunities.request');
     Route::get('/reports',[\App\Http\Controllers\ReportsController::class,'reports'])->name('publisher.reports');

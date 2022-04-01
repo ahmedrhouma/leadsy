@@ -12,4 +12,8 @@ class Publishers_cost_types extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function costType(){
+        return $this->belongsTo(Cost_types::class,'cost_type_id');
+    }
 }

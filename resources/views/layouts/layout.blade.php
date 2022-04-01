@@ -61,7 +61,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="dashboard">
-                            <img alt="Logo" src="{{asset('assets/media/logos/logo-demo9.svg')}}" class="h-35px"/>
+                            <img alt="Logo" src="{{asset('assets/media/logos/logo.png')}}" class="h-35px"/>
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -1533,9 +1533,9 @@
 <script>var hostUrl = "/";</script>
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
+<script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-<script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

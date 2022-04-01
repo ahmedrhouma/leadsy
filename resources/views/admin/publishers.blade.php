@@ -201,7 +201,6 @@
                 <tbody class="text-gray-600 fw-bold">
                 <!--begin::Table row-->
                 @foreach($publishers as $publisher)
-
                     <tr>
                         <td>
                             @if($publisher->thematics->count() > 1)
@@ -221,24 +220,24 @@
                             @endif
                         </td>
                         <td>{{$publisher->id}} </td>
-                        <td>
+                        <td class="text-capitalize">
                             {{$publisher->name}}
                         </td>
                         <td>
-                            <div class="badge badge-light">{{ $publisher->thematics->first()->name }}</div>
+                            <div class="badge badge-light d-inline text-capitalize">{{ $publisher->thematics->first()->name }}</div>
                         </td>
                         <td>
                             @foreach(json_decode($publisher->thematics->first()->pivot->countries) as $country)
-                                <div class="badge badge-light fw-bolder"><img
+                                <div class="badge badge-light fw-bolder text-capitalize  d-inline"><img
                                         src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}"
                                         class="me-4 w-15px" style="border-radius: 4px"
                                         alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
                             @endforeach
                         </td>
-                        <td>
+                        <td class="text-capitalize">
                             {{ $publisher->thematics->first()->leadsTypes->where('pivot.publisher_id',$publisher->id)->first()->name  }}
                         </td>
-                        <td>
+                        <td class="text-capitalize">
                             {{ $publisher->thematics->first()->costsTypes->where('pivot.publisher_id',$publisher->id)->first()->name }}
                         </td>
                         <td>
@@ -281,21 +280,19 @@
 
                     </tr>
                     @foreach($publisher->thematics->skip(1) as $key => $thematic)
-                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}"
-                            class="d-none">
+                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $publisher->id }}" class="d-none">
                             <td></td>
                             <td></td>
                             <td>
                             </td>
                             <td>
-                                <div class="badge badge-light fw-bolder">{{ $thematic->name }}</div>
+                                <div class="badge badge-light fw-bolder d-inline">{{ $thematic->name }}</div>
                             </td>
                             <td>
                                 @foreach(json_decode($thematic->pivot->countries) as $country)
-                                    <div class="badge badge-light fw-bolder"><img
-                                            src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}"
-                                            class="me-4 w-15px" style="border-radius: 4px"
-                                            alt="">{{ \App\Helper\Countries::getCountry($country) }}</div>
+                                    <div class="badge badge-light fw-bolder  d-inline">
+                                        <img src="{{asset('assets/media/flags/'. \App\Helper\Countries::getCountry($country) .'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ \App\Helper\Countries::getCountry($country) }}
+                                    </div>
                                 @endforeach
                             </td>
                             <td>
@@ -321,8 +318,7 @@
             </table>
         </div>
     </div>
-    <div class="modal fade" id="kt_modal_add_publisher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_publisher" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_add_user_header">
@@ -345,12 +341,54 @@
                              data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                             <div class="fv-row mb-7">
                                 <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.full_name')</label>
-                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0"
-                                       placeholder="Full name"/>
+                                <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
                             </div>
                             <div class="fv-row mb-7">
                                 <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.email')</label>
                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                            </div>
+                            <div class="thematics"></div>
+                            <div class="text-center">
+                                <button type="button" class="mt-4 btn btn-light-primary addThem">
+                                    Add thematic
+                                </button>
+                            </div>
+                            {{--<div class="thematics">
+                                <div class="card bg-light h-100">
+                                    <div class="card-body p-3">
+                                        <div class="fs-6 d-flex justify-content-between mb-4">
+                                            <div class="fw-bold">Thematic</div>
+                                            <div class="d-flex fw-bolder">
+                                                $6,570
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                        <div class="fs-6 d-flex justify-content-between my-4">
+                                            <div class="fw-bold">Countries</div>
+                                            <div class="d-flex fw-bolder">
+                                                $408
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                        <div class="fs-6 d-flex justify-content-between my-4">
+                                            <div class="fw-bold">Leads type</div>
+                                            <div class="d-flex fw-bolder">
+                                                $920
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 py-3 px-4 mb-3">
+                                                <div class="fs-6 text-gray-800 fw-bolder">Cost types</div>
+                                                <div class="fw-bold text-gray-400">Due Date</div>
+                                            </div>
+                                            <div class="col-md-6 min-w-125px py-3 px-4 mb-3">
+                                                <div class="fs-6 text-gray-800 fw-bolder">Amount</div>
+                                                <div class="fw-bold text-gray-400">Budget</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row g-9 mb-7 them">
                                 <div class="d-flex col-5 flex-column mb-7 fv-row">
@@ -442,7 +480,7 @@
                                     <!--end::Input-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
@@ -546,6 +584,103 @@
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                @lang('actions.cancel')
+                            </button>
+                            <button type="submit" class="btn btn-primary" data-kt-publishers-modal-action="submit">
+                                <span class="indicator-label">@lang('actions.save_changes')</span>
+                                <span class="indicator-progress">Please wait...
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_add_them">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_add_them_header">
+                    <h2 class="fw-bolder">Edit publisher Thematic</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
+                         data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                      transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <form id="add_them_form" class="form" action="#">
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.thematic',1)</span>
+                            </label>
+                            <select name="thematics" aria-label="Select a Thematic"  data-dropdown-parent="#modal_add_them" data-control="select2" data-placeholder="Select a Thematic..." class="form-select form-select-solid fw-bolder" multiple>
+                                <option value="">Select a Thematic...</option>
+                                @foreach($thematics as $thematic)
+                                    <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.country',2)</span>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                            </label>
+                            <select name="country" aria-label="Select Countries" data-dropdown-parent="#modal_add_them"  data-placeholder="Select Countries..." class="form-select form-select-solid fw-bolder" multiple="multiple">
+                                <option value="">Select a Country...</option>
+                                @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                    <option value="{{ $key}}">{{ $country}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.lead_type',2)</span>
+                            </label>
+                            <select name="leads_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them"  data-control="select2"
+                                    data-placeholder="Select a Leads type..."
+                                    data-dropdown-parent="#kt_modal_add_publisher"
+                                    class="form-select form-select-solid fw-bolder">
+                                <option value="">Select a Leads type...</option>
+                                @foreach($leads_types as $lead_type)
+                                    <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class=" fv-row fv-plugins-icon-container">
+                            <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
+                            <select name="costs_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them"  data-control="select2"
+                                    data-placeholder="Select a Thematic..."
+                                    data-dropdown-parent="#kt_modal_add_publisher"
+                                    class="form-select form-select-solid fw-bolder">
+                                <option value="">Select a Cost type...</option>
+                                @foreach($costs_types as $cost_type)
+                                    <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
+                                @endforeach
+                            </select>
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div style="display: none" class="fv-row fv-plugins-icon-container unit_price">
+                            <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.amount')</label>
+                            <input type="number" class="form-control form-control-solid" name="unit_price">
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div style="display: none"
+                             class="fv-row fv-plugins-icon-container sale_percentage">
+                            <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
+                            <input type="number" max="100" class="form-control form-control-solid" name="sale_percentage">
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
@@ -684,11 +819,46 @@
 @endsection
 @section('javascript')
     <script>
-        let themath = $('.them').clone();
+/*        let themath = $('<div><div class="float-end d-flex flex-column"><button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-22"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+            '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>\n' +
+            '</svg></span></button>\n' +
+            '                                    <button type="button" class="btn btn-sm btn-icon btn-outline-secondary edit"><span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
+            '<path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z" fill="currentColor"></path>\n' +
+            '<path d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z" fill="currentColor"></path>\n' +
+            '<path d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z" fill="currentColor"></path>\n' +
+            '</svg></span></button></div><div class="card bg-light h-100">\n' +
+            '                                    <div class="card-body p-3">\n' +
+            '                                        <div class="fs-6 d-flex justify-content-between mb-4">\n' +
+            '                                            <div class="fw-bold">Thematic</div>\n' +
+            '                                            <div class="d-flex fw-bolder thematics"></div>\n' +
+            '                                        </div>\n' +
+            '                                        <div class="separator separator-dashed"></div>\n' +
+            '                                        <div class="fs-6 d-flex justify-content-between my-4">\n' +
+            '                                            <div class="fw-bold">Countries</div>\n' +
+            '                                            <div class="d-flex fw-bolder countries"></div>\n' +
+            '                                        </div>\n' +
+            '                                        <div class="separator separator-dashed"></div>\n' +
+            '                                        <div class="fs-6 d-flex justify-content-between my-4">\n' +
+            '                                            <div class="fw-bold">Leads type</div>\n' +
+            '                                            <div class="d-flex fw-bolder leads_type"></div>\n' +
+            '                                        </div>\n' +
+            '                                        <div class="separator separator-dashed"></div>\n' +
+            '                                        <div class="row mt-5">\n' +
+            '                                            <div class="col-md-6 py-3 px-4 mb-3">\n' +
+            '                                                <div class="fs-6 text-gray-800 fw-bolder">Cost types</div>\n' +
+            '                                                <div class="fw-bold text-gray-400 cost_type"></div>\n' +
+            '                                            </div>\n' +
+            '                                            <div class="col-md-6 min-w-125px py-3 px-4 mb-3">\n' +
+            '                                                <div class="fs-6 text-gray-800 fw-bolder">Amount</div>\n' +
+            '                                                <div class="fw-bold text-gray-400 amount"></div>\n' +
+            '                                            </div>\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                </div></div>');*/
         let source = $('.source_body').clone();
     </script>
-    <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <script src="{{asset('assets/js/custom/publishers/add_publisher.js')}}"></script>
     <script>
         let tr;
         let id;
@@ -712,7 +882,7 @@
         let CloseOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
         let AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
         let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
-        $(document).on('click', '.addThem', function () {
+/*        $(document).on('click', '.addThem', function () {
             var newTh = themath.clone();
             $('select[name="thematics"]', $(this).parents('form')).each(function (e) {
                 $('select[name="thematics"] option[value="' + $(this).val() + '"]', newTh).attr('disabled', true);
@@ -726,7 +896,7 @@
                 dropdownAdapter: dropdownAdapter,
                 multiple: true
             });
-        });
+        });*/
         $(document).on('click', '.addSource', function () {
             var newTh = source.clone();
             newTh.insertAfter($(this).parents('.row'));
@@ -750,7 +920,7 @@
         $(document).on('click', '.credentials', function () {
             $('.login').text($(this).data('email'));
             $('.password').text($(this).data('password'));
-            $('.status').html($(this).data('changed') == 1 ? '<span class="badge badge-danger">{{ trans('admin/publishers.changed') }}</span>':'<span class="badge badge-light">{{ trans('admin/publishers.not_changed') }}</span>');
+            $('.status').html($(this).data('changed') == 1 ? '<span class="badge badge-danger">{{ trans('admin/publishers.changed') }}</span>' : '<span class="badge badge-light">{{ trans('admin/publishers.not_changed') }}</span>');
             $('#kt_modal_credentials_publisher').modal('show');
         });
         $(document).on('click', '.sources', function () {
@@ -926,10 +1096,11 @@
                 }
             }
         );
-        $('#kt_modal_add_publisher').on('show.bs.modal', function (e) {
+        /*$('#kt_modal_add_publisher').on('show.bs.modal', function (e) {
             $('#kt_modal_add_publisher_form').trigger('reset');
             $('#kt_modal_add_thematic_form select').change();
-        });
+            $('#modal_add_them').modal('hide');
+        });*/
         let selectedCountries = [];
         $('select[name="costs_types"]').change(function () {
             if ($(this).val() == 2) {
@@ -1040,11 +1211,8 @@
         $('#kt_modal_add_publisher_form').on('submit', function (e) {
             e.preventDefault();
             var thematics = [];
-            $('#kt_modal_add_publisher_form select[name="thematics"]').map(function (i, v) {
-                thematics.push({
-                    'val': $(v).val(),
-                    'countries': $(v).parents('.them').find('select[name="country"]').val()
-                });
+            $('.thematics .thematic').map(function (i, v) {
+                thematics.push($(this).data('values'));
             });
             if (validator) {
                 validator.validate().then(function (status) {

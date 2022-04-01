@@ -107,7 +107,7 @@
                         </div>
                         <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
                             <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                <span class="required">Message </span>
+                                <span class="">Message </span>
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="Specify a Reason to ban this publisher"></i>
                             </label>
                             <textarea rows="3" class="form-control form-control-solid message"></textarea>
@@ -172,7 +172,7 @@
                 },
                 {
                     "render": function (data, type, row) {
-                        return '<button type="button" class="btn btn-sm btn-light-danger banAct" data-id="'+row.publisher_id+'">Ban Publisher</button>';
+                            return row.status != 2?'<button type="button" class="btn btn-sm btn-light-danger banAct" data-id="' + row.publisher_id + '">Ban Publisher</button>':'';
                     },
                     "targets": 7
                 },
@@ -224,9 +224,13 @@
             advertisersTable.columns($(this).data('row')).search($(this).val()).draw();
         });
         let publisher_id = null;
+        let campaign_id = null;
+        let btn = null;
         $(document).on('click', '.banAct', function () {
             let data = advertisersTable.row($(this).parents('tr')).data();
             publisher_id = data.publisher_id;
+            campaign_id = data.campaign_id;
+            btn = $(this);
             $('#banModal').modal('show');
         });
         $(document).on('click', '.ban', function () {
@@ -244,7 +248,8 @@
                         method: 'POST',
                         dataType: 'JSON',
                         data: {
-                            id: publisher_id,
+                            publisher_id: publisher_id,
+                            campaign_id: campaign_id,
                             reason: $('#banModal .reason').val(),
                             message: $('#banModal .message').val(),
                             _token: '{{ csrf_token() }}'
@@ -254,7 +259,9 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Publisher successfully banned'
-                                })
+                                });
+                                btn.remove();
+                                $('#banModal').modal('hide');
                             } else {
                                 Swal.fire({
                                     icon: 'error',

@@ -29,7 +29,7 @@ class Campaigns extends Model
      */
     public function publishers()
     {
-        return $this->belongsToMany(Publishers::class, 'campaign_publishers', 'campaign_id', 'publisher_id')->withPivot(['buying_price']);
+        return $this->belongsToMany(Publishers::class, 'campaign_publishers', 'campaign_id', 'publisher_id')->withPivot(['buying_price','status']);
     }
     /**
      * Get the leads associated with the campaign.

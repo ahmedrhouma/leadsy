@@ -608,6 +608,206 @@
             </div>
         </div>
     </div>
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Form-->
+                <form class="form" action="#" id="kt_modal_add_campaign_form">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_campaign_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bolder">@lang('advert/campaigns.add_campaign')</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div id="kt_modal_add_campaign_close" class="btn btn-icon btn-sm btn-active-icon-primary"  data-bs-dismiss="modal">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"/>
+									<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+								</svg>
+							</span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--end::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_campaign_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_campaign_header" data-kt-scroll-wrappers="#kt_modal_add_campaign_scroll" data-kt-scroll-offset="300px">
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-7">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.name')</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control form-control-solid" placeholder="" name="name"/>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <div class="row g-9 mb-7">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.starting_date')</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid dateStart" placeholder="" name="start_date" value="" autocomplete="off">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-bold mb-2">@lang('advert/campaigns.ending_date')</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid dateEnd" placeholder="" name="end_date" value="" autocomplete="off">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">@choice('advert/campaigns.thematic',1)</span>
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <select name="Thematic" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                    <option></option>
+                                    @foreach($thematics as $thematic)
+                                        <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
+                                    @endforeach
+                                </select>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">@choice('advert/campaigns.country',1)</span>
+                                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder" multiple>
+                                    @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                        <option value="{{ $key}}">{{ $country}}</option>
+                                    @endforeach
+                                </select>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="required">@choice('advert/campaigns.lead_type',1)</span>
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2" data-placeholder="Select a Lead Type..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                    <option></option>
+                                    @foreach($leads_types as $lead_type)
+                                        <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
+                                    @endforeach
+                                </select>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-7">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.expected_leads_volume')</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select name="leads_volume" aria-label="Select a lead volume" data-control="select2" data-placeholder="Select a Lead volume..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                        <option></option>
+                                        <option value="1">Per Day</option>
+                                        <option value="2">Per Campaign</option>
+                                    </select>
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.max_leads')</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control form-control-solid" placeholder="" name="leads_vmax">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-7">
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@choice('advert/campaigns.cost_type',1)</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select name="costs_types" aria-label="Select a Cost type" data-control="select2" data-placeholder="Select a Cost type..." data-dropdown-parent="#kt_modal_add_campaign" class="form-select form-select-solid fw-bolder">
+                                        <option></option>
+                                        @foreach($costs_types as $cost_type)
+                                            <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container cost_amount">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.amount')</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="number" step="0.1" class="form-control form-control-solid" name="cost_amount">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">@lang('advert/campaigns.sale') %</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="number" max="100" step="0.1" class="form-control form-control-solid" name="sale_percentage">
+                                    <!--end::Input-->
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer flex-center">
+                        <button type="reset" id="kt_modal_add_campaign_cancel" data-bs-dismiss="modal" class="btn btn-light me-3">
+                            @lang('actions.cancel')
+                        </button>
+                        <button type="submit" id="kt_modal_add_campaign_submit" class="btn btn-primary">
+                            <span class="indicator-label">@lang('actions.save')</span>
+                            <span class="indicator-progress">Please wait...
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
 
 @endsection
 

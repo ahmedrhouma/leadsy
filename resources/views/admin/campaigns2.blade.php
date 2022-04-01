@@ -185,9 +185,9 @@
                 <thead>
                 <!--begin::Table row-->
                 <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                    <th>@lang('admin/campaigns.publisher_id')</th>
+                    {{--<th></th>--}}
                     <th>@choice('admin/campaigns.publisher',2)</th>
-                    <th>@lang('admin/campaigns.buying_price')</th>
+                    {{--<th>@lang('admin/campaigns.buying_price')</th>--}}
                     <th>@lang('admin/campaigns.selling_price')</th>
                     <th>@lang('admin/campaigns.fee')</th>
                     <th>@lang('admin/campaigns.advertiser_id')</th>
@@ -213,12 +213,27 @@
                 <tbody class="text-gray-600 fw-bold">
                 @foreach($campaigns as $campaign)
                     <tr>
-                        <td>
-                            @foreach($campaign->publishers as $publisher)
-                                <div class="badge badge-light" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark"  title="ID : {{ $publisher->id }}">{{$campaign->publishers[0]->name}}</div>
-                            @endforeach
+                        <td class="text-center">
+                            @if($campaign->publishers->count() > 1)
+                                <button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary toggle h-25px w-25px" data-kt-publisher-datatable-subtable="expand_row" data-id="{{ $campaign->id }}">
+                                <span class="svg-icon svg-icon-3 m-0 toggle-off">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="black"></rect>
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                                        </svg>
+                                    </span>
+                                    <span class="svg-icon svg-icon-3 m-0 toggle-on">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="black"></rect>
+                                        </svg>
+                                    </span>
+                                </button>
+                            @endif
                         </td>
-                        <td>{{$campaign->publishers[0]->pivot->buying_price??''}}</td>
+                        {{--<td>
+                            <div class="badge badge-light" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark" title="ID : {{ $campaign->publishers->first()?->id }}">{{$campaign->publishers->first()?->name}}</div>
+                        </td>
+                        <td>{{$campaign->publishers->first()?->pivot->buying_price??''}}</td>--}}
                         <td>{{$campaign->selling_price}}</td>
                         <td>{{$campaign->fee}}</td>
                         <td>{{$campaign->advertiser->id}}</td>
@@ -238,17 +253,20 @@
                         <td>
                             <div class="badge badge-light">{{$campaign->thematics->name}}</div>
                         </td>
-                        <td>@foreach($campaign->countriesName as $country)
+                        <td>
+                            @foreach($campaign->countriesName as $country)
                                 <div class="badge badge-light fw-bolder m-1">
                                     <img src="{{asset('assets/media/flags/'.str_replace(' ','-',strtolower($country)).'.svg')}}" class="me-4 w-15px" style="border-radius: 4px" alt="">{{ $country }}
                                 </div>
-                            @endforeach</td>
+                            @endforeach
+                        </td>
                         <td>
                             <div class="badge badge-light">{{$campaign->leadsTypes->name}}</div>
                         </td>
                         <td>{{$campaign->leads_vmax}}</td>
                         <td>{{$campaign->costsTypes->name}}</td>
                         <td>{{$campaign->cost_amount}}</td>
+                        <!--begin::Action=-->
                         <td class="text-end">
                             <a href="#" class="btn btn-secondary btn-active-secondary-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
@@ -271,7 +289,54 @@
                             </div>
                             <!--end::Menu-->
                         </td>
+                        <!--end::Action=-->
                     </tr>
+                    @foreach($campaign->publishers as $publisher)
+                        <tr data-kt-publisher-datatable-subtable="subtable_template_{{ $campaign->id }}" class="d-none border-bottom border-secondary">
+                            <td></td>
+                            <td colspan="3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <a href="#" class="symbol symbol-50px bg-secondary bg-opacity-25 rounded">
+                                        <img src="{{ $publisher->user->photo }}" alt="" data-kt-docs-datatable-subtable="template_image"/>
+                                    </a>
+                                    <div class="d-flex flex-column text-muted">
+                                        <a href="#" class="text-dark text-hover-primary fw-bolder" data-kt-docs-datatable-subtable="template_name">{{ $publisher->name }}</a>
+                                        <div class="fs-7" data-kt-docs-datatable-subtable="template_description">ID : {{ $publisher->id }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div class="text-dark fs-7">@lang('admin/campaigns.buying_price')</div>
+                                <div class="text-muted fs-7 fw-bolder" data-kt-docs-datatable-subtable="template_cost">{{$publisher->pivot->buying_price??''}}</div>
+                            </td>
+                            <td colspan="2">
+                                <div class="text-dark fs-7">Total leads</div>
+                                <div class="text-muted fs-7 fw-bolder" data-kt-docs-datatable-subtable="template_qty">{{ $campaign->leads->where('publisher_id',$publisher->id)->count() }}</div>
+                            </td>
+                            <td colspan="2">
+                                <div class="text-dark fs-7">Total sales</div>
+                                <div class="text-muted fs-7 fw-bolder" data-kt-docs-datatable-subtable="template_total">{{ $campaign->leads->where('publisher_id',$publisher->id)->where('pivot.sale_status_id',1)->count() }}</div>
+                            </td>
+                            <td colspan="2">
+                                <div class="text-dark fs-7 me-3">Total rejection</div>
+                                <div class="text-muted fs-7 fw-bolder" data-kt-docs-datatable-subtable="template_stock">{{ $campaign->leads->where('publisher_id',$publisher->id)->whereNotNull('pivot.rejection_id')->count() }}</div>
+                            </td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>{{--
+                            <td class="d-none"></td>
+                            <td class="d-none"></td>--}}
+                        </tr>
+                    @endforeach
                 @endforeach
                 </tbody>
                 <!--end::Table body-->
@@ -525,12 +590,25 @@
 @section('javascript')
     <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/4.0.1/js/dataTables.fixedColumns.min.js"></script>
     <script>
         var id;
         var tr;
 
         $(document).ready(function () {
+            $(document).on('click', 'button[data-kt-publisher-datatable-subtable="expand_row"]', function () {
+                if (!$(this).hasClass('expanded')) {
+                    $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').insertAfter($(this).parents('tr'));
+                    $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').removeClass('d-none');
+                    $(this).addClass('expanded');
+                } else {
+                    $('tr[data-kt-publisher-datatable-subtable="subtable_template_' + $(this).data('id') + '"]').addClass('d-none');
+                    $(this).removeClass('expanded');
+                }
+                let onBTN = $(this).find('.toggle-on');
+                let offBTN = $(this).find('.toggle-off');
+                onBTN.addClass('toggle-off').removeClass('toggle-on');
+                offBTN.addClass('toggle-on').removeClass('toggle-off');
+            });
             var table = $("#kt_campaigns_table").DataTable({
                 "pageLength": 5,
                 lengthMenu: [[5, 10, 20], [5, 10, 20]],

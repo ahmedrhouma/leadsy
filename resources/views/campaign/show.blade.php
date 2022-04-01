@@ -1,14 +1,23 @@
 <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
     <div class="flex-grow-1">
         <div class="d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                <div>
-                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1 show-subject">{{ $campaign->name }}</a>
-                    <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 show-type">{{ \App\Models\Campaigns::status[$campaign->status] }}</a>
-                    <div class="d-flex mt-4">
-                        <a href="javascript:" class="d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2 fw-bold"><span class="show-start-at">{{ $campaign->start_date }}</span></a>
-                        <span class=" text-gray-400">-</span>
-                        <a href="javascript:" class="d-flex align-items-center text-gray-400 text-hover-primary mx-4 mb-2  fw-bold"><span class="show-end-at">{{ $campaign->end_date }}</span></a>
+            <div class="d-flex justify-content-between align-items-start flex-wrap mb-10">
+                <div class="d-flex align-items-center">
+                    <div class="symbol symbol-50px me-4">
+                        <div class="symbol-label fs-4 fw-bold bg-primary text-inverse-danger">{{ $campaign->id }}</div>
+                    </div>
+                    <div>
+                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1 show-subject">{{ $campaign->name }}</a>
+                        @if($campaign->campaignPublishers->where('publisher_id',session('account_id'))->first()->status == 1)
+                            <div class="badge badge-light-success">Active</div>
+                        @elseif($campaign->campaignPublishers->where('publisher_id',session('account_id'))->first()->status == 0)
+                            <div class="badge badge-light-danger">Stopped</div>
+                        @endif
+                        <div class="d-flex mt-3">
+                            <a href="javascript:" class="d-flex align-items-center text-gray-400 text-hover-primary me-4 mb-2 fw-bold"><span class="show-start-at">{{ $campaign->start_date }}</span></a>
+                            <span class=" text-gray-400">-</span>
+                            <a href="javascript:" class="d-flex align-items-center text-gray-400 text-hover-primary mx-4 mb-2  fw-bold"><span class="show-end-at">{{ $campaign->end_date }}</span></a>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex align-items-center">
@@ -23,8 +32,21 @@
                     </div>
                 </div>
             </div>
+            <div class="text-end">
+                <a href="{{ route(auth()->user()->getAccountName().'.negotiations').'?negotiation='.$campaign->negotiations->where('part_type',2)->where('part_id',session('account_id'))->first()->id }}" class="btn btn-sm btn-light-primary">Show negotiation</a>
+            </div>
             <div class="d-flex flex-wrap justify-content-start">
                 <div class="row">
+                    @publisher
+                    <div class="col-md-4 p-2">
+                        <div class="border border-gray-300 border-dashed rounded py-3 px-4  mb-3">
+                            <div class="fw-bold fs-6 text-gray-400">@lang('admin/negotiations.advertiser_id')</div>
+                            <div class="d-flex align-items-center">
+                                <div class="fs-4 fw-bolder">ID : {{ $campaign->advertiser_id }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    @endpublisher
                     <div class="col-md-4 p-2">
                         <div class="border border-gray-300 border-dashed rounded py-3 px-4  mb-3">
                             <div class="fw-bold fs-6 text-gray-400">@choice('admin/negotiations.thematic',1)</div>
@@ -77,6 +99,7 @@
                             </div>
                         </div>
                     </div>
+                    @advertiser
                     <div class="col-md-4 p-2">
                         <div class="border border-gray-300 border-dashed rounded py-3 px-4  mb-3">
                             <div class="fw-bold fs-6 text-gray-400">@lang('admin/negotiations.max_fixed_amount')</div>
@@ -87,19 +110,30 @@
                             </div>
                         </div>
                     </div>
+                    @endadvertiser
+                    @publisher
+                    <div class="col-md-4 p-2">
+                        <div class="border border-gray-300 border-dashed rounded py-3 px-4  mb-3">
+                            <div class="fw-bold fs-6 text-gray-400">@choice('admin/negotiations.selling_price',1)</div>
+                            <div class="d-flex align-items-center">
+                                <div class="fs-4 fw-bolder">{{ $campaign->campaignPublishers->where('publisher_id',session('account_id'))->first()->buying_price }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    @endpublisher
                 </div>
             </div>
+            @admin
             <div class="separator separator-dashed my-6"></div>
             <h4 class="mb-0">@choice('admin/negotiations.negotiation',2)
                 (<span class="show-publishers-count">{{ $campaign->publishers->count()+1 }}</span>) </h4>
             <div class="row g-6 g-xl-9 mt-2">
-
                 <div class="col-md-4 col-xxl-4">
                     <div class="d-flex align-items-sm-center mb-7">
                         <div class="symbol symbol-50px me-5">
-                                <span class="symbol-label">
-                                    <img src="{{ $campaign->advertiser->user->photo }}" class="align-self-center" alt="">
-                                </span>
+                            <span class="symbol-label">
+                                <img src="{{ $campaign->advertiser->user->photo }}" class="w-100 h-100 align-self-center" alt="">
+                            </span>
                         </div>
                         <div class="d-flex align-items-center flex-row-fluid flex-wrap">
                             <div class="flex-grow-1 me-2">
@@ -117,7 +151,7 @@
                         <div class="d-flex align-items-sm-center mb-7">
                             <div class="symbol symbol-50px me-5">
                                 <span class="symbol-label">
-                                    <img src="{{ $publisher->publisher->user->photo }}" class="align-self-center" alt="">
+                                    <img src="{{ $publisher->publisher->user->photo }}" class="w-100 h-100 align-self-center" alt="">
                                 </span>
                             </div>
                             <div class="d-flex align-items-center flex-row-fluid flex-wrap">
@@ -135,6 +169,8 @@
                 @endforeach
             </div>
             <div class="show-contacts hover-scroll-y mh-200px"></div>
+            @endadmin
+
         </div>
     </div>
 </div>

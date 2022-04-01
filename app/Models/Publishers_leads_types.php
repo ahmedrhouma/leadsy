@@ -12,4 +12,7 @@ class Publishers_leads_types extends Model
     protected $guarded = [
         'id'
     ];
+    public function leadType(){
+        return $this->belongsTo(Leads_types::class,'lead_type_id');
+    }
 }

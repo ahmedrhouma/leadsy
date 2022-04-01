@@ -34,7 +34,7 @@
                             <a href="#" class="d-flex flex-stack py-4 bg-hover-light rounded px-2 campaign_item" data-id="{{ $negotiation->campaign->id }}" data-negotiation="{{ $negotiation->id }}" @if(!is_null($negotiation->lastMessage)) data-receiver_id="{{ $negotiation->lastMessage->receiver_id == auth()->id()?$negotiation->lastMessage->sender_id:$negotiation->lastMessage->receiver_id}}" @endif >
                                 <div class="d-flex align-items-center">
                                     <div class="symbol symbol-45px symbol-circle">
-                                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder id">{{ $negotiation->campaign->id }}</span>
+                                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder id"  data-bs-toggle="tooltip" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-placement="right" title="Campaign ID : {{ $negotiation->campaign->id }}">{{ $negotiation->campaign->id }}</span>
                                     </div>
                                     <div class="ms-5 mw-125px">
                                         <span class="fs-5 fw-bold text-truncate  text-gray-600 text-hover-primary mb-2 name">{{ $negotiation->campaign->name }}</span>

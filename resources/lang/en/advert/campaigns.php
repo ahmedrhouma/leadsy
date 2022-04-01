@@ -3,6 +3,7 @@ return [
     'id' => 'ID ',
     'page_title' => 'Campaigns list',
     'page_description' => 'List of all campaigns',
+    'campaign' => 'Campaign|Campaigns',
     'publisher' => 'Publisher|Publishers',
     'publisher_name' => 'Publisher name',
     'advertiser' => 'Advertiser|Advertisers',

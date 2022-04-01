@@ -14,13 +14,18 @@ class Publishers_thematics extends Model
         'id'
     ];
     protected $appends = [
-        'countries_name',
-        'countries'
+        'countries_details'
+    ];
+    protected $casts = [
+        'countries' => 'json'
     ];
     public function getCountriesNameAttribute(){
         return Countries::getCountry($this->countries) ?? null;
     }
-    public function getCountriesAttribute(){
-        return json_decode($this->countries) ?? null;
+
+    public function getCountriesDetailsAttribute(){
+        return array_map(function ($iso){
+            return ['iso' => $iso,'name'=>Countries::getCountry($iso)];
+        },$this->countries);
     }
 }

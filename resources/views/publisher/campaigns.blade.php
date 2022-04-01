@@ -172,10 +172,10 @@
                         <td>{{$campaign->start_date}}</td>
                         <td>{{$campaign->end_date}}</td>
                         <td>
-                            @if($campaign->status == 1)
+                            @if($campaign->pivot->status == 1)
                                 <div class="badge badge-light-success">Active</div>
-                            @else
-                                <div class="badge badge-light-info">Disabled</div>
+                            @elseif($campaign->pivot->status == 0)
+                                <div class="badge badge-light-danger">Stopped</div>
                             @endif
                         </td>
                         <td>
@@ -191,7 +191,7 @@
                         </td>
                         <td>{{$campaign->leads_vmax}}</td>
                         <td>{{$campaign->costsTypes->name}}</td>
-                        <td>{{$campaign->selling_price}}</td>
+                        <td>{{$campaign->campaignPublishers->where('publisher_id',session('account_id'))->first()->buying_price}}</td>
                         <td class="text-end">
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                 <span class="svg-icon svg-icon-5 m-0">
@@ -201,16 +201,20 @@
 								</span>
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                @if((intval($campaign->leads_vmax) - intval($campaign->leads_count)) > 0)
+
+                                @if($campaign->pivot->status == 1)
+                                    @if((intval($campaign->leads_vmax) - intval($campaign->leads_count)) > 0)
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">@lang('actions.upload')</a>
+                                        </div>
+                                    @endif
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3 upload" data-id="{{ $campaign->id }}">@lang('actions.upload')</a>
+                                        <a href="#" class="menu-link px-3 stop" data-id="{{ $campaign->id }}">@lang('actions.stop')</a>
                                     </div>
                                 @endif
+
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3 view" data-id="{{ $campaign->id }}">@lang('actions.view')</a>
-                                </div>
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 stop" data-id="{{ $campaign->id }}">@lang('actions.stop')</a>
                                 </div>
                             </div>
                         </td>
@@ -240,7 +244,7 @@
                             <label class="required form-label">Source</label>
                             <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option" name="source">
                                 <option></option>
-                                <option value="1">Landing Page</option>
+                                <option value="1" selected>Landing Page</option>
                             </select>
                         </div>
                         <div class="fv-row fv-plugins-icon-container">
@@ -361,15 +365,51 @@
             $('[data-kt-campaigns-table-filter="search"]').on('keyup', function (e) {
                 table.search($(this).val()).draw();
             });
+            $(document).on('click', '.stop', function () {
+                let id = $(this).data('id');
+                let tr = $(this).closest('tr');
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Do you want to stop this campaign?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No I Don't`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: route('publisher.campaigns.stop'),
+                            method: 'POST',
+                            data: {
+                                id: id,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (data) {
+                                if (data.success) {
+                                    let data = table.row(tr).data();
+                                    data[5]= '<div class="badge badge-light-danger">Stopped</div>';
+                                    table.row(tr).data(data).draw();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Campaign successfully Stopped !',
+                                    });
+                                }
+                            }
+                        });
+                    }
+                })
+
+            });
+
 
         });
-        $(document).on('click','.view',function () {
+        $(document).on('click', '.view', function () {
             $.ajax({
                 url: route('publisher.campaigns.view'),
                 method: 'POST',
                 data: {
                     id: $(this).data('id'),
-                    _token : '{{ csrf_token() }}'
+                    _token: '{{ csrf_token() }}'
                 },
                 success: function (data) {
                     $('.campaign_details_body').html(data);
@@ -377,5 +417,6 @@
                 }
             });
         });
+
     </script>
 @endsection

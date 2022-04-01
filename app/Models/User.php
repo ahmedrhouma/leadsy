@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->accountTypes[$this->profile];
     }
     public function getPhotoAttribute($photo){
-        return Storage::disk('public')->exists($photo)?Storage::url($photo):asset('assets/media/svg/avatars/007-boy-2.svg');
+        return Storage::disk('public')->exists($photo)?Storage::url($photo):asset('assets/media/avatars/'.$this->accountTypes[$this->profile].'.png');
     }
     public function account(){
         switch ($this->profile){

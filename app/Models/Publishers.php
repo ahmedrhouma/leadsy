@@ -21,6 +21,14 @@ class Publishers extends Model
     }
 
     /**
+     * Get the leads associated with the publisher.
+     */
+    public function offers()
+    {
+        return $this->hasMany(Offer::class, 'publisher_id');
+    }
+
+    /**
      * Get the thematics associated with the publisher.
      */
     public function thematics()
@@ -49,7 +57,7 @@ class Publishers extends Model
      */
     public function campaigns()
     {
-        return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price']);
+        return $this->belongsToMany(Campaigns::class, 'campaign_publishers', 'publisher_id', 'campaign_id')->withPivot(['buying_price','status']);
     }
 
     /**

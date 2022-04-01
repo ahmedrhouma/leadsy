@@ -13,7 +13,8 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     const ELEMENTS = [
         'campaign' => 1,
-        'lead' => 2
+        'lead' => 2,
+        'campaignPublisher' => 3
     ];
 
     /**

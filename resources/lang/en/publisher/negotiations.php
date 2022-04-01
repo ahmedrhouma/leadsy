@@ -8,6 +8,7 @@ return [
     'negotiations_main_subtitle' => 'Select a campaign from the list on left.<br> Negotiate your campaign leads price with all privacy and secure method.',
     'search_campaign' => 'Search by campaign ID or campaign Name',
     'advertiser' => 'Advertiser|Advertisers',
+    'advertiser_id' => 'Advertiser ID',
     'publisher' => 'Publisher|Publishers',
     'creation_date' => 'Creation date',
     'starting_date' => 'Starting date',

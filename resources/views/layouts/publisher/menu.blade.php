@@ -2,7 +2,7 @@
     <!--begin::Logo-->
     <div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
         <a href="{{route('publisher.dashboard')}}">
-            <img alt="Logo" src="{{asset('assets/media/logos/logo-demo9.svg')}}" class="h-40px" />
+            <img alt="Logo" src="{{asset('assets/media/logos/logo.png')}}" class="h-40px" />
         </a>
     </div>
     <!--end::Logo-->

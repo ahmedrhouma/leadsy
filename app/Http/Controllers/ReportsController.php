@@ -20,7 +20,7 @@ class ReportsController extends Controller
             $campaigns->whereBetween('created_at', [$request->start_date, $request->end_date]);
         }
         if (auth()->user()->profile == 3) {
-            $campaigns->where('publisher_id','=',auth()->user()->account->id);
+            $campaigns->where('publisher_id', '=', auth()->user()->account->id);
         }
         return DataTables::of($campaigns)
             ->addColumn('quantity', function ($row) {
@@ -53,7 +53,7 @@ class ReportsController extends Controller
             $campaigns->whereBetween('created_at', [$request->start_date, $request->end_date]);
         }
         if (auth()->user()->profile == 2) {
-            $campaigns->whereHas('campaign', function($query) {
+            $campaigns->whereHas('campaign', function ($query) {
                 $query->where('advertiser_id', auth()->user()->account->id);
             });
         }
@@ -73,8 +73,19 @@ class ReportsController extends Controller
             })
             ->make(true);
     }
+
     public function banPublisher(Request $request)
     {
-
+        $campaignPublisher = CampaignPublisher::where(['publisher_id' => $request->publisher_id, 'campaign_id' => $request->campaign_id])->first();
+        if ($campaignPublisher) {
+            $campaignPublisher->update(['status' => 2]);
+            if ($request->has('message') && $request->get('message') != "") {
+                $this->addNote('campaignPublisher', $campaignPublisher->id, $request->message);
+            }
+            if ($campaignPublisher->wasChanged()){
+                return Response()->json(['success'=>true]);
+            }
+        }
+        return Response()->json(['success'=>false]);
     }
 }

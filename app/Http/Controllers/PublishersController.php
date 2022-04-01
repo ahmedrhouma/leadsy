@@ -35,7 +35,7 @@ class PublishersController extends Controller
         }
         $publisher = Publishers::create(['name' => $request->name, 'status' => 1]);
         if ($publisher) {
-            $user = User::create([
+            /*$user = User::create([
                 'username' => $request->name,
                 'email' => $request->email,
                 'profile' => 3,
@@ -43,8 +43,10 @@ class PublishersController extends Controller
                 'role' => 0,
                 'status' => 1,
                 'password' => Hash::make(str_replace(' ', '', $request->name) . '@' . $publisher->id),
-            ]);
+            ]);*/
             foreach ($request->thematics as $thematic) {
+                parse_str($thematic, $values);
+                dd($values);
                 if ($thematic['val'] != null && count($thematic['countries']) != 0) {
                     Publishers_thematics::create(['countries' => json_encode($thematic['countries']), 'status' => 1, 'unit_price' => $request->unit_price != "" ? $request->unit_price : NULL, 'sale_percentage' => $request->sale_percentage, 'publisher_id' => $publisher->id, 'thematic_id' => $thematic['val']]);
                     Publishers_leads_types::create(['status' => 1, 'publisher_id' => $publisher->id, 'thematic_id' => $thematic['val'], 'lead_type_id' => $request->leads_types]);
