@@ -224,7 +224,7 @@
                             {{$publisher->name}}
                         </td>
                         <td>
-                            <div class="badge badge-light d-inline text-capitalize">{{ $publisher->thematics->first()->name }}</div>
+                            <div class="badge badge-light d-inline text-capitalize">{{ $publisher->thematics->first()?->name }}</div>
                         </td>
                         <td>
                             @foreach(json_decode($publisher->thematics->first()->pivot->countries) as $country)
@@ -347,140 +347,12 @@
                                 <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.email')</label>
                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0"/>
                             </div>
-                            <div class="thematics"></div>
+                            <div class="thematics-block"></div>
                             <div class="text-center">
                                 <button type="button" class="mt-4 btn btn-light-primary addThem">
                                     Add thematic
                                 </button>
                             </div>
-                            {{--<div class="thematics">
-                                <div class="card bg-light h-100">
-                                    <div class="card-body p-3">
-                                        <div class="fs-6 d-flex justify-content-between mb-4">
-                                            <div class="fw-bold">Thematic</div>
-                                            <div class="d-flex fw-bolder">
-                                                $6,570
-                                            </div>
-                                        </div>
-                                        <div class="separator separator-dashed"></div>
-                                        <div class="fs-6 d-flex justify-content-between my-4">
-                                            <div class="fw-bold">Countries</div>
-                                            <div class="d-flex fw-bolder">
-                                                $408
-                                            </div>
-                                        </div>
-                                        <div class="separator separator-dashed"></div>
-                                        <div class="fs-6 d-flex justify-content-between my-4">
-                                            <div class="fw-bold">Leads type</div>
-                                            <div class="d-flex fw-bolder">
-                                                $920
-                                            </div>
-                                        </div>
-                                        <div class="separator separator-dashed"></div>
-                                        <div class="row mt-5">
-                                            <div class="col-md-6 py-3 px-4 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bolder">Cost types</div>
-                                                <div class="fw-bold text-gray-400">Due Date</div>
-                                            </div>
-                                            <div class="col-md-6 min-w-125px py-3 px-4 mb-3">
-                                                <div class="fs-6 text-gray-800 fw-bolder">Amount</div>
-                                                <div class="fw-bold text-gray-400">Budget</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-9 mb-7 them">
-                                <div class="d-flex col-5 flex-column mb-7 fv-row">
-                                    <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">@choice('admin/publishers.thematic',1)</span>
-                                    </label>
-                                    <select name="thematics" aria-label="Select a Thematic" data-control="select2"
-                                            data-placeholder="Select a Thematic..."
-                                            class="form-select form-select-solid fw-bolder">
-                                        <option value="">Select a Thematic...</option>
-                                        @foreach($thematics as $thematic)
-                                            <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="d-flex col-5 flex-column mb-7 fv-row">
-                                    <label class="fs-6 fw-bold mb-2">
-                                        <span class="required">@choice('admin/publishers.country',2)</span>
-                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                           title="Country of origination"></i>
-                                    </label>
-                                    <select name="country" aria-label="Select Countries"
-                                            data-placeholder="Select Countries..."
-                                            class="form-select form-select-solid fw-bolder" multiple="multiple">
-                                        <option value="">Select a Country...</option>
-                                        @foreach(\App\Helper\Countries::getCountries() as $key => $country)
-                                            <option value="{{ $key}}">{{ $country}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-2 d-flex align-items-center">
-                                    <button type="button" class="btn btn-sm btn-icon btn-outline-secondary addThem">
-                                        <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                 viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                                                  transform="rotate(-90 11.364 20.364)" fill="black"/>
-                                            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">@choice('admin/publishers.lead_type',2)</span>
-                                </label>
-                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
-                                        data-placeholder="Select a Leads type..."
-                                        data-dropdown-parent="#kt_modal_add_publisher"
-                                        class="form-select form-select-solid fw-bolder">
-                                    <option value="">Select a Leads type...</option>
-                                    @foreach($leads_types as $lead_type)
-                                        <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="row g-9 mb-7">
-                                <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
-                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
-                                            data-placeholder="Select a Thematic..."
-                                            data-dropdown-parent="#kt_modal_add_publisher"
-                                            class="form-select form-select-solid fw-bolder">
-                                        <option value="">Select a Cost type...</option>
-                                        @foreach($costs_types as $cost_type)
-                                            <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
-                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.amount')</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid" name="unit_price">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
-                                <div style="display: none"
-                                     class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" max="100" class="form-control form-control-solid"
-                                           name="sale_percentage">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
-                            </div>--}}
                         </div>
                         <div class="text-center pt-15">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
@@ -532,57 +404,11 @@
                                 <label class="required fw-bold fs-6 mb-2">@lang('admin/publishers.email')</label>
                                 <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" value="Email"/>
                             </div>
-                            <div class="thematics">
-
-                            </div>
-                            <div class="d-flex flex-column mb-7 fv-row">
-                                <label class="fs-6 fw-bold mb-2">
-                                    <span class="required">@choice('admin/publishers.lead_type',2)</span>
-                                </label>
-                                <select name="leads_types" aria-label="Select a Thematic" data-control="select2"
-                                        data-placeholder="Select a Leads type..."
-                                        data-dropdown-parent="#kt_modal_edit_publisher"
-                                        class="form-select form-select-solid fw-bolder">
-                                    <option value="">Select a Leads type...</option>
-                                    @foreach($leads_types as $lead_type)
-                                        <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="row g-9 mb-7">
-                                <div class="col-md-6 fv-row fv-plugins-icon-container">
-                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
-                                    <select name="costs_types" aria-label="Select a Thematic" data-control="select2"
-                                            data-placeholder="Select a Thematic..."
-                                            data-dropdown-parent="#kt_modal_edit_publisher"
-                                            class="form-select form-select-solid fw-bolder">
-                                        <option value="">Select a Cost type...</option>
-                                        @foreach($costs_types as $cost_type)
-                                            <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
-                                <div style="display: none" class="col-md-6 fv-row fv-plugins-icon-container unit_price">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.amount',2)</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" class="form-control form-control-solid" name="unit_price">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
-                                <div style="display: none"
-                                     class="col-md-6 fv-row fv-plugins-icon-container sale_percentage">
-                                    <!--begin::Label-->
-                                    <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="number" max="100" class="form-control form-control-solid"
-                                           name="sale_percentage">
-                                    <!--end::Input-->
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
-                                </div>
+                            <div class="thematics-block"></div>
+                            <div class="text-center">
+                                <button type="button" class="mt-4 btn btn-light-primary addThem">
+                                    Add thematic
+                                </button>
                             </div>
                         </div>
                         <div class="text-center pt-15">
@@ -605,7 +431,7 @@
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <div class="modal-content">
                 <div class="modal-header" id="kt_modal_add_them_header">
-                    <h2 class="fw-bolder">Edit publisher Thematic</h2>
+                    <h2 class="fw-bolder">Add publisher Thematic</h2>
                     <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
                          data-bs-dismiss="modal">
                         <span class="svg-icon svg-icon-1">
@@ -625,7 +451,7 @@
                             <label class="fs-6 fw-bold mb-2">
                                 <span class="required">@choice('admin/publishers.thematic',1)</span>
                             </label>
-                            <select name="thematics" aria-label="Select a Thematic"  data-dropdown-parent="#modal_add_them" data-control="select2" data-placeholder="Select a Thematic..." class="form-select form-select-solid fw-bolder" multiple>
+                            <select name="thematics[]" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them" data-control="select2" data-placeholder="Select a Thematic..." class="form-select form-select-solid fw-bolder" multiple>
                                 <option value="">Select a Thematic...</option>
                                 @foreach($thematics as $thematic)
                                     <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
@@ -637,7 +463,7 @@
                                 <span class="required">@choice('admin/publishers.country',2)</span>
                                 <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
                             </label>
-                            <select name="country" aria-label="Select Countries" data-dropdown-parent="#modal_add_them"  data-placeholder="Select Countries..." class="form-select form-select-solid fw-bolder" multiple="multiple">
+                            <select name="country[]" aria-label="Select Countries" data-dropdown-parent="#modal_add_them" data-placeholder="Select Countries..." class="form-select form-select-solid fw-bolder" multiple="multiple">
                                 <option value="">Select a Country...</option>
                                 @foreach(\App\Helper\Countries::getCountries() as $key => $country)
                                     <option value="{{ $key}}">{{ $country}}</option>
@@ -648,7 +474,7 @@
                             <label class="fs-6 fw-bold mb-2">
                                 <span class="required">@choice('admin/publishers.lead_type',2)</span>
                             </label>
-                            <select name="leads_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them"  data-control="select2"
+                            <select name="leads_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them" data-control="select2"
                                     data-placeholder="Select a Leads type..."
                                     data-dropdown-parent="#kt_modal_add_publisher"
                                     class="form-select form-select-solid fw-bolder">
@@ -660,10 +486,109 @@
                         </div>
                         <div class=" fv-row fv-plugins-icon-container">
                             <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
-                            <select name="costs_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them"  data-control="select2"
+                            <select name="costs_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_add_them" data-control="select2"
                                     data-placeholder="Select a Thematic..."
                                     data-dropdown-parent="#kt_modal_add_publisher"
                                     class="form-select form-select-solid fw-bolder">
+                                <option value="">Select a Cost type...</option>
+                                @foreach($costs_types as $cost_type)
+                                    <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
+                                @endforeach
+                            </select>
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div style="display: none" class="fv-row fv-plugins-icon-container unit_price">
+                            <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.amount')</label>
+                            <input type="number" class="form-control form-control-solid" name="unit_price">
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div style="display: none"
+                             class="fv-row fv-plugins-icon-container sale_percentage">
+                            <label class="required fs-6 fw-bold mb-2">@lang('admin/publishers.sale') %</label>
+                            <input type="number" max="100" class="form-control form-control-solid" name="sale_percentage">
+                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">
+                                @lang('actions.cancel')
+                            </button>
+                            <button type="submit" class="btn btn-primary" data-kt-publishers-modal-action="submit">
+                                <span class="indicator-label">@lang('actions.save')</span>
+                                <span class="indicator-progress">Please wait...
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_edit_them">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header" id="kt_modal_edit_them_header">
+                    <h2 class="fw-bolder">Edit publisher Thematic</h2>
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
+                         data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="black"/>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                      transform="rotate(45 7.41422 6)" fill="black"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <form id="edit_them_form" class="form" action="#">
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.thematic',1)</span>
+                            </label>
+                            <select name="thematics[]" aria-label="Select a Thematic" data-dropdown-parent="#modal_edit_them" data-control="select2" data-placeholder="Select a Thematic..." class="form-select form-select-solid fw-bolder" multiple required>
+                                <option value="">Select a Thematic...</option>
+                                @foreach($thematics as $thematic)
+                                    <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.country',2)</span>
+                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
+                            </label>
+                            <select name="country[]" aria-label="Select Countries" data-dropdown-parent="#modal_edit_them" data-placeholder="Select Countries..." class="form-select form-select-solid fw-bolder" multiple="multiple" required>
+                                <option value="">Select a Country...</option>
+                                @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                    <option value="{{ $key}}">{{ $country}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">@choice('admin/publishers.lead_type',2)</span>
+                            </label>
+                            <select name="leads_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_edit_them" data-control="select2"
+                                    data-placeholder="Select a Leads type..."
+                                    data-dropdown-parent="#kt_modal_add_publisher"
+                                    class="form-select form-select-solid fw-bolder"
+                                    required>
+                                <option value="">Select a Leads type...</option>
+                                @foreach($leads_types as $lead_type)
+                                    <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class=" fv-row fv-plugins-icon-container">
+                            <label class="required fs-6 fw-bold mb-2">@choice('admin/publishers.cost_type',2)</label>
+                            <select name="costs_types" aria-label="Select a Thematic" data-dropdown-parent="#modal_edit_them" data-control="select2"
+                                    data-placeholder="Select a Thematic..."
+                                    data-dropdown-parent="#kt_modal_add_publisher"
+                                    class="form-select form-select-solid fw-bolder"
+                                    required>
                                 <option value="">Select a Cost type...</option>
                                 @foreach($costs_types as $cost_type)
                                     <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
@@ -819,42 +744,6 @@
 @endsection
 @section('javascript')
     <script>
-/*        let themath = $('<div><div class="float-end d-flex flex-column"><button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-22"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-            '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"></rect>\n' +
-            '</svg></span></button>\n' +
-            '                                    <button type="button" class="btn btn-sm btn-icon btn-outline-secondary edit"><span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-            '<path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M2 4.63158C2 3.1782 3.1782 2 4.63158 2H13.47C14.0155 2 14.278 2.66919 13.8778 3.04006L12.4556 4.35821C11.9009 4.87228 11.1726 5.15789 10.4163 5.15789H7.1579C6.05333 5.15789 5.15789 6.05333 5.15789 7.1579V16.8421C5.15789 17.9467 6.05333 18.8421 7.1579 18.8421H16.8421C17.9467 18.8421 18.8421 17.9467 18.8421 16.8421V13.7518C18.8421 12.927 19.1817 12.1387 19.7809 11.572L20.9878 10.4308C21.3703 10.0691 22 10.3403 22 10.8668V19.3684C22 20.8218 20.8218 22 19.3684 22H4.63158C3.1782 22 2 20.8218 2 19.3684V4.63158Z" fill="currentColor"></path>\n' +
-            '<path d="M10.9256 11.1882C10.5351 10.7977 10.5351 10.1645 10.9256 9.77397L18.0669 2.6327C18.8479 1.85165 20.1143 1.85165 20.8953 2.6327L21.3665 3.10391C22.1476 3.88496 22.1476 5.15129 21.3665 5.93234L14.2252 13.0736C13.8347 13.4641 13.2016 13.4641 12.811 13.0736L10.9256 11.1882Z" fill="currentColor"></path>\n' +
-            '<path d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z" fill="currentColor"></path>\n' +
-            '</svg></span></button></div><div class="card bg-light h-100">\n' +
-            '                                    <div class="card-body p-3">\n' +
-            '                                        <div class="fs-6 d-flex justify-content-between mb-4">\n' +
-            '                                            <div class="fw-bold">Thematic</div>\n' +
-            '                                            <div class="d-flex fw-bolder thematics"></div>\n' +
-            '                                        </div>\n' +
-            '                                        <div class="separator separator-dashed"></div>\n' +
-            '                                        <div class="fs-6 d-flex justify-content-between my-4">\n' +
-            '                                            <div class="fw-bold">Countries</div>\n' +
-            '                                            <div class="d-flex fw-bolder countries"></div>\n' +
-            '                                        </div>\n' +
-            '                                        <div class="separator separator-dashed"></div>\n' +
-            '                                        <div class="fs-6 d-flex justify-content-between my-4">\n' +
-            '                                            <div class="fw-bold">Leads type</div>\n' +
-            '                                            <div class="d-flex fw-bolder leads_type"></div>\n' +
-            '                                        </div>\n' +
-            '                                        <div class="separator separator-dashed"></div>\n' +
-            '                                        <div class="row mt-5">\n' +
-            '                                            <div class="col-md-6 py-3 px-4 mb-3">\n' +
-            '                                                <div class="fs-6 text-gray-800 fw-bolder">Cost types</div>\n' +
-            '                                                <div class="fw-bold text-gray-400 cost_type"></div>\n' +
-            '                                            </div>\n' +
-            '                                            <div class="col-md-6 min-w-125px py-3 px-4 mb-3">\n' +
-            '                                                <div class="fs-6 text-gray-800 fw-bolder">Amount</div>\n' +
-            '                                                <div class="fw-bold text-gray-400 amount"></div>\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div></div>');*/
         let source = $('.source_body').clone();
     </script>
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
@@ -882,21 +771,6 @@
         let CloseOnSelect = $.fn.select2.amd.require('select2/dropdown/closeOnSelect');
         let AttachBody = $.fn.select2.amd.require('select2/dropdown/attachBody');
         let dropdownAdapter = Utils.Decorate(Utils.Decorate(Utils.Decorate(Dropdown, DropdownSearch), CloseOnSelect), AttachBody);
-/*        $(document).on('click', '.addThem', function () {
-            var newTh = themath.clone();
-            $('select[name="thematics"]', $(this).parents('form')).each(function (e) {
-                $('select[name="thematics"] option[value="' + $(this).val() + '"]', newTh).attr('disabled', true);
-            });
-            newTh.insertAfter($(this).parents('.row'));
-            $(this).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
-                '</svg></span></button>');
-            $($('select[data-control="select2"]', newTh)).select2();
-            $($('select[name="country"]', newTh)).select2({
-                dropdownAdapter: dropdownAdapter,
-                multiple: true
-            });
-        });*/
         $(document).on('click', '.addSource', function () {
             var newTh = source.clone();
             newTh.insertAfter($(this).parents('.row'));
@@ -904,7 +778,7 @@
                 '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
                 '</svg></span></button>');
             $($('select[data-control="select2"]', newTh)).select2();
-            $($('select[name="country"]', newTh)).select2({
+            $($('select[name="country[]"]', newTh)).select2({
                 dropdownAdapter: dropdownAdapter,
                 multiple: true
             });
@@ -913,7 +787,7 @@
             $('select[name="thematics"] option[value="' + $(this).parents('.row').find('select[name="thematics"]').val() + '"]', $(this).parents('form')).attr('disabled', false);
             $(this).parents('.row').remove();
         });
-        $('select[name="country"]').select2({
+        $('select[name="country[]"]').select2({
             dropdownAdapter: dropdownAdapter,
             multiple: true
         });
@@ -976,27 +850,6 @@
             column.visible($(this).is(':checked'));
             table.columns.adjust().draw();
         });
-        /*$(document).on('change', 'select[name="thematics"]', function () {
-            var select = $(this);
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('admin.thematics.countries') }}',
-                dataType: 'JSON',
-                data: {
-                    thematics: $(this).val(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (data) {
-                    $('select[name="country"]', select.parents('.them')).empty();
-                    if (data.success) {
-                        $.each(data.countries, function (index, country) {
-                            let sel = $.inArray(index, selectedCountries[select.val()]) != -1 ? 'selected' : '';
-                            $('select[name="country"]', select.parents('.them')).append('<option value="' + index + '" ' + sel + ' >' + country + '</option>')
-                        })
-                    }
-                }
-            })
-        });*/
         $('select[name="leads_types"],select[name="costs_types"]').select2({
             minimumResultsForSearch: Infinity
         });
@@ -1171,39 +1024,29 @@
                 },
                 success: function (data) {
                     if (data.success) {
-                        $('#kt_modal_edit_publisher').modal('show');
                         $('#kt_modal_edit_publisher_form input[name="name"]').val(data.publisher.name);
                         $('#kt_modal_edit_publisher_form input[name="email"]').val(data.publisher.user.email);
-                        if (data.publisher.leads_types.length != 0) $('#kt_modal_edit_publisher_form select[name="leads_types"] option[value="' + data.publisher.leads_types[0].id + '"]').prop('selected', true).change();
-                        if (data.publisher.costs_types.length != 0) $('#kt_modal_edit_publisher_form select[name="costs_types"] option[value="' + data.publisher.costs_types[0].id + '"]').prop('selected', true).change();
-                        if (data.publisher.thematics.length != 0) $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(data.publisher.thematics[0].pivot.sale_percentage);
-                        $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(data.publisher.thematics[0].pivot.unit_price);
-                        $('#kt_modal_edit_publisher_form .thematics').empty();
+                        $('#kt_modal_edit_publisher_form .thematics-block').empty();
                         $.each(data.publisher.thematics, function () {
                             let newThem = themath.clone();
-                            $($('select[name="thematics"] option[value="' + this.id + '"]', newThem)).attr('selected', true);
-                            selectedCountries = JSON.parse(this.pivot.countries);
-                            $.each(selectedCountries, function () {
-                                $('select[name="country"] option[value="' + this + '"]', newThem).attr('selected', true);
+                            newThem.data('values', {
+                                thematics: [this.id],
+                                countries: JSON.parse(this.pivot.countries),
+                                leads_types: this.leads_types[0].id,
+                                cost_types: this.costs_types[0].id,
+                                amount: this.pivot.unit_price,
                             });
-                            $('.addThem', newThem).parent().html('<button type="button" class="btn btn-sm btn-icon btn-outline-danger del"><span class="svg-icon svg-icon-muted svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">\n' +
-                                '<rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black"/>\n' +
-                                '</svg></span></button>');
-                            $('#kt_modal_edit_publisher_form .thematics').append(newThem);
-                            $($('select[data-control="select2"]', newThem)).select2();
-                            $($('select[name="country"]', newThem)).select2({
-                                dropdownAdapter: dropdownAdapter,
-                                multiple: true
+                            newThem.find('.thematics').append('<div class="badge badge-white">' + this.name + '</div>');
+                            $.each($('#add_them_form [name="country[]"] option:selected'), function () {
+                                newThem.find('.countries').append('<div class="badge badge-white">' + $(this).text() + '</div>');
                             });
-                        });
-                        let newThem = themath.clone();
-                        $('#kt_modal_edit_publisher_form .thematics').append(newThem);
-                        $($('select[data-control="select2"]', newThem)).select2();
-                        $($('select[name="country"]', newThem)).select2({
-                            dropdownAdapter: dropdownAdapter,
-                            multiple: true
+                            newThem.find('.lead_types').html('<div class="badge badge-white">' + this.leads_types[0].name + '</div>');
+                            newThem.find('.cost_types').html('<div class="badge badge-white mt-2 d-inline">' + this.costs_types[0].name + '</div>');
+                            newThem.find('.amount').html('<div class="badge badge-white mt-2 d-inline">' + this.pivot.unit_price + '</div>');
+                            $('#kt_modal_edit_publisher_form .thematics-block').prepend(newThem);
                         });
 
+                        $('#kt_modal_edit_publisher').modal('show');
                     }
                 }
             });
@@ -1211,7 +1054,7 @@
         $('#kt_modal_add_publisher_form').on('submit', function (e) {
             e.preventDefault();
             var thematics = [];
-            $('.thematics .thematic').map(function (i, v) {
+            $('#kt_modal_add_publisher_form .thematics-block .thematic').map(function (i, v) {
                 thematics.push($(this).data('values'));
             });
             if (validator) {
@@ -1265,6 +1108,7 @@
                                     '                            </div>']).draw();
                                     KTMenu.createInstances();
                                     $('#kt_modal_add_publisher_form button[type="reset"]').click();
+                                    $('.thematics-block').remove();
                                 } else {
                                     Swal.fire({
                                         text: "@lang('alert.error_general_text')",
@@ -1283,65 +1127,65 @@
         $('#kt_modal_edit_publisher_form').on('submit', function (e) {
             e.preventDefault();
             var thematics = [];
-            $('#kt_modal_edit_publisher_form select[name="thematics"]').map(function (i, v) {
-                if ($(this).val() != "" && $(v).parents('.them').find('select[name="country"]').val().length != 0) thematics.push({
-                    'val': $(v).val(),
-                    'countries': $(v).parents('.them').find('select[name="country"]').val()
-                });
+            $('#kt_modal_edit_publisher_form .thematics-block .thematic').map(function (i, v) {
+                thematics.push($(this).data('values'));
             });
-            if (validator1 && thematics.length != 0) {
-                validator1.validate().then(function (status) {
-                    if (status == 'Valid') {
-                        $('.indicator-progress').show();
-                        $('.indicator-label').hide();
-                        $.ajax({
-                            method: 'POST',
-                            url: '{{ route('admin.publishers.update') }}',
-                            dataType: 'JSON',
-                            data: {
-                                id: id,
-                                name: $('#kt_modal_edit_publisher_form input[name="name"]').val(),
-                                email: $('#kt_modal_edit_publisher_form input[name="email"]').val(),
-                                leads_types: $('#kt_modal_edit_publisher_form select[name="leads_types"]').val(),
-                                costs_types: $('#kt_modal_edit_publisher_form select[name="costs_types"]').val(),
-                                sale_percentage: $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(),
-                                unit_price: $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(),
-                                thematics: thematics,
-                                _token: '{{ csrf_token() }}'
-                            },
-                            success: function (data) {
-                                $('.indicator-progress').hide();
-                                $('.indicator-label').show();
-                                if (data.success) {
-                                    Swal.fire({
-                                        text: "Publisher successfully updated",
-                                        icon: "success",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    let DTdata = table.row(tr).data();
-                                    DTdata[2] = data.publisher.name;
-                                    DTdata[3] = $('#kt_modal_edit_publisher_form select[name="thematics"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
-                                    DTdata[4] = $('#kt_modal_edit_publisher_form select[name="country"] option:selected').map((O, V) => '<div class="badge badge-light">' + $(V).text() + '</div>').toArray().join('');
-                                    DTdata[5] = $('#kt_modal_edit_publisher_form select[name="leads_types"] option:selected').text();
-                                    DTdata[6] = $('#kt_modal_edit_publisher_form select[name="costs_types"] option:selected').text();
-                                    DTdata[7] = $('#kt_modal_edit_publisher_form input[name="unit_price"]').val();
-                                    table.row(tr).data(DTdata).draw();
-                                    $('#kt_modal_edit_publisher_form button[data-bs-dismiss="modal"]').click();
-                                } else {
-                                    Swal.fire({
-                                        text: "Something went wrong ! please try later.",
-                                        icon: "error",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        }
-                                    });
-                                }
+            $('.indicator-progress').show();
+            $('.indicator-label').hide();
+            $.ajax({
+                method: 'POST',
+                url: '{{ route('admin.publishers.update') }}',
+                dataType: 'JSON',
+                data: {
+                    id: id,
+                    name: $('#kt_modal_edit_publisher_form input[name="name"]').val(),
+                    email: $('#kt_modal_edit_publisher_form input[name="email"]').val(),
+                    leads_types: $('#kt_modal_edit_publisher_form select[name="leads_types"]').val(),
+                    costs_types: $('#kt_modal_edit_publisher_form select[name="costs_types"]').val(),
+                    sale_percentage: $('#kt_modal_edit_publisher_form input[name="sale_percentage"]').val(),
+                    unit_price: $('#kt_modal_edit_publisher_form input[name="unit_price"]').val(),
+                    thematics: thematics,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    $('.indicator-progress').hide();
+                    $('.indicator-label').show();
+                    if (data.success) {
+                        Swal.fire({
+                            text: "Publisher successfully updated",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        let DTdata = table.row(tr).data();
+                        ['', data.publisher.id
+                            , data.publisher.name
+                            , data.publisher.thematics.map((O, K) => '<div class="badge badge-light">' + O.name + '</div>').join("")
+                            , $('#kt_modal_add_publisher_form select[name="country"] option:selected').map((O, K) => '<div class="badge badge-light">' + $(K).text() + '</div>').toArray().join(""),
+                            data.publisher.leads_types[0].name, data.publisher.costs_types[0].name,
+                            data.publisher.thematics[0].pivot.unit_price,
+                            data.publisher.thematics[0].pivot.sale_percentage
+                        ]
+                        DTdata[2] = data.publisher.name;
+                        DTdata[3] = data.publisher.thematics.map((O, K) => '<div class="badge badge-light">' + O.name + '</div>').join("");
+                        DTdata[4] = $('#kt_modal_add_publisher_form select[name="country"] option:selected').map((O, K) => '<div class="badge badge-light">' + $(K).text() + '</div>').toArray().join("");
+                        DTdata[5] = data.publisher.leads_types[0].name;
+                        DTdata[6] =  data.publisher.costs_types[0].name;
+                        DTdata[7] = data.publisher.thematics[0].pivot.unit_price;
+                        DTdata[8] = data.publisher.thematics[0].pivot.sale_percentage;
+                        table.row(tr).data(DTdata).draw();
+                        $('#kt_modal_edit_publisher_form button[data-bs-dismiss="modal"]').click();
+                    } else {
+                        Swal.fire({
+                            text: "Something went wrong ! please try later.",
+                            icon: "error",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
                             }
-                        })
+                        });
                     }
-                })
-            }
+                }
+            })
         });
     </script>
 @endsection

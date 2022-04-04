@@ -67,15 +67,11 @@
                     @csrf
                     <div class="modal-body scroll-y ">
                         <div class="scroll-y me-n7 pe-7" id="modal_add_offer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#modal_add_offer_header" data-kt-scroll-wrappers="#kt_modal_add_campaign_scroll" data-kt-scroll-offset="300px">
-                            <div class="fv-row mb-7">
-                                <label class="required fs-6 fw-bold mb-2">@lang('publisher/offers.name')</label>
-                                <input type="text" class="form-control form-control-solid" required placeholder="" name="name"/>
-                            </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
                                     <span class="required">@choice('publisher/offers.thematic',1)</span>
                                 </label>
-                                <select name="thematic" aria-label="Select a Thematic" required data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder">
+                                <select name="thematic[]" aria-label="Select a Thematic" required data-control="select2" data-placeholder="Select a Thematic..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder" multiple>
                                     <option value="">Select a Thematic</option>
                                     @foreach($thematics as $thematic)
                                         <option value="{{ $thematic->id }}">{{ $thematic->name }}</option>
@@ -88,22 +84,23 @@
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i>
                                 </label>
                                 <select name="country[]" aria-label="Select a Country" required data-control="select2" data-placeholder="Select a Country..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder" multiple>
-                                    {{-- @foreach(\App\Helper\Countries::getCountries() as $key => $country)
+                                     @foreach(\App\Helper\Countries::getCountries() as $key => $country)
                                          <option value="{{ $key}}">{{ $country}}</option>
-                                     @endforeach--}}
+                                     @endforeach
                                 </select>
                             </div>
                             <div class="d-flex flex-column mb-7 fv-row">
                                 <label class="fs-6 fw-bold mb-2">
                                     <span class="required">@choice('publisher/offers.lead_type',1)</span>
                                 </label>
-                                <select name="leads_types" aria-label="Select a Thematic" required data-control="select2" data-placeholder="Select a Lead Type..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder">
-                                    {{--@foreach($leads_types as $lead_type)
+                                <select name="leads_types" aria-label="Select a Thematic" required data-control="select2" data-placeholder="Select a Lead Type..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder" required>
+                                    <option></option>
+                                    @foreach($leads_types as $lead_type)
                                         <option value="{{ $lead_type->id }}">{{ $lead_type->name }}</option>
-                                    @endforeach--}}
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="row g-9 mb-7">
+{{--                            <div class="row g-9 mb-7">
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <label class="required fs-6 fw-bold mb-2">@lang('publisher/offers.leads_volume')</label>
                                     <select name="leads_volume" aria-label="Select a lead volume" data-control="select2" data-placeholder="Select a Lead volume..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder">
@@ -117,14 +114,15 @@
                                     <input class="form-control form-control-solid" placeholder="" name="leads_vmax" type="number">
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="row g-9 mb-7">
                                 <div class="col-md-6 fv-row fv-plugins-icon-container">
                                     <label class="required fs-6 fw-bold mb-2">@choice('publisher/offers.cost_type',1)</label>
                                     <select name="costs_types" aria-label="Select a Cost type" data-control="select2" data-placeholder="Select a Cost type..." data-dropdown-parent="#modal_add_offer_form" class="form-select form-select-solid fw-bolder" required>
-                                        {{-- @foreach($costs_types as $cost_type)
+                                        <option></option>
+                                    @foreach($costs_types as $cost_type)
                                              <option value="{{ $cost_type->id }}">{{ $cost_type->name }}</option>
-                                         @endforeach--}}
+                                         @endforeach
                                     </select>
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
@@ -189,6 +187,8 @@
                             title: '{{ trans('alert.success_action',['action' => trans_choice('actions.create',2),'attribute'=>trans_choice('publisher/offers.offer',1)]) }}'
                         });
                         $('#kt_modal_add_offer_cancel').click();
+                        $('#modal_add_offer_form select').change();
+                        $('#kt_contacts_main').remove();
                         $('.offers').append(data.component);
                     } else {
                         Swal.fire({
@@ -199,6 +199,7 @@
                 }
             });
         });
+        /*
         $('select[name="thematic"]').change(function () {
             $.ajax({
                 url: '{{ route('publisher.thematic.show') }}',
@@ -224,7 +225,7 @@
                     $('select[name="leads_types"],select[name="costs_types"],select[name="country[]"]').change();
                 }
             });
-        });
+        });*/
         $(document).on('click','.delete',function () {
             let btn = $(this);
             Swal.fire({

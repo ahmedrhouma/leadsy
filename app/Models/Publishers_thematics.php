@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Publishers_thematics extends Model
 {
-    use HasFactory,Log;
+    use HasFactory, Log;
     protected $guarded = [
         'id'
     ];
@@ -19,13 +19,17 @@ class Publishers_thematics extends Model
     protected $casts = [
         'countries' => 'json'
     ];
-    public function getCountriesNameAttribute(){
+
+    public function getCountriesNameAttribute()
+    {
         return Countries::getCountry($this->countries) ?? null;
     }
 
-    public function getCountriesDetailsAttribute(){
-        return array_map(function ($iso){
-            return ['iso' => $iso,'name'=>Countries::getCountry($iso)];
-        },$this->countries);
+    public function getCountriesDetailsAttribute()
+    {
+        return array_map(function ($iso) {
+            return ['iso' => $iso, 'name' => Countries::getCountry($iso)];
+        }, $this->countries);
     }
+
 }

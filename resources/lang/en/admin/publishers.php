@@ -25,4 +25,6 @@ return [
     'publisher_sources' => 'Publisher Sources',
     'changed' => 'Changed',
     'not_changed' => 'Not Changed',
+    'login' => 'Login',
+    'password' => 'Password',
 ];

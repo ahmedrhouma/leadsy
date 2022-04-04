@@ -25,6 +25,6 @@ return [
     'publisher_sources' => "Sources de l'éditeur",
     'changed' => 'Modifié',
     'not_changed' => 'Non modifié',
-    'login' => 'Identifier',
+    'login' => 'Identifiant ( Email ) ',
     'password' => 'Mot de passe',
 ];

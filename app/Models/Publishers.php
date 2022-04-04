@@ -20,13 +20,6 @@ class Publishers extends Model
         return $this->hasMany(Leads::class, 'publisher_id');
     }
 
-    /**
-     * Get the leads associated with the publisher.
-     */
-    public function offers()
-    {
-        return $this->hasMany(Offer::class, 'publisher_id');
-    }
 
     /**
      * Get the thematics associated with the publisher.

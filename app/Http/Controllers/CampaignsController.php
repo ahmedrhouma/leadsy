@@ -205,9 +205,12 @@ class CampaignsController extends Controller
      */
     public function offers(Request $request)
     {
-        $offers = \auth()->user()->account->offers->load(['thematics', 'leadsTypes', 'costsTypes']);
-        $thematics = \auth()->user()->account->thematics;
-        return view('publisher.offers', ['offers' => $offers, 'thematics' => $thematics]);
+        $offers = \auth()->user()->account->load(['thematics', 'thematics.leadsTypes'=>function($q){
+            return $q->where('publisher_id',session('account_id'));
+        }, 'thematics.costsTypes'=>function($q){
+            return $q->where('publisher_id',session('account_id'));
+        }]);
+        return view('publisher.offers', ['offers' =>  $offers->thematics, 'thematics' => Thematics::all(), 'costs_types' => Cost_types::all(), 'leads_types' => Leads_types::all()]);
     }
 
     /**
@@ -217,29 +220,29 @@ class CampaignsController extends Controller
      */
     public function addOffer(Request $request)
     {
-        $validator = Validator::make($request->all(), ['name' => 'required', 'thematic' => 'required', 'cost_amount' => 'required', 'costs_types' => 'required', 'leads_types' => 'required', 'country' => 'required|array', 'leads_volume' => 'required', 'leads_vmax' => 'required'], $messages = [
+        $validator = Validator::make($request->all(), ['thematic' => 'required', 'cost_amount' => 'required', 'costs_types' => 'required', 'leads_types' => 'required', 'country' => 'required|array'], $messages = [
             'required' => 'The :attribute field is required.',
         ]);
         $validated = $validator->validate();
         if (!$validator->fails()) {
-            $offer = Offer::create([
-                'name' => $validated['name'],
-                'thematic_id' => $validated['thematic'],
-                'publisher_id' => \auth()->user()->account->id,
-                'cost_type_id' => $validated['costs_types'],
-                'leads_type_id' => $validated['leads_types'],
-                'countries' => json_encode($validated['country']),
-                'leads_volume' => $validated['leads_volume'],
-                'leads_vmax' => $validated['leads_vmax'],
-                'selling_price' => $validated['costs_types'] == 1 ?$validated['cost_amount']:$validated['sale_percentage'],
-            ]);
-            if ($offer) {
-                $offer = view('offer.offer', compact('offer'))->render();
-                return Response()->json([
-                    'success' => true,
-                    'component' => $offer
-                ]);
+            $offers = "";
+            foreach ($validated['thematic'] as $thematic){
+                $publisherThematic = Publishers_thematics::create(['countries' => $validated['country'], 'status' => 1, 'unit_price' => $validated['cost_amount'] != "" ? $validated['cost_amount'] : NULL, 'sale_percentage' => $validated['sale_percentage']??NULL, 'publisher_id' => session('account_id'), 'thematic_id' => $thematic]);
+                $publisherLeadType = Publishers_leads_types::create(['status' => 1, 'publisher_id' =>  session('account_id'), 'thematic_id' => $thematic, 'lead_type_id' => $validated['leads_types']]);
+                $publisherCostType = Publishers_cost_types::create(['status' => 1, 'publisher_id' =>  session('account_id'), 'thematic_id' => $thematic, 'cost_type_id' => $validated['costs_types']]);
+                $offer = \auth()->user()->account->load(['thematics'=>function($q)use ($thematic){
+                    return $q->where('thematic_id',$thematic);
+                }, 'thematics.leadsTypes'=>function($q){
+                    return $q->where('publisher_id',session('account_id'));
+                }, 'thematics.costsTypes'=>function($q){
+                    return $q->where('publisher_id',session('account_id'));
+                }]);
+                $offers .= view('offer.offer',['offer'=>$offer->thematics->find($thematic)])->render();
             }
+            return Response()->json([
+                'success' => true,
+                'component' => $offers
+            ]);
         }
         return Response()->json([
             'success'=> false
@@ -252,8 +255,10 @@ class CampaignsController extends Controller
      */
     public function destroyOffer(Request $request)
     {
-        $offer = Offer::find($request->id);
-        if ($offer->delete()) {
+        $publisherThematic = Publishers_thematics::where(['publisher_id' => \auth()->user()->account->id, 'thematic_id' => $request->id]);
+        $publisherLeadType = Publishers_leads_types::where(['publisher_id' =>  \auth()->user()->account->id, 'thematic_id' => $request->id]);
+        $publisherCostType = Publishers_cost_types::where(['publisher_id' =>  \auth()->user()->account->id, 'thematic_id' => $request->id]);
+        if ($publisherThematic->delete() && $publisherLeadType->delete() && $publisherCostType->delete()) {
             return Response()->json(['success' => true]);
         }
         return Response()->json(['success' => false]);
@@ -294,7 +299,7 @@ class CampaignsController extends Controller
                 'publishers_leads_types.publisher_id' => session('account_id')
             ])
             ->doesntHave('negotiations')
-            ->with(['thematics', 'leadsTypes', 'costsTypes'])->withCount('leads')->get();
+            ->with(['thematics', 'leadsTypes', 'costsTypes'])->withCount('leads')->groupBy('id')->get();
         return view('publisher.opportunities', ['campaigns' => $campaigns]);
     }
 

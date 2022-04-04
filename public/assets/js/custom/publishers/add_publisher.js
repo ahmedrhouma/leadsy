@@ -45,56 +45,99 @@ let themath = $(`<div class="thematic">
             </div>
         </div>
     </div>
-</div>
-`);
-$(document).on('click','.delThem',function () {
+</div>`);
+let editThem = null ;
+let lastModal = null ;
+$(document).on('click', '.delThem', function () {
     $(this).closest('.thematic').remove();
 });
-$(document).on('click','.addThem',function () {
-    $('#kt_modal_add_publisher').modal('hide');
+$(document).on('click', '.addThem', function () {
+    if ($('#kt_modal_add_publisher').hasClass('show')){
+        lastModal = $('#kt_modal_add_publisher');
+        $('#kt_modal_add_publisher').modal('hide');
+    }else{
+        lastModal = $('#kt_modal_edit_publisher');
+        $('#kt_modal_edit_publisher').modal('hide');
+    }
     $('#modal_add_them').modal('show');
 });
 $('#modal_add_them').on('hidden.bs.modal', function (e) {
-    $('#kt_modal_add_publisher').modal('show');
+    lastModal.modal('show');
 });
 $('#add_them_form').submit(function (e) {
     e.preventDefault();
     let newThem = themath.clone();
-    newThem.data('values',$(this).serialize());
-    $.each($('#add_them_form [name="thematics"] option:selected'),function () {
-        newThem.find('.thematics').append('<div class="badge badge-white">'+$(this).text()+'</div>');
+    newThem.data('values', {
+        thematics: $('#add_them_form [name="thematics[]"]').val(),
+        countries: $('#add_them_form [name="country[]"]').val(),
+        leads_types: $('#add_them_form [name="leads_types"]').val(),
+        cost_types: $('#add_them_form [name="costs_types"]').val(),
+        amount: $('#add_them_form [name="unit_price"]').val(),
     });
-    $.each($('#add_them_form [name="country"] option:selected'),function () {
-        newThem.find('.countries').append('<div class="badge badge-white">'+$(this).text()+'</div>');
+    $.each($('#add_them_form [name="thematics[]"] option:selected'), function () {
+        newThem.find('.thematics').append('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    $.each($('#add_them_form [name="leads_types"] option:selected'),function () {
-        newThem.find('.lead_types').html('<div class="badge badge-white">'+$(this).text()+'</div>');
+    $.each($('#add_them_form [name="country[]"] option:selected'), function () {
+        newThem.find('.countries').append('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    $.each($('#add_them_form [name="costs_types"] option:selected'),function () {
-        newThem.find('.cost_types').html('<div class="badge badge-white mt-2 d-inline">'+$(this).text()+'</div>');
+    $.each($('#add_them_form [name="leads_types"] option:selected'), function () {
+        newThem.find('.lead_types').html('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    newThem.find('.amount').html('<div class="badge badge-white mt-2 d-inline">'+$('#add_them_form [name="unit_price"]').val()+'</div>');
-    $('.thematics').prepend(newThem);
+    $.each($('#add_them_form [name="costs_types"] option:selected'), function () {
+        newThem.find('.cost_types').html('<div class="badge badge-white mt-2 d-inline">' + $(this).text() + '</div>');
+    });
+    newThem.find('.amount').html('<div class="badge badge-white mt-2 d-inline">' + $('#add_them_form [name="unit_price"]').val() + '</div>');
+    $('.thematics-block', lastModal).prepend(newThem);
+    $('#add_them_form').trigger('reset');
+    $('#add_them_form select').change();
     $('#modal_add_them').modal('hide');
 });
-$(document).on('click','.editThem',function () {
-   let them = $(this).closest('.thematic ')
+$(document).on('click', '.editThem', function () {
+    editThem = $(this).closest('.thematic');
+    let data = editThem.data('values');
+    $.each(data.thematics, function () {
+        $('#edit_them_form [name="thematics[]"] option[value="' + this + '"]').attr('selected', true);
+    });
+    $.each(data.countries, function () {
+        $('#edit_them_form [name="country[]"] option[value="' + this + '"]').attr('selected', true);
+    });
+    $('#edit_them_form [name="leads_types"] option[value="' + data.leads_types + '"]').attr('selected', true);
+    $('#edit_them_form [name="costs_types"] option[value="' + data.cost_types + '"]').attr('selected', true);
+    $('#edit_them_form select').change();
+    $('#edit_them_form [name="unit_price"]').val(data.amount);
+    if ($('#kt_modal_add_publisher').hasClass('show')){
+        lastModal = $('#kt_modal_add_publisher');
+        $('#kt_modal_add_publisher').modal('hide');
+    }else{
+        lastModal = $('#kt_modal_edit_publisher');
+        $('#kt_modal_edit_publisher').modal('hide');
+    }
+    $('#modal_edit_them').modal('show');
 });
 $('#edit_them_form').submit(function (e) {
     e.preventDefault();
     let newThem = themath.clone();
-    $.each($('#add_them_form .thematics option:selected'),function () {
-        newThem.find('.thematics').append('<div class="badge badge-white">'+$(this).text()+'</div>');
+    newThem.data('values', {
+        thematics: $('#edit_them_form [name="thematics[]"]').val(),
+        countries: $('#edit_them_form [name="country[]"]').val(),
+        leads_types: $('#edit_them_form [name="leads_types"]').val(),
+        cost_types: $('#edit_them_form [name="costs_types"]').val(),
+        amount: $('#edit_them_form [name="unit_price"]').val(),
     });
-    $.each($('#add_them_form .countries option:selected'),function () {
-        newThem.find('.countries').append('<div class="badge badge-white">'+$(this).text()+'</div>');
+    $.each($('#edit_them_form [name="thematics[]"] option:selected'), function () {
+        newThem.find('.thematics').append('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    $.each($('#add_them_form .lead_types option:selected'),function () {
-        newThem.find('.lead_types').html('<div class="badge badge-white">'+$(this).text()+'</div>');
+    $.each($('#edit_them_form [name="country[]"] option:selected'), function () {
+        newThem.find('.countries').append('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    $.each($('#add_them_form .cost_types option:selected'),function () {
-        newThem.find('.cost_types').html('<div class="badge badge-white">'+$(this).text()+'</div>');
+    $.each($('#edit_them_form [name="leads_types"] option:selected'), function () {
+        newThem.find('.lead_types').html('<div class="badge badge-white">' + $(this).text() + '</div>');
     });
-    newThem.find('.amount').html('<div class="badge badge-white mt-2 d-inline">'+$('#add_them_form .amount').val()+'</div>');
-    $('thematics').prepend(newThem);
+    $.each($('#edit_them_form [name="costs_types"] option:selected'), function () {
+        newThem.find('.cost_types').html('<div class="badge badge-white mt-2 d-inline">' + $(this).text() + '</div>');
+    });
+    newThem.find('.amount').html('<div class="badge badge-white mt-2 d-inline">' + $('#edit_them_form [name="unit_price"]').val() + '</div>');
+    editThem.replaceWith(newThem);
+    $('#modal_edit_them').modal('hide');
+    lastModal.modal('show');
 });

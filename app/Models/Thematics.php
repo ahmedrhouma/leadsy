@@ -27,7 +27,7 @@ class Thematics extends Model
      */
     public function publishers()
     {
-        return $this->belongsToMany(Publishers::class,'publishers_thematics', 'thematic_id', 'publisher_id');
+        return $this->belongsToMany(Publishers::class,'publishers_thematics', 'thematic_id', 'publisher_id')->withPivot(['countries_details']);
     }
 
     /**

@@ -62,10 +62,5 @@ class User extends Authenticatable
                 break;
         }
     }
-    protected static function booted()
-    {
-        self::updated(function($model){
-            $model->account()->update(['name'=>$model->username]);
-        });
-    }
+
 }
